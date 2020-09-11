@@ -2,58 +2,49 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Apro Scraper</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
-    <form onsubmit="startScraping(event)">
-      <input id="url-input" type="text" required />
-    </form>
-    <div id="item-sections"></div>
+    <div id="app">
+      <form @submit.prevent="startScraping($event)">
+        <input ref="url" required />
+      </form>
+      <section v-for="message in messages">
+        <div>{{ dateIntervalForMessage(message) }}/div>
+        <div v-for="item in message" :key="item.url">
+          <a :href="item.url">{{ item.title }}</a>
+          <span>{{ item.price }}</span>
+          <span>{{ item.location }}</span>
+          <span>{{ item.updated }}</span>
+        </div>
+      </section>
+    </div>
   </body>
   <script>
     const { ipcRenderer } = require("electron");
 
-    ipcRenderer.on("new-items", (event, items) => {
-      console.log(items);
-      if (items.length) {
-        createItemSection(items);
-      }
+    const app = new Vue({
+      el: "#app",
+      data: {
+        messages: [],
+      },
+      mounted() {
+        ipcRenderer.on("new-items", (event, message) => {
+          console.log(message);
+          this.messages.push(message);
+        });
+      },
+      methods: {
+        startScraping(event) {
+          ipcRenderer.send("start-scraping", this.$refs.url.value);
+        },
+        dateIntervalForMessage(message) {
+          const lastDate = message[message.length - 1].updated
+          const firstDate = message[0].updated
+          return `${lastDate} - ${firstDate}`
+        }
+      },
     });
-
-    const startScraping = (event) => {
-      event.preventDefault();
-
-      const urlInput = document.querySelector("#url-input");
-      ipcRenderer.send("start-scraping", urlInput.value);
-    };
-
-    const createItemSection = (items) => {
-      const lastDate = items[items.length - 1].updated;
-      const firstDate = items[0].updated;
-
-      const section = document.createElement("section");
-
-      const sectionHead = document.createElement("div");
-      sectionHead.classList.add("section-head");
-      sectionHead.innerText = `${lastDate} - ${firstDate}`;
-
-      const itemList = document.createElement("ul");
-      for (let item of items) {
-        const itemHolder = document.createElement("li");
-        itemHolder.innerHTML = `
-          <a href="${item.url}">${item.title}</a>
-          <span>${item.price}</span>
-          <span>${item.location}</span>
-          <span>${item.updated}</span>
-        `.trim();
-        itemList.appendChild(itemHolder);
-      }
-
-      section.appendChild(sectionHead);
-      section.appendChild(itemList);
-
-      const itemSectionContainer = document.querySelector("#item-sections");
-      itemSectionContainer.prepend(section);
-    };
   </script>
 </html>

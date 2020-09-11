@@ -85,9 +85,11 @@ const createWindow = () => {
 ipcMain.on("start-scraping", (event, page) => {
   startInterval(60, async () => {
     const selling = await scrape(page);
-    mainWindow.webContents.send("new-items", selling);
-    if (selling.length && !mainWindow.isVisible()) {
-      showNewItemsNotification(selling);
+    if (selling.length) {
+      mainWindow.webContents.send("new-items", selling);
+      if (!mainWindow.isVisible()) {
+        showNewItemsNotification(selling);
+      }
     }
   });
 });
