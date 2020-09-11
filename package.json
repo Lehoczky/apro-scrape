@@ -9,12 +9,13 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "test": "jest",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
   "author": {
     "name": "Lehoczky Zoltán",
-    "email": "zoltan.lehoczky@aimotive.com"
+    "email": "ifjlehoczkyzoltan@gmail.com"
   },
   "license": "MIT",
   "config": {
@@ -45,7 +46,8 @@
     }
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    "electron-squirrel-startup": "^1.0.0",
+    "jsdom": "^16.4.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.53",
@@ -53,6 +55,7 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.53",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.53",
     "@electron-forge/maker-zip": "^6.0.0-beta.53",
-    "electron": "10.1.1"
+    "electron": "10.1.1",
+    "jest": "^26.4.2"
   }
 }
