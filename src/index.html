@@ -3,22 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <title>Apro Scraper</title>
+    <link rel="stylesheet" href="index.css" />
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
-    <div id="app">
+    <div class="container" id="app">
       <form @submit.prevent="startScraping($event)">
-        <input ref="url" required />
+        <input ref="url" placeholder="Enter HardverApro URL" required />
 
         <button v-if="!scraping" type="submit">Scrape</button>
         <button v-else @click.prevent="stopScraping()">Stop</button>
       </form>
-      <!-- Temp -->
-      <div>https://hardverapro.hu/aprok/mobil/android/index.html</div>
-      <!--  -->
       <section v-for="message in messages">
-        <div>{{ dateIntervalForMessage(message) }}</div>
-        <div v-for="item in message" :key="item.url">
+        <div class="date">{{ dateIntervalForMessage(message) }}</div>
+        <div class="row" v-for="item in message" :key="item.url">
           <a :href="item.url">{{ item.title }}</a>
           <span>{{ item.price }}</span>
           <span>{{ item.location }}</span>
