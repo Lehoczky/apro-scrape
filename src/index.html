@@ -10,15 +10,31 @@
     <div class="container" id="app">
       <form @submit.prevent="startScraping($event)">
         <input
-          ref="url"
+          v-model="url"
           type="url"
           placeholder="Enter HardverApro URL"
+          :disabled="scraping"
           required
         />
 
-        <button v-if="!scraping" type="submit">Scrape</button>
-        <button v-else @click.prevent="stopScraping()">Stop</button>
+        <div class="buttons">
+          <button v-show="history.length" @click.prevent="toggleHistory()">
+            History
+          </button>
+
+          <button v-if="!scraping" type="submit">Scrape</button>
+          <button v-else @click.prevent="stopScraping()">Stop</button>
+        </div>
       </form>
+      <div v-show="showHistory" class="history">
+        <span
+          v-for="link in history"
+          class="history-item"
+          @click="chooseHistoryLink(link)"
+        >
+          {{link}}
+        </span>
+      </div>
       <section v-for="message in messages">
         <div class="date">{{ dateIntervalForMessage(message) }}</div>
         <div class="row" v-for="item in message" :key="item.url">
@@ -36,18 +52,25 @@
     const app = new Vue({
       el: "#app",
       data: {
+        url: "",
         scraping: false,
+        showHistory: false,
+        history: [],
         messages: [],
       },
-      mounted() {
+      created() {
         ipcRenderer.on("new-items", (event, message) => {
           this.messages.push(message);
         });
+
+        this.history = JSON.parse(localStorage.getItem("history")) || [];
       },
       methods: {
         startScraping(event) {
           this.scraping = true;
-          ipcRenderer.send("start-scraping", this.$refs.url.value);
+          this.showHistory = false;
+          this.addToHistory(this.url);
+          ipcRenderer.send("start-scraping", this.url);
         },
         stopScraping() {
           this.scraping = false;
@@ -57,6 +80,25 @@
           const lastDate = message[message.length - 1].updated;
           const firstDate = message[0].updated;
           return `${lastDate} - ${firstDate}`;
+        },
+        toggleHistory() {
+          this.showHistory = !this.showHistory;
+        },
+        chooseHistoryLink(link) {
+          if (!this.scraping) {
+            this.url = link;
+          }
+        },
+        addToHistory(link) {
+          if (this.history.includes(link)) {
+            this.history.splice(this.history.indexOf(link), 1);
+          }
+          this.history = [link, ...this.history.slice(0, 4)];
+        },
+      },
+      watch: {
+        history(newValue, oldValue) {
+          localStorage.setItem("history", JSON.stringify(newValue));
         },
       },
     });

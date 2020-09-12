@@ -31,6 +31,7 @@ body {
 
 form {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 150px;
   align-items: center;
@@ -47,7 +48,6 @@ input {
   padding: 3px 10px 3px 10px;
   width: 50%;
   max-width: 500px;
-  margin-right: 15px;
 }
 
 input::placeholder {
@@ -64,10 +64,19 @@ input:focus::placeholder {
   color: white;
 }
 
+.buttons {
+  width: 50%;
+  max-width: 500px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
 button {
   border: 1px solid var(--text-color);
   border-radius: 17px;
   padding: 0 7px;
+  margin: 0 5px;
   font-size: 16px;
   line-height: 2;
   color: inherit;
@@ -81,12 +90,27 @@ button:hover {
   color: var(--text-color-light);
 }
 
-button:focus {
+button:active {
   border: 1px solid var(--input-bg-color);
   color: var(--input-bg-color);
 }
 
 a {
+  color: var(--text-color-light);
+}
+
+.history {
+  display: flex;
+  flex-direction: column;
+}
+
+.history-item {
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.history-item:hover {
   color: var(--text-color-light);
 }
 
