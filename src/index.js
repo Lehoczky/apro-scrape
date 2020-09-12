@@ -17,6 +17,7 @@ if (require("electron-squirrel-startup")) {
 
 let mainWindow = null;
 let tray = null;
+let interval = null;
 const iconPath = path.join(__dirname, "..", "static", "icon.png");
 const scrape = createScraper();
 
@@ -67,6 +68,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     icon: iconPath,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
     },
@@ -83,8 +85,10 @@ const createWindow = () => {
 };
 
 ipcMain.on("start-scraping", (event, page) => {
-  startInterval(60, async () => {
+  interval = startInterval(5, async () => {
     const selling = await scrape(page);
+    console.log(selling.length);
+
     if (selling.length) {
       mainWindow.webContents.send("new-items", selling);
       if (!mainWindow.isVisible()) {
@@ -94,9 +98,10 @@ ipcMain.on("start-scraping", (event, page) => {
   });
 });
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
+ipcMain.on("stop-scraping", (event) => {
+  clearInterval(interval);
+});
+
 app.on("ready", () => {
   createWindow();
   createTray();

@@ -9,9 +9,15 @@
     <div id="app">
       <form @submit.prevent="startScraping($event)">
         <input ref="url" required />
+
+        <button v-if="!scraping" type="submit">Scrape</button>
+        <button v-else @click.prevent="stopScraping()">Stop</button>
       </form>
+      <!-- Temp -->
+      <div>https://hardverapro.hu/aprok/mobil/android/index.html</div>
+      <!--  -->
       <section v-for="message in messages">
-        <div>{{ dateIntervalForMessage(message) }}/div>
+        <div>{{ dateIntervalForMessage(message) }}</div>
         <div v-for="item in message" :key="item.url">
           <a :href="item.url">{{ item.title }}</a>
           <span>{{ item.price }}</span>
@@ -27,23 +33,28 @@
     const app = new Vue({
       el: "#app",
       data: {
+        scraping: false,
         messages: [],
       },
       mounted() {
         ipcRenderer.on("new-items", (event, message) => {
-          console.log(message);
           this.messages.push(message);
         });
       },
       methods: {
         startScraping(event) {
+          this.scraping = true;
           ipcRenderer.send("start-scraping", this.$refs.url.value);
         },
+        stopScraping() {
+          this.scraping = false;
+          ipcRenderer.send("stop-scraping");
+        },
         dateIntervalForMessage(message) {
-          const lastDate = message[message.length - 1].updated
-          const firstDate = message[0].updated
-          return `${lastDate} - ${firstDate}`
-        }
+          const lastDate = message[message.length - 1].updated;
+          const firstDate = message[0].updated;
+          return `${lastDate} - ${firstDate}`;
+        },
       },
     });
   </script>
