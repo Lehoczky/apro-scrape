@@ -16,8 +16,6 @@ exports.createScraper = () => {
   };
 };
 
-// "https://hardverapro.hu/aprok/mobil/android/oneplus_keszulekek/keres.php?stext=6t&stcid=0&selling=1"
-
 const getSellingItems = async (page) => {
   const dom = await JSDOM.fromURL(page);
   return Array.from(dom.window.document.querySelectorAll(".media"))
