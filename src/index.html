@@ -4,11 +4,16 @@
     <meta charset="UTF-8" />
     <title>Apro Scraper</title>
     <link rel="stylesheet" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div class="container" id="app">
-      <form @submit.prevent="startScraping($event)">
+      <form class="row" @submit.prevent="startScraping($event)">
         <input
           v-model="url"
           type="url"
@@ -18,30 +23,56 @@
         />
 
         <div class="buttons">
-          <button v-show="history.length" @click.prevent="toggleHistory()">
+          <button
+            v-show="history.length"
+            class="btn waves-effect waves-light"
+            @click.prevent="toggleHistory()"
+          >
             History
           </button>
 
-          <button v-if="!scraping" type="submit">Scrape</button>
-          <button v-else @click.prevent="stopScraping()">Stop</button>
+          <button
+            v-if="!scraping"
+            class="btn waves-effect waves-light"
+            type="submit"
+          >
+            Scrape
+          </button>
+          <button
+            v-else
+            class="btn waves-effect waves-light"
+            @click.prevent="stopScraping()"
+          >
+            Stop
+          </button>
         </div>
       </form>
-      <div v-show="showHistory" class="history">
-        <span
+      <div v-show="showHistory" class="row collection">
+        <a
           v-for="link in history"
-          class="history-item"
+          class="collection-item small-font waves-effect waves-teal"
           @click="chooseHistoryLink(link)"
         >
           {{link}}
-        </span>
+        </a>
       </div>
-      <section v-for="message in messages">
-        <div class="date">{{ dateIntervalForMessage(message) }}</div>
-        <div class="row" v-for="item in message" :key="item.url">
-          <a :href="item.url">{{ item.title }}</a>
-          <span>{{ item.price }}</span>
-          <span>{{ item.location }}</span>
-          <span>{{ item.updated }}</span>
+      <section class="row" v-for="message in messages">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              {{ dateIntervalForMessage(message) }}
+            </span>
+            <table class="highlight">
+              <tbody>
+                <tr v-for="item in message" :key="item.url">
+                  <td><a :href="item.url">{{ item.title }}</a></td>
+                  <td class="price">{{ item.price }}</td>
+                  <td class="location">{{ item.location }}</td>
+                  <td class="date">{{ item.updated }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </section>
     </div>
