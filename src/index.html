@@ -15,16 +15,19 @@
   <body>
     <div class="container" id="app">
       <div class="row">
-        <form class="col s12" @submit.prevent="startScraping($event)">
+        <form
+          class="col s12"
+          @submit.prevent="startScraping($event)"
+          novalidate
+        >
           <div class="input-field">
             <input
               v-model="url"
-              id="url"
-              type="url"
+              ref="input"
               placeholder="Enter HardverApro URL"
               :disabled="scraping"
-              required
             />
+            <span ref="urlError" class="helper-text"></span>
           </div>
 
           <p class="range-field">
@@ -127,15 +130,37 @@
         M.Range.init(sliders);
       },
       methods: {
-        startScraping(event) {
-          this.scraping = true;
-          this.showHistory = false;
-          this.addToHistory(this.url);
-          ipcRenderer.send("start-scraping", this.url, this.scrapeInterval);
+        async startScraping(event) {
+          const errorMessage = await this.validateUrlInput();
+          if (errorMessage) {
+            this.$refs.input.classList.add("invalid");
+            this.$refs.urlError.dataset.error = errorMessage;
+          } else {
+            this.$refs.input.classList.remove("invalid");
+            this.scraping = true;
+            this.showHistory = false;
+            this.addToHistory(this.url);
+            ipcRenderer.send("start-scraping", this.url, this.scrapeInterval);
+          }
         },
         stopScraping() {
           this.scraping = false;
           ipcRenderer.send("stop-scraping");
+        },
+        async validateUrlInput() {
+          if (this.url == "") {
+            return "Please fill out this field";
+          } else if (!this.url.startsWith("https://hardverapro.hu")) {
+            return "Please provide a link to hardverapro.hu";
+          } else {
+            const response = await fetch(this.url, {
+              method: "HEAD",
+            });
+            if (response.status == 404) {
+              return "The page does not exist, please check the URL";
+            }
+            return "";
+          }
         },
         dateIntervalForMessage(message) {
           const lastDate = message[message.length - 1].updated;
