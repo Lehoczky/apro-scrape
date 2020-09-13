@@ -1,3 +1,11 @@
+.mr-8 {
+  margin-right: 8px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
 .small-font {
   font-size: 12px;
 }
@@ -17,5 +25,21 @@
     bottom: 7% !important;
     left: auto !important;
     right: 5%;
+  }
+}
+
+.fade-from-top-enter-active {
+  animation: fade-from-top 0.1s;
+}
+.fade-from-top-leave-active {
+  animation: fade-from-top 0.1s reverse;
+}
+@keyframes fade-from-top {
+  0% {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }

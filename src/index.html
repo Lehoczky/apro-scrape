@@ -14,7 +14,7 @@
 
   <body>
     <div class="container" id="app">
-      <div class="row">
+      <div class="row mt-20">
         <form
           class="col s12"
           @submit.prevent="startScraping($event)"
@@ -43,10 +43,10 @@
             />
           </p>
 
-          <div class="buttons">
+          <div class="right-align">
             <button
               v-show="history.length"
-              class="btn waves-effect waves-light"
+              class="btn waves-effect waves-light mr-8"
               @click.prevent="toggleHistory()"
             >
               History
@@ -61,7 +61,7 @@
             </button>
             <button
               v-else
-              class="btn waves-effect waves-light"
+              class="btn waves-effect waves-light red"
               @click.prevent="stopScraping()"
             >
               Stop
@@ -70,15 +70,17 @@
         </form>
       </div>
 
-      <div v-show="showHistory" class="row collection">
-        <a
-          v-for="link in history"
-          class="collection-item small-font waves-effect waves-teal"
-          @click="chooseHistoryLink(link)"
-        >
-          {{link}}
-        </a>
-      </div>
+      <transition name="fade-from-top">
+        <div v-show="showHistory" class="row collection">
+          <a
+            v-for="link in history"
+            class="collection-item small-font waves-effect waves-teal"
+            @click="chooseHistoryLink(link)"
+          >
+            {{link}}
+          </a>
+        </div>
+      </transition>
 
       <section v-for="message in messages" class="row">
         <div class="card">
