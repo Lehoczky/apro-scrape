@@ -113,7 +113,7 @@
       },
       created() {
         ipcRenderer.on("new-items", (event, message) => {
-          this.messages.push(message);
+          this.messages = [message, ...this.messages];
         });
 
         this.history = JSON.parse(localStorage.getItem("history")) || [];
