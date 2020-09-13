@@ -95,8 +95,10 @@
                     </a>
                   </td>
                   <td class="price">{{ item.price }}</td>
-                  <td class="location">{{ item.location }}</td>
-                  <td class="date">{{ item.updated }}</td>
+                  <td class="location hide-on-small-only">
+                    {{ item.location }}
+                  </td>
+                  <td class="date hide-on-small-only">{{ item.updated }}</td>
                 </tr>
               </tbody>
             </table>
