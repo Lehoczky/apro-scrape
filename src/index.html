@@ -123,6 +123,16 @@
           this.messages = [message, ...this.messages];
         });
 
+        ipcRenderer.on("scrape-error", (event) => {
+          const message = `Couldn't connect to the server, trying again.<br>
+            You can safely ignore this error if it doesn't persist.`;
+
+          M.toast({
+            html: message,
+            displayLength: 10000,
+          });
+        });
+
         this.history = JSON.parse(localStorage.getItem("history")) || [];
       },
       mounted() {

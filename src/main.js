@@ -7,8 +7,11 @@ const {
   Notification,
 } = require("electron");
 const path = require("path");
+const unhandled = require("electron-unhandled");
 
 const { createScraper } = require("./scrape");
+
+unhandled();
 
 require("electron-reload")(__dirname, {
   electron: path.join(__dirname, "..", "node_modules", ".bin", "electron"),
@@ -42,7 +45,7 @@ const createTray = () => {
       },
     },
   ]);
-  tray.setToolTip("This is my application.");
+  tray.setToolTip("Apro Scrape");
   tray.setContextMenu(contextMenu);
 
   tray.on("click", () => {
@@ -90,14 +93,18 @@ const createWindow = () => {
 
 ipcMain.on("start-scraping", (event, page, seconds) => {
   interval = startInterval(seconds, async () => {
-    const selling = await scrape(page);
-    console.log(selling.length);
+    try {
+      const selling = await scrape(page);
+      console.log(selling.length);
 
-    if (selling.length) {
-      mainWindow.webContents.send("new-items", selling);
-      if (!mainWindow.isVisible()) {
-        showNewItemsNotification(selling);
+      if (selling.length) {
+        mainWindow.webContents.send("new-items", selling);
+        if (!mainWindow.isVisible()) {
+          showNewItemsNotification(selling);
+        }
       }
+    } catch (error) {
+      mainWindow.webContents.send("scrape-error");
     }
   });
 });

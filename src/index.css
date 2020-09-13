@@ -10,3 +10,12 @@
 .date {
   width: 90px;
 }
+
+@media (min-width: 601px) {
+  #toast-container {
+    top: auto !important;
+    bottom: 7% !important;
+    left: auto !important;
+    right: 5%;
+  }
+}

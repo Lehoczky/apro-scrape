@@ -48,6 +48,7 @@
   "dependencies": {
     "electron-reload": "^1.5.0",
     "electron-squirrel-startup": "^1.0.0",
+    "electron-unhandled": "^3.0.2",
     "jsdom": "^16.4.0"
   },
   "devDependencies": {
