@@ -86,7 +86,11 @@
             <table class="highlight">
               <tbody>
                 <tr v-for="item in message" :key="item.url">
-                  <td><a :href="item.url">{{ item.title }}</a></td>
+                  <td>
+                    <a :href="item.url" @click.prevent="openExternal(item.url)">
+                      {{ item.title }}
+                    </a>
+                  </td>
                   <td class="price">{{ item.price }}</td>
                   <td class="location">{{ item.location }}</td>
                   <td class="date">{{ item.updated }}</td>
@@ -99,7 +103,7 @@
     </div>
   </body>
   <script>
-    const { ipcRenderer } = require("electron");
+    const { ipcRenderer, shell } = require("electron");
 
     const app = new Vue({
       el: "#app",
@@ -151,6 +155,9 @@
             this.history.splice(this.history.indexOf(link), 1);
           }
           this.history = [link, ...this.history.slice(0, 4)];
+        },
+        openExternal(url) {
+          shell.openExternal(url);
         },
       },
       watch: {
