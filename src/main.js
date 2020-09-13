@@ -88,8 +88,8 @@ const createWindow = () => {
   });
 };
 
-ipcMain.on("start-scraping", (event, page) => {
-  interval = startInterval(5, async () => {
+ipcMain.on("start-scraping", (event, page, seconds) => {
+  interval = startInterval(seconds, async () => {
     const selling = await scrape(page);
     console.log(selling.length);
 

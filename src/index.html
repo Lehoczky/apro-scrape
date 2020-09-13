@@ -11,42 +11,62 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
+
   <body>
     <div class="container" id="app">
-      <form class="row" @submit.prevent="startScraping($event)">
-        <input
-          v-model="url"
-          type="url"
-          placeholder="Enter HardverApro URL"
-          :disabled="scraping"
-          required
-        />
+      <div class="row">
+        <form class="col s12" @submit.prevent="startScraping($event)">
+          <div class="input-field">
+            <input
+              v-model="url"
+              id="url"
+              type="url"
+              placeholder="Enter HardverApro URL"
+              :disabled="scraping"
+              required
+            />
+          </div>
 
-        <div class="buttons">
-          <button
-            v-show="history.length"
-            class="btn waves-effect waves-light"
-            @click.prevent="toggleHistory()"
-          >
-            History
-          </button>
+          <p class="range-field">
+            <label for="range">Scarping interval (seconds)</label>
+            <input
+              v-model="scrapeInterval"
+              id="interval"
+              type="range"
+              min="5"
+              max="600"
+              step="5"
+              :disabled="scraping"
+            />
+          </p>
 
-          <button
-            v-if="!scraping"
-            class="btn waves-effect waves-light"
-            type="submit"
-          >
-            Scrape
-          </button>
-          <button
-            v-else
-            class="btn waves-effect waves-light"
-            @click.prevent="stopScraping()"
-          >
-            Stop
-          </button>
-        </div>
-      </form>
+          <div class="buttons">
+            <button
+              v-show="history.length"
+              class="btn waves-effect waves-light"
+              @click.prevent="toggleHistory()"
+            >
+              History
+            </button>
+
+            <button
+              v-if="!scraping"
+              class="btn waves-effect waves-light"
+              type="submit"
+            >
+              Scrape
+            </button>
+            <button
+              v-else
+              class="btn waves-effect waves-light"
+              @click.prevent="stopScraping()"
+            >
+              Stop
+            </button>
+          </div>
+        </form>
+      </div>
+
       <div v-show="showHistory" class="row collection">
         <a
           v-for="link in history"
@@ -56,7 +76,8 @@
           {{link}}
         </a>
       </div>
-      <section class="row" v-for="message in messages">
+
+      <section v-for="message in messages" class="row">
         <div class="card">
           <div class="card-content">
             <span class="card-title">
@@ -85,6 +106,7 @@
       data: {
         url: "",
         scraping: false,
+        scrapeInterval: 60,
         showHistory: false,
         history: [],
         messages: [],
@@ -96,12 +118,16 @@
 
         this.history = JSON.parse(localStorage.getItem("history")) || [];
       },
+      mounted() {
+        const sliders = document.querySelectorAll("input[type=range]");
+        M.Range.init(sliders);
+      },
       methods: {
         startScraping(event) {
           this.scraping = true;
           this.showHistory = false;
           this.addToHistory(this.url);
-          ipcRenderer.send("start-scraping", this.url);
+          ipcRenderer.send("start-scraping", this.url, this.scrapeInterval);
         },
         stopScraping() {
           this.scraping = false;
