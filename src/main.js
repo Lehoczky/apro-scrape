@@ -1,15 +1,6 @@
-const {
-  app,
-  BrowserWindow,
-  ipcMain,
-  Tray,
-  Menu,
-  Notification,
-} = require("electron");
+const { app, BrowserWindow, Tray, Menu } = require("electron");
 const path = require("path");
 const unhandled = require("electron-unhandled");
-
-const { createScraper } = require("./scrape");
 
 unhandled();
 
@@ -24,9 +15,7 @@ if (require("electron-squirrel-startup")) {
 
 let mainWindow = null;
 let tray = null;
-let interval = null;
 const iconPath = path.join(__dirname, "..", "static", "icon.png");
-const scrape = createScraper();
 
 const createTray = () => {
   tray = new Tray(iconPath);
@@ -53,23 +42,6 @@ const createTray = () => {
   });
 };
 
-const showNewItemsNotification = (items) => {
-  const notification = new Notification();
-  notification.on("click", () => {
-    mainWindow.show();
-  });
-
-  if (items.length == 1) {
-    const item = items[0];
-    notification.title = "New item is available";
-    notification.body = `${item.title} - ${item.price}`;
-  } else if (items.length > 1) {
-    notification.title = "New items are available";
-    notification.body = `${items.length} new items found!`;
-  }
-  notification.show();
-};
-
 const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
@@ -79,10 +51,10 @@ const createWindow = () => {
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
     },
   });
 
-  // and load the index.html of the app.
   mainWindow.loadFile(path.join(__dirname, "index.html"));
 
   mainWindow.webContents.openDevTools();
@@ -91,28 +63,6 @@ const createWindow = () => {
     mainWindow.hide();
   });
 };
-
-ipcMain.on("start-scraping", (event, page, seconds) => {
-  interval = startInterval(seconds, async () => {
-    try {
-      const selling = await scrape(page);
-      console.log(selling.length);
-
-      if (selling.length) {
-        mainWindow.webContents.send("new-items", selling);
-        if (!mainWindow.isVisible()) {
-          showNewItemsNotification(selling);
-        }
-      }
-    } catch (error) {
-      mainWindow.webContents.send("scrape-error");
-    }
-  });
-});
-
-ipcMain.on("stop-scraping", (event) => {
-  clearInterval(interval);
-});
 
 app.on("ready", () => {
   createWindow();
@@ -135,8 +85,3 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
-const startInterval = (seconds, callback) => {
-  callback();
-  return setInterval(callback, seconds * 1000);
-};

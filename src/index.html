@@ -110,7 +110,17 @@
     </div>
   </body>
   <script>
+    const remote = require("electron").remote;
     const { ipcRenderer, shell } = require("electron");
+    const { createScraper } = remote.require("./scrape");
+
+    const mainWindow = remote.getCurrentWindow();
+    const scrape = createScraper();
+
+    const startInterval = (seconds, callback) => {
+      callback();
+      return setInterval(callback, seconds * 1000);
+    };
 
     const app = new Vue({
       el: "#app",
@@ -121,22 +131,9 @@
         showHistory: false,
         history: [],
         messages: [],
+        interval: undefined,
       },
       created() {
-        ipcRenderer.on("new-items", (event, message) => {
-          this.messages = [message, ...this.messages];
-        });
-
-        ipcRenderer.on("scrape-error", (event) => {
-          const message = `Couldn't connect to the server, trying again.<br>
-            You can safely ignore this error if it doesn't persist.`;
-
-          M.toast({
-            html: message,
-            displayLength: 10000,
-          });
-        });
-
         this.history = JSON.parse(localStorage.getItem("history")) || [];
       },
       mounted() {
@@ -154,12 +151,36 @@
             this.scraping = true;
             this.showHistory = false;
             this.addToHistory(this.url);
-            ipcRenderer.send("start-scraping", this.url, this.scrapeInterval);
+
+            this.interval = startInterval(this.scrapeInterval, async () => {
+              const items = await scrape(this.url);
+              console.log(items.length);
+              if (items.length) {
+                this.messages = [items, ...this.messages];
+                if (true || !mainWindow.isVisible()) {
+                  const title =
+                    items.length == 1
+                      ? "New item is available"
+                      : "New items are available";
+                  const body =
+                    items.length == 1
+                      ? `${items[0].title} - ${items[0].price}`
+                      : `${items.length} new items found!`;
+
+                  const myNotification = new Notification(title, { body });
+
+                  myNotification.onclick = () => {
+                    mainWindow.show();
+                  };
+                }
+              }
+            });
           }
         },
         stopScraping() {
           this.scraping = false;
-          ipcRenderer.send("stop-scraping");
+          clearInterval(this.interval);
+          this.interval = undefined;
         },
         async validateUrlInput() {
           if (this.url == "") {
