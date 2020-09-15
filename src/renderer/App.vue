@@ -36,18 +36,7 @@
         </div>
       </form>
     </div>
-
-    <transition name="fade-from-top">
-      <div v-show="showHistory" class="row collection">
-        <a
-          v-for="link in history"
-          :key="link"
-          class="collection-item small-font waves-effect waves-teal"
-          @click="chooseHistoryLink(link)"
-        >{{link}}</a>
-      </div>
-    </transition>
-
+    <history-list v-show="showHistory" :history="history" @select="chooseHistoryLink($event)"></history-list>
     <message-list class="row" :messages="messages"></message-list>
   </div>
 </template>
@@ -57,6 +46,7 @@ import { remote } from "electron";
 import { ipcRenderer } from "electron";
 import M from "materialize-css";
 
+import HistoryList from "./components/HistoryList.vue";
 import MessageList from "./components/MessageList.vue";
 import { createNewItemNotification } from "./notification.js";
 
@@ -70,6 +60,7 @@ const startInterval = (seconds, callback) => {
 export default {
   name: "App",
   components: {
+    HistoryList,
     MessageList,
   },
   data() {
@@ -165,25 +156,5 @@ export default {
 
 .mt-20 {
   margin-top: 20px;
-}
-
-.small-font {
-  font-size: 12px;
-}
-
-.fade-from-top-enter-active {
-  animation: fade-from-top 0.1s;
-}
-.fade-from-top-leave-active {
-  animation: fade-from-top 0.1s reverse;
-}
-@keyframes fade-from-top {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
 }
 </style>
