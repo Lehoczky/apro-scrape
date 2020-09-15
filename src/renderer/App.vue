@@ -2,11 +2,7 @@
   <div class="container" id="app">
     <div class="row mt-20">
       <form class="col s12" @submit.prevent="startScraping($event)" novalidate>
-        <div class="input-field">
-          <input v-model="url" ref="input" placeholder="Enter HardverApro URL" :disabled="scraping" />
-          <span ref="urlError" class="helper-text"></span>
-        </div>
-
+        <scraping-form-input v-model="url" :disabled="scraping" :error="error"></scraping-form-input>
         <scraping-form-slider v-model="scrapeInterval" :disabled="scraping"></scraping-form-slider>
 
         <div class="right-align">
@@ -34,6 +30,7 @@
 import { remote } from "electron";
 import { ipcRenderer } from "electron";
 
+import ScrapingFormInput from "./components/ScrapingFormInput.vue";
 import ScrapingFormSlider from "./components/ScrapingFormSlider.vue";
 import HistoryList from "./components/HistoryList.vue";
 import MessageList from "./components/MessageList.vue";
@@ -49,6 +46,7 @@ const startInterval = (seconds, callback) => {
 export default {
   name: "App",
   components: {
+    ScrapingFormInput,
     ScrapingFormSlider,
     HistoryList,
     MessageList,
@@ -60,6 +58,7 @@ export default {
       scrapeInterval: 60,
       showHistory: false,
       history: [],
+      error: "",
       messages: [],
       interval: undefined,
     };
@@ -79,12 +78,8 @@ export default {
   },
   methods: {
     async startScraping(event) {
-      const errorMessage = await this.validateUrlInput();
-      if (errorMessage) {
-        this.$refs.input.classList.add("invalid");
-        this.$refs.urlError.dataset.error = errorMessage;
-      } else {
-        this.$refs.input.classList.remove("invalid");
+      this.error = await this.validateUrlInput();
+      if (!this.error) {
         this.scraping = true;
         this.showHistory = false;
         this.addToHistory(this.url);
