@@ -6,7 +6,7 @@
       :class="{invalid: error !== ''}"
       placeholder="Enter HardverApro URL"
     />
-    <span ref="urlError" :data-error="error" class="helper-text"></span>
+    <span :data-error="error" class="helper-text"></span>
   </div>
 </template>
 

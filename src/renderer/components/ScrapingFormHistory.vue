@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: "HistoryList",
+  name: "ScrapingFormHistory",
   props: {
     history: {
       type: Array,
