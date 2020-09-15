@@ -1,51 +1,27 @@
 "use strict";
 
-import { app, BrowserWindow, Tray, Menu, protocol, ipcMain } from "electron";
+import { app, BrowserWindow, protocol, ipcMain } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
-import path from "path";
+
 import unhandled from "electron-unhandled";
 import axios from "axios";
 
+import { iconPath } from "./icon";
+import { createTray } from "./tray";
 import { createScraper } from "./scrape";
 const scrape = createScraper();
 
 unhandled();
 
 const isDevelopment = process.env.NODE_ENV !== "production";
-const iconPath = path.join(__static, "icon.png");
+
 let mainWindow;
-let tray;
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
-
-const createTray = () => {
-  tray = new Tray(iconPath);
-  const contextMenu = Menu.buildFromTemplate([
-    {
-      label: "Show",
-      click: () => {
-        mainWindow.show();
-      },
-    },
-    {
-      label: "Quit",
-      click: () => {
-        mainWindow.destroy();
-        app.quit();
-      },
-    },
-  ]);
-  tray.setToolTip("Apro Scrape");
-  tray.setContextMenu(contextMenu);
-
-  tray.on("click", () => {
-    mainWindow.show();
-  });
-};
 
 function createWindow() {
   mainWindow = new BrowserWindow({
