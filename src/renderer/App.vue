@@ -48,33 +48,16 @@
       </div>
     </transition>
 
-    <section v-for="(message, index) in messages" :key="index" class="row">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">{{ dateIntervalForMessage(message) }}</span>
-          <table class="highlight">
-            <tbody>
-              <tr v-for="item in message" :key="item.url">
-                <td>
-                  <a :href="item.url" @click.prevent="openExternal(item.url)">{{ item.title }}</a>
-                </td>
-                <td class="price">{{ item.price }}</td>
-                <td class="location hide-on-small-only">{{ item.location }}</td>
-                <td class="date hide-on-small-only">{{ item.updated }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <message-list class="row" :messages="messages"></message-list>
   </div>
 </template>
 
-<script>
+<script >
 import { remote } from "electron";
-import { ipcRenderer, shell } from "electron";
+import { ipcRenderer } from "electron";
 import M from "materialize-css";
 
+import MessageList from "./components/MessageList.vue";
 import { createNewItemNotification } from "./notification.js";
 
 const mainWindow = remote.getCurrentWindow();
@@ -86,6 +69,9 @@ const startInterval = (seconds, callback) => {
 
 export default {
   name: "App",
+  components: {
+    MessageList,
+  },
   data() {
     return {
       url: "",
@@ -149,11 +135,6 @@ export default {
         return "";
       }
     },
-    dateIntervalForMessage(message) {
-      const lastDate = message[message.length - 1].updated;
-      const firstDate = message[0].updated;
-      return `${lastDate} - ${firstDate}`;
-    },
     toggleHistory() {
       this.showHistory = !this.showHistory;
     },
@@ -167,9 +148,6 @@ export default {
         this.history.splice(this.history.indexOf(link), 1);
       }
       this.history = [link, ...this.history.slice(0, 4)];
-    },
-    openExternal(url) {
-      shell.openExternal(url);
     },
   },
   watch: {
@@ -191,24 +169,6 @@ export default {
 
 .small-font {
   font-size: 12px;
-}
-
-.price,
-.location {
-  width: 100px;
-}
-
-.date {
-  width: 90px;
-}
-
-@media (min-width: 601px) {
-  #toast-container {
-    top: auto !important;
-    bottom: 7% !important;
-    left: auto !important;
-    right: 5%;
-  }
 }
 
 .fade-from-top-enter-active {
