@@ -7,18 +7,7 @@
           <span ref="urlError" class="helper-text"></span>
         </div>
 
-        <p class="range-field">
-          <label for="range">Scarping interval (seconds)</label>
-          <input
-            v-model="scrapeInterval"
-            id="interval"
-            type="range"
-            min="5"
-            max="600"
-            step="5"
-            :disabled="scraping"
-          />
-        </p>
+        <scraping-form-slider v-model="scrapeInterval" :disabled="scraping"></scraping-form-slider>
 
         <div class="right-align">
           <button
@@ -44,8 +33,8 @@
 <script >
 import { remote } from "electron";
 import { ipcRenderer } from "electron";
-import M from "materialize-css";
 
+import ScrapingFormSlider from "./components/ScrapingFormSlider.vue";
 import HistoryList from "./components/HistoryList.vue";
 import MessageList from "./components/MessageList.vue";
 import { createNewItemNotification } from "./notification.js";
@@ -60,6 +49,7 @@ const startInterval = (seconds, callback) => {
 export default {
   name: "App",
   components: {
+    ScrapingFormSlider,
     HistoryList,
     MessageList,
   },
@@ -86,10 +76,6 @@ export default {
         }
       }
     });
-  },
-  mounted() {
-    const sliders = document.querySelectorAll("input[type=range]");
-    M.Range.init(sliders);
   },
   methods: {
     async startScraping(event) {
