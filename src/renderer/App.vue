@@ -73,6 +73,7 @@
 <script>
 import { remote } from "electron";
 import { ipcRenderer, shell } from "electron";
+import M from "materialize-css";
 
 const mainWindow = remote.getCurrentWindow();
 

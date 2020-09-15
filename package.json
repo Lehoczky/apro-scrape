@@ -12,6 +12,7 @@
     "axios": "^0.20.0",
     "electron-unhandled": "^3.0.2",
     "jsdom": "^16.4.0",
+    "materialize-css": "^1.0.0",
     "vue": "^2.6.11"
   },
   "devDependencies": {
