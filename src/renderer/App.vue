@@ -75,6 +75,8 @@ import { remote } from "electron";
 import { ipcRenderer, shell } from "electron";
 import M from "materialize-css";
 
+import { createNewItemNotification } from "./notification.js";
+
 const mainWindow = remote.getCurrentWindow();
 
 const startInterval = (seconds, callback) => {
@@ -103,20 +105,7 @@ export default {
       if (items.length) {
         this.messages = [items, ...this.messages];
         if (!mainWindow.isVisible()) {
-          const title =
-            items.length == 1
-              ? "New item is available"
-              : "New items are available";
-          const body =
-            items.length == 1
-              ? `${items[0].title} - ${items[0].price}`
-              : `${items.length} new items found!`;
-
-          const myNotification = new Notification(title, { body });
-
-          myNotification.onclick = () => {
-            mainWindow.show();
-          };
+          createNewItemNotification(items, mainWindow);
         }
       }
     });
