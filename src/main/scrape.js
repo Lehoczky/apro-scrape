@@ -1,6 +1,6 @@
-const { JSDOM } = require("jsdom");
+import { JSDOM } from "jsdom";
 
-exports.createScraper = () => {
+export const createScraper = () => {
   let lastItem = null;
   return async (page) => {
     let items = await getSellingItems(page);

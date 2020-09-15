@@ -1,6 +1,6 @@
-const { JSDOM } = require("jsdom");
+import { JSDOM } from "jsdom";
 
-const { createScraper } = require("../src/scrape");
+import { createScraper } from "@/main/scrape.js";
 
 test("return empty list when no .media element is present", async () => {
   const scrape = createScraper();
