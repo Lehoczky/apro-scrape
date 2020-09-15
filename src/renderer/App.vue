@@ -44,8 +44,8 @@ export default {
     });
   },
   methods: {
-    async startScraping(event) {
-      this.interval = startInterval(event.scrapeInterval, async () => {
+    startScraping(event) {
+      this.interval = startInterval(event.scrapeInterval, () => {
         ipcRenderer.send("start-scraping", event.url);
       });
     },
