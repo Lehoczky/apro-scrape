@@ -15,7 +15,8 @@ module.exports = {
           target: "AppImage",
           category: "Network",
           icon: "./icons"
-        }
+        },
+        publish: ["github"]
       }
     }
   }

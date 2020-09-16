@@ -11,10 +11,15 @@
   "private": true,
   "scripts": {
     "build": "vue-cli-service electron:build",
-    "serve": "vue-cli-service electron:serve",
-    "test:unit": "vue-cli-service test:unit"
+    "start": "vue-cli-service electron:serve",
+    "test:unit": "vue-cli-service test:unit",
+    "publish": "vue-cli-service electron:build -p always"
   },
   "main": "background.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lehoczky/apro-scrape"
+  },
   "dependencies": {
     "axios": "^0.20.0",
     "electron-unhandled": "^3.0.2",
