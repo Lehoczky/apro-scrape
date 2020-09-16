@@ -1,5 +1,13 @@
 module.exports = {
   configureWebpack: {},
+  chainWebpack: config => {
+    config.plugin("html").tap(args => [
+      {
+        ...args[0],
+        title: "Apro Scrape"
+      }
+    ]);
+  },
   pluginOptions: {
     electronBuilder: {
       chainWebpackRendererProcess: (config) => {
