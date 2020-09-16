@@ -1,7 +1,13 @@
 {
   "name": "apro-scrape",
   "productName": "Apro Scrape",
+  "description": "Helpful web scraper for hardverapro.hu",
   "version": "0.1.0",
+  "author": {
+    "name": "Zoltan Lehoczky",
+    "email": "ifjlehoczkyzoltan@gmail.com",
+    "url": "https://github.com/Lehoczky"
+  },
   "private": true,
   "scripts": {
     "build": "vue-cli-service electron:build",

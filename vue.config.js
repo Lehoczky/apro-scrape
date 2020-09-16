@@ -1,16 +1,8 @@
 module.exports = {
   configureWebpack: {},
-  chainWebpack: config => {
-    config.plugin("html").tap(args => [
-      {
-        ...args[0],
-        title: "Apro Scrape"
-      }
-    ]);
-  },
   pluginOptions: {
     electronBuilder: {
-      chainWebpackRendererProcess: (config) => {
+      chainWebpackRendererProcess: config => {
         // Add custom entry point
         config.entry("app").clear();
         config.entry("app").add("./src/renderer/main.js");
@@ -18,6 +10,13 @@ module.exports = {
       mainProcessFile: "src/main/background.js",
       nodeIntegration: true,
       externals: ["jsdom"],
-    },
-  },
+      builderOptions: {
+        linux: {
+          target: "AppImage",
+          category: "Network",
+          icon: "./icons"
+        }
+      }
+    }
+  }
 };
