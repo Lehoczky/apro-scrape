@@ -11,10 +11,15 @@ module.exports = {
       nodeIntegration: true,
       externals: ["jsdom"],
       builderOptions: {
+        win: {
+          target: "nsis"
+        },
         linux: {
           target: "AppImage",
-          category: "Network",
-          icon: "./icons"
+          category: "Network"
+        },
+        nsis: {
+          deleteAppDataOnUninstall: "true"
         },
         publish: ["github"]
       }
