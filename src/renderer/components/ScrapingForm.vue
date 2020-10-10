@@ -5,6 +5,8 @@
         <scraping-form-input v-model="url" :disabled="scraping" :error="error"></scraping-form-input>
         <scraping-form-slider v-model="scrapeInterval" :disabled="scraping"></scraping-form-slider>
 
+        <scraping-form-load v-if="scraping" class="left"></scraping-form-load>
+
         <div class="right-align">
           <button
             v-show="history.length"
@@ -30,6 +32,7 @@ import { ipcRenderer } from "electron";
 
 import ScrapingFormInput from "./ScrapingFormInput.vue";
 import ScrapingFormSlider from "./ScrapingFormSlider.vue";
+import ScrapingFormLoad from "./ScrapingFormLoad.vue";
 import ScrapingFormHistory from "./ScrapingFormHistory.vue";
 
 export default {
@@ -38,6 +41,7 @@ export default {
     ScrapingFormInput,
     ScrapingFormSlider,
     ScrapingFormHistory,
+    ScrapingFormLoad
   },
   data() {
     return {
