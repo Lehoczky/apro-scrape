@@ -8,6 +8,7 @@ module.exports = {
         config.entry("app").add("./src/renderer/main.js");
       },
       mainProcessFile: "src/main/background.js",
+      mainProcessWatch: ["src/main/"],
       nodeIntegration: true,
       externals: ["jsdom"],
       builderOptions: {
