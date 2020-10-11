@@ -10,7 +10,7 @@
         <div class="right-align">
           <button
             v-show="history.length"
-            class="btn waves-effect waves-light mr-8"
+            class="btn waves-effect waves-light blue-grey mr-8"
             @click.prevent="toggleHistory()"
           >History</button>
 
