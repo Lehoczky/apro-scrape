@@ -1,7 +1,7 @@
 <template>
   <div class="loading-message ml-10">
     <load-indicator></load-indicator>
-    <span class="ml-10">Scraping in progress</span>
+    <span class="hide-on-extra-small-only ml-10">Scraping in progress</span>
   </div>
 </template>
 
@@ -20,5 +20,11 @@ export default {
 .loading-message {
   display: flex;
   align-items: center;
+}
+
+@media (max-width: 350px) {
+  .hide-on-extra-small-only {
+    display: none !important;
+  }
 }
 </style>
