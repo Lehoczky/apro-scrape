@@ -9,13 +9,13 @@
 
         <div class="right-align">
           <button
-            v-show="history.length"
+            v-show="history.length && !scraping"
             class="btn waves-effect waves-light blue-grey mr-8"
             @click.prevent="toggleHistory()"
           >History</button>
 
-          <button v-if="!scraping" class="btn waves-effect waves-light" type="submit">Scrape</button>
-          <button v-else class="btn waves-effect waves-light red" @click.prevent="onStop()">Stop</button>
+          <button v-if="!scraping" class="btn scrape-btn waves-effect waves-light" type="submit">Scrape</button>
+          <button v-else class="btn scrape-btn waves-effect waves-light red" @click.prevent="onStop()">Stop</button>
         </div>
       </form>
     </div>
@@ -109,3 +109,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.scrape-btn {
+  width: 84px;
+}
+</style>

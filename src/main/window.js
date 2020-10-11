@@ -10,7 +10,7 @@ export const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    minWidth: 250,
+    minWidth: 310,
     icon: iconPath,
     autoHideMenuBar: true,
     webPreferences: {
