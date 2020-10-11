@@ -2,6 +2,7 @@
 
 import { app, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
+import { autoUpdater } from "electron-updater"
 import { iconPath } from "./icon";
 
 let mainWindow;
@@ -27,6 +28,7 @@ export const createWindow = () => {
   } else {
     createProtocol("app");
     mainWindow.loadURL("app://./index.html");
+    autoUpdater.checkForUpdatesAndNotify();
   }
 
   mainWindow.on("minimize", mainWindow.hide);
