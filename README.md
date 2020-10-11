@@ -1,4 +1,4 @@
-# AproScrape <img src="public/icon.png" alt="logo" width="20">
+# AproScrape <img src="public/icon.png" alt="logo" width="40">
 
 Get instantly notified for new items you are interested in!
 
@@ -24,19 +24,19 @@ Go to hardverapro.hu, navigate to a topic you are interested in, like the Androi
 
 In this example I will also use the detailed search option to only see items from Budapest.
 
-![Android page on hardverapro](images/hardverapro.png)
+<img src="images/hardverapro.png" alt="Android page on hardverapro" width="650">
 
 Now hit search, and copy the URL from your browser, then open AproScrape
 and paste the link to the input field on the top.
 
-![AproScrape main window](images/main-window.png)
+<img src="images/main-window.png" alt="AproScrape main window" width="650">
 
 Press the `SCRAPE` button, and you should see deals from the website.
 
 Here comes the fun part: If you minimize the window, it will hide to the taskbar,
 and display a notification when it finds new items!
 
-![AproScrape main window](images/notification.png)
+<img src="images/notification.png" alt="AproScrape main window">
 
 Open the app by clicking on the notification or the icon in the taksbar, and click
 on the item's link. It will navigate you straight to HardverApro and you can contact
