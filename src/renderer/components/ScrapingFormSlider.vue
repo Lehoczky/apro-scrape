@@ -1,7 +1,16 @@
 <template>
   <p class="range-field">
     <label for="r">Scarping interval (seconds)</label>
-    <input v-model="interval" id="r" type="range" min="5" max="600" step="5" :disabled="disabled" />
+    <input
+      v-model="interval"
+      id="r"
+      :class="{ disabled }"
+      type="range"
+      min="5"
+      max="600"
+      step="5"
+      :disabled="disabled"
+    />
   </p>
 </template>
 
@@ -27,3 +36,9 @@ export default {
   },
 };
 </script>
+
+<style>
+.disabled::-webkit-slider-thumb {
+  background-color: #e2e2e2 !important;
+}
+</style>
