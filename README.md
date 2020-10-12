@@ -2,8 +2,8 @@
 
 Get instantly notified for new items you are interested in!
 
-Have you ever browsed HardverApro, found a good deal and wrote to the seller just to
-find out someone has already bought the item?  
+Have you ever browsed [HardverApro](http://hardverapro.hu/index.html),
+found a good deal and wrote to the seller just to find out someone has already bought the item?  
 If you feel like you have to be on the site 24/7 to get something with a very good price,
 this app is for you!
 
