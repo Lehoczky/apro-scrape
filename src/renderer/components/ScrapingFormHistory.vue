@@ -4,7 +4,7 @@
       <a
         v-for="link in history"
         :key="link"
-        class="collection-item small-font waves-effect waves-teal"
+        class="collection-item small-font waves-effect waves-teal truncate"
         @click="$emit('select', link)"
       >{{link}}</a>
     </div>
