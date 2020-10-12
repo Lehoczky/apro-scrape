@@ -16,7 +16,7 @@ so you can contact the seller as fast as you can.
 ## Installation
 
 Dowload the latest version from the [releases](https://github.com/Lehoczky/apro-scrape/releases) page.
-Installers are available for Windows and Linux (OSX support will come eventually).
+Installers are available for all platforms (Windows, Linux, OSX).
 
 ## Usage
 
