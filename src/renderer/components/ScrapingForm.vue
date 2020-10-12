@@ -74,7 +74,7 @@ export default {
       this.scraping = false;
       this.$emit("stop");
     },
-    async validateUrlInput() {
+    validateUrlInput() {
       if (this.url == "") {
         return "Please fill out this field";
       } else if (!this.url.startsWith("https://hardverapro.hu")) {
