@@ -1,0 +1,39 @@
+{
+  "root": true,
+  "env": {
+    "node": true
+  },
+  "extends": ["plugin:vue/essential", "@vue/standard"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "globals": {
+    "__static": "readonly"
+  },
+  "rules": {
+    "no-debugger": "warn",
+    "arrow-parens": [1, "as-needed"],
+    "semi": [1, "always"],
+    "quotes": [1, "double", "avoid-escape"],
+    "comma-dangle": [1, "always-multiline"],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "never",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": [
+        "**/__tests__/*.{j,t}s?(x)",
+        "**/tests/unit/**/*.spec.{j,t}s?(x)"
+      ],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
+}

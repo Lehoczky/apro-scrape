@@ -6,8 +6,7 @@
 </template>
 
 <script >
-import { remote } from "electron";
-import { ipcRenderer } from "electron";
+import { remote, ipcRenderer } from "electron";
 
 import ScrapingForm from "./components/ScrapingForm.vue";
 import MessageList from "./components/MessageList.vue";

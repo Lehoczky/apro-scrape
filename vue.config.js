@@ -13,17 +13,17 @@ module.exports = {
       externals: ["jsdom"],
       builderOptions: {
         win: {
-          target: "nsis"
+          target: "nsis",
         },
         linux: {
           target: "AppImage",
-          category: "Network"
+          category: "Network",
         },
         nsis: {
-          deleteAppDataOnUninstall: "true"
+          deleteAppDataOnUninstall: "true",
         },
-        publish: ["github"]
-      }
-    }
-  }
+        publish: ["github"],
+      },
+    },
+  },
 };

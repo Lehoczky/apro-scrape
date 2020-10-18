@@ -41,7 +41,7 @@ export default {
     ScrapingFormInput,
     ScrapingFormSlider,
     ScrapingFormHistory,
-    ScrapingFormLoad
+    ScrapingFormLoad,
   },
   data() {
     return {
@@ -75,7 +75,7 @@ export default {
       this.$emit("stop");
     },
     validateUrlInput() {
-      if (this.url == "") {
+      if (this.url === "") {
         return "Please fill out this field";
       } else if (!this.url.startsWith("https://hardverapro.hu")) {
         return "Please provide a link to hardverapro.hu";

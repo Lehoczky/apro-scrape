@@ -5,7 +5,7 @@ import { createScraper } from "@/main/scrape.js";
 test("return empty list when no .media element is present", async () => {
   const scrape = createScraper();
 
-  const dom = new JSDOM(`<body></body>`);
+  const dom = new JSDOM("<body></body>");
   jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom);
 
   const items = await scrape("");

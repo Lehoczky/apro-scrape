@@ -10,6 +10,7 @@
   },
   "private": true,
   "scripts": {
+    "lint": "vue-cli-service lint",
     "build": "vue-cli-service electron:build",
     "start": "vue-cli-service electron:serve",
     "test": "vue-cli-service test:unit",
@@ -28,12 +29,20 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@vue/cli-plugin-eslint": "^4.5.7",
     "@vue/cli-plugin-unit-jest": "^4.5.7",
     "@vue/cli-service": "^4.5.7",
+    "@vue/eslint-config-standard": "^5.1.2",
     "@vue/test-utils": "^1.0.3",
     "electron": "9.0.0",
     "electron-devtools-installer": "^3.1.0",
     "electron-icon-builder": "^1.0.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.2.2",
     "vue-cli-plugin-electron-builder": "^2.0.0-rc.4",
     "vue-template-compiler": "^2.6.11"
   },

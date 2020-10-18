@@ -2,7 +2,7 @@
 
 import { app, BrowserWindow } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { autoUpdater } from "electron-updater"
+import { autoUpdater } from "electron-updater";
 import { iconPath } from "./icon";
 
 let mainWindow;
@@ -18,8 +18,8 @@ export const createWindow = () => {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
-      enableRemoteModule: true
-    }
+      enableRemoteModule: true,
+    },
   });
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {

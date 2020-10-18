@@ -14,6 +14,6 @@
 
 <script>
 export default {
-  name: "LoadIndicator"
-}
+  name: "LoadIndicator",
+};
 </script>

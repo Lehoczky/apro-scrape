@@ -16,9 +16,7 @@ npm install
 
 ## Building the app locally
 
-If you don't trust the released binaries, you can easily build the project on your own machine.
-
-Run the follwing command:
+You can easily build the project on your own machine, just run the follwing command:
 
 ```ps
 npm build
