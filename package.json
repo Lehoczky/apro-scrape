@@ -13,10 +13,8 @@
     "build": "vue-cli-service electron:build",
     "start": "vue-cli-service electron:serve",
     "test": "vue-cli-service test:unit",
-    "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
-    "publish": "vue-cli-service electron:build -p always"
+    "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
-  "main": "background.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lehoczky/apro-scrape"
