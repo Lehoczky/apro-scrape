@@ -1,11 +1,15 @@
 # AproScrape <img src="public/icon.png" alt="logo" width="40">
 
-Get instantly notified for new items you are interested in!
+Get instantly notified about new items you are interested in!
 
 Have you ever browsed [HardverApro](http://hardverapro.hu/index.html),
 found a good deal and wrote to the seller just to find out someone has already bought the item?  
 If you feel like you have to be on the site 24/7 to get something with a very good price,
 this app is for you!
+
+[![Github all releases](https://img.shields.io/github/downloads/Lehoczky/apro-scrape/total.svg)](https://GitHub.com/Lehoczky/apro-scrape/releases/)
+![Test status](https://github.com/lehoczky/apro-scrape/workflows/Test/badge.svg)
+![Build status](https://github.com/lehoczky/apro-scrape/workflows/Build%2Frelease/badge.svg)
 
 ## What is AproScrape
 
