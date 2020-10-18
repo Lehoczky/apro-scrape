@@ -9,7 +9,7 @@ this app is for you!
 
 ## What is AproScrape
 
-AproScrape is a free, opensource web scraper which will periodically check HardveApro
+AproScrape is a free, opensource web scraper which will periodically check HardverApro
 for new items you are searching for and display a notification when it finds one,
 so you can contact the seller as fast as you can.
 
@@ -52,12 +52,18 @@ You can leave it as is (60 seconds). By raising the value, you will get fewer no
 but possibly with more items. In contrast lowering it may result in more notifications which
 can be annoying, but you have the chance to find new item sooner.
 
+## Feedback
+
+Feedbacks are always welcome! If you have an idea how to make AproScrape better or found a bug,
+[open a new issue](https://github.com/Lehoczky/apro-scrape/issues) and I'll read it for sure.
+Pull requests are also appreciated!
+
 ## Built with
 
 Special thanks to the creators of these libraries:
 
 <a href="https://vuejs.org/">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" alt="vue logo" height="80">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg" alt="vue logo" height="100">
 </a>
 
 <a href="https://www.electronjs.org/">
