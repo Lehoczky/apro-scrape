@@ -1,9 +1,10 @@
 <template>
   <div class="input-field">
     <input
+      id="url-input"
       v-model="input"
       :disabled="disabled"
-      :class="{invalid: error !== ''}"
+      :class="{ invalid: error !== '' }"
       placeholder="Enter HardverApro URL"
     />
     <span :data-error="error" class="helper-text"></span>

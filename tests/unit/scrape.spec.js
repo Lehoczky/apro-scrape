@@ -1,3 +1,7 @@
+/**
+ * @group unit
+ */
+
 import { JSDOM } from "jsdom";
 
 import { createScraper } from "@/main/scrape.js";
@@ -39,15 +43,15 @@ test("return every item on first call", async () => {
       title: "Item1",
       price: "5000 Ft",
       location: "Budapest",
-      updated: "2020-09-07",
+      updated: "2020-09-07"
     },
     {
       url: "http://example.com/2",
       title: "Item2",
       price: "6000 Ft",
       location: "Budafok",
-      updated: "2020-09-06",
-    },
+      updated: "2020-09-06"
+    }
   ]);
 });
 
@@ -77,8 +81,8 @@ test("skip featured item", async () => {
       title: "Item2",
       price: "6000 Ft",
       location: "Budafok",
-      updated: "2020-09-06",
-    },
+      updated: "2020-09-06"
+    }
   ]);
 });
 
@@ -122,8 +126,8 @@ test("return only new item | older is present", async () => {
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
-      updated: "ma 19:48",
-    },
+      updated: "ma 19:48"
+    }
   ]);
 });
 
@@ -160,8 +164,8 @@ test("return only new item | old has been removed", async () => {
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
-      updated: "ma 19:48",
-    },
+      updated: "ma 19:48"
+    }
   ]);
 });
 
@@ -217,8 +221,8 @@ test("return empty list while there is no new item", async () => {
       title: "Item1",
       price: "5000 Ft",
       location: "Budapest",
-      updated: "ma 19:41",
-    },
+      updated: "ma 19:41"
+    }
   ]);
 
   items = await scrape("");
@@ -234,7 +238,7 @@ test("return empty list while there is no new item", async () => {
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
-      updated: "ma 19:48",
-    },
+      updated: "ma 19:48"
+    }
   ]);
 });

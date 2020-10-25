@@ -13,9 +13,11 @@
     "lint": "vue-cli-service lint",
     "build": "vue-cli-service electron:build",
     "start": "vue-cli-service electron:serve",
-    "test": "vue-cli-service test:unit",
+    "test": "vue-cli-service test:unit --group=unit",
+    "e2e": "vue-cli-service test:unit --group=e2e",
     "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
+  "main": "background.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/Lehoczky/apro-scrape"
@@ -43,10 +45,16 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-vue": "^6.2.2",
+    "jest-runner-groups": "^2.0.1",
+    "spectron": "^11.0.0",
     "vue-cli-plugin-electron-builder": "^2.0.0-rc.4",
     "vue-template-compiler": "^2.6.11"
   },
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest/presets/no-babel"
+    "preset": "@vue/cli-plugin-unit-jest/presets/no-babel",
+    "runner": "groups",
+    "testMatch": [
+      "<rootDir>/tests/**/*.spec.(js|ts)"
+    ]
   }
 }
