@@ -56,5 +56,10 @@
     "testMatch": [
       "<rootDir>/tests/**/*.spec.(js|ts)"
     ]
+  },
+  "prettier": {
+    "arrowParens": "avoid",
+    "endOfLine": "auto",
+    "trailingComma": "all"
   }
 }
