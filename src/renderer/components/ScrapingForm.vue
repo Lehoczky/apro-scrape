@@ -3,7 +3,6 @@
     <div class="row mt-20">
       <form class="col s12" @submit.prevent="onFormSubmit()" novalidate>
         <scraping-form-input v-model="url" :disabled="scraping" :error="error"></scraping-form-input>
-        <scraping-form-slider v-model="scrapeInterval" :disabled="scraping"></scraping-form-slider>
 
         <scraping-form-load v-if="scraping" class="left"></scraping-form-load>
 
@@ -31,7 +30,6 @@
 import { ipcRenderer } from "electron";
 
 import ScrapingFormInput from "./ScrapingFormInput.vue";
-import ScrapingFormSlider from "./ScrapingFormSlider.vue";
 import ScrapingFormLoad from "./ScrapingFormLoad.vue";
 import ScrapingFormHistory from "./ScrapingFormHistory.vue";
 
@@ -39,14 +37,12 @@ export default {
   name: "ScrapingForm",
   components: {
     ScrapingFormInput,
-    ScrapingFormSlider,
     ScrapingFormHistory,
     ScrapingFormLoad,
   },
   data() {
     return {
       url: "",
-      scrapeInterval: 60,
       scraping: false,
       showHistory: false,
       history: [],
@@ -64,10 +60,7 @@ export default {
         this.showHistory = false;
         this.addToHistory(this.url);
 
-        this.$emit("submit", {
-          url: this.url,
-          scrapeInterval: this.scrapeInterval,
-        });
+        this.$emit("submit", this.url);
       }
     },
     onStop() {

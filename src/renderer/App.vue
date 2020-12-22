@@ -11,13 +11,10 @@ import { remote, ipcRenderer } from "electron";
 import ScrapingForm from "./components/ScrapingForm.vue";
 import MessageList from "./components/MessageList.vue";
 import { createNewItemNotification } from "./notification.js";
+import { startInterval } from "./utils.js";
 
+const SCRAPING_INTERVAL = 15;
 const mainWindow = remote.getCurrentWindow();
-
-const startInterval = (seconds, callback) => {
-  callback();
-  return setInterval(callback, seconds * 1000);
-};
 
 export default {
   name: "App",
@@ -43,9 +40,9 @@ export default {
     });
   },
   methods: {
-    startScraping(event) {
-      this.interval = startInterval(event.scrapeInterval, () => {
-        ipcRenderer.send("start-scraping", event.url);
+    startScraping(url) {
+      this.interval = startInterval(SCRAPING_INTERVAL, () => {
+        ipcRenderer.send("start-scraping", url);
       });
     },
     stopScraping() {

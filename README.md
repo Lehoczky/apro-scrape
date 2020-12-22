@@ -1,6 +1,5 @@
 # AproScrape <img src="public/icon.png" alt="logo" width="40">
 
-
 [![Github all releases](https://img.shields.io/github/downloads/Lehoczky/apro-scrape/total.svg)](https://GitHub.com/Lehoczky/apro-scrape/releases/)
 ![Test status](https://github.com/lehoczky/apro-scrape/workflows/Test/badge.svg)
 ![Build status](https://github.com/lehoczky/apro-scrape/workflows/Build%2Frelease/badge.svg)
@@ -48,14 +47,6 @@ on the item's link. It will navigate you straight to HardverApro and you can con
 the seller immediately!
 
 _Note: highlighted item are excluded, since they are always at the top of the page and it doesn't make sense to scrape them._
-
-## A word on scraping interval
-
-Scraping interval defines how often the program should check HardverApro for new items.
-
-You can leave it as is (60 seconds). By raising the value, you will get fewer notifications
-but possibly with more items. In contrast lowering it may result in more notifications which
-can be annoying, but you have the chance to find new item sooner.
 
 ## Feedback
 
