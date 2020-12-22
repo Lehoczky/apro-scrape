@@ -3,6 +3,7 @@
   "env": {
     "node": true
   },
+  "plugins": ["only-warn"],
   "extends": ["plugin:vue/essential", "@vue/standard"],
   "parserOptions": {
     "ecmaVersion": 2020
