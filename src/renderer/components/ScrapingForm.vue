@@ -4,6 +4,7 @@
       <b-input-group>
         <b-form-input
           v-model="url"
+          class="text-truncate"
           :class="{ 'is-invalid': hasError }"
           :disabled="scraping"
           placeholder="Enter HardverApro URL"

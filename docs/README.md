@@ -24,3 +24,7 @@ npm build
 
 This will create the `dist_electron` folder in the project's root directory with the binaires for your
 platform.
+
+## Creating new release
+
+See: <https://github.com/samuelmeuli/action-electron-builder#releasin>

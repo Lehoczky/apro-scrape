@@ -1,5 +1,5 @@
 <template>
-  <b-container id="app">
+  <b-container fluid id="app">
     <b-card class="mb-3 mt-5">
       <scraping-form
         @submit="startScraping($event)"
@@ -80,7 +80,7 @@ button {
 }
 
 #app {
-  width: min(750px, 95%);
+  width: min(850px, 95%);
 }
 
 /** Input */

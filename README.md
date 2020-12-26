@@ -35,7 +35,7 @@ and paste the link to the input field on the top.
 
 <img src="docs/images/main-window.png" alt="AproScrape main window" width="650">
 
-Press the `SCRAPE` button, and you should see deals from the website.
+Press the `Scrape` button, and you should see deals from the website.
 
 Here comes the fun part: If you minimize the window, it will hide to the taskbar,
 and display a notification when it finds new items!
