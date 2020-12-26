@@ -1,25 +1,40 @@
 <template>
   <div>
-    <div class="row mt-20">
-      <form class="col s12" @submit.prevent="onFormSubmit()" novalidate>
-        <scraping-form-input v-model="url" :disabled="scraping" :error="error"></scraping-form-input>
-
-        <scraping-form-load v-if="scraping" class="left"></scraping-form-load>
-
-        <div class="right-align">
-          <button
+    <b-form @submit.prevent="onFormSubmit()">
+      <b-input-group>
+        <b-form-input
+          v-model="url"
+          :class="{ 'is-invalid': error !== '' }"
+          :disabled="scraping"
+          placeholder="Enter HardverApro URL"
+        >
+        </b-form-input>
+        <b-input-group-append>
+          <b-button
+            type="button"
+            variant="light"
+            class="btn-history"
+            :class="{ 'is-invalid': error !== '' }"
             v-show="history.length && !scraping"
-            class="btn waves-effect waves-light blue-grey mr-8"
             @click.prevent="toggleHistory()"
-          >History</button>
+          >
+            <b-icon icon="arrow-counterclockwise" title="History"></b-icon>
+          </b-button>
 
-          <button v-if="!scraping" class="btn scrape-btn waves-effect waves-light" type="submit">Scrape</button>
-          <button v-else class="btn scrape-btn waves-effect waves-light red" @click.prevent="onStop()">Stop</button>
-        </div>
-      </form>
-    </div>
+          <b-button v-if="!scraping" variant="primary" type="submit">
+            Scrape
+          </b-button>
+
+          <b-button v-else variant="primary" @click.prevent="onStop()">
+            <b-spinner class="mr-1" small></b-spinner>
+            Stop
+          </b-button>
+        </b-input-group-append>
+        <div class="invalid-feedback">{{ error }}</div>
+      </b-input-group>
+    </b-form>
     <scraping-form-history
-      v-show="showHistory"
+      :show="showHistory"
       :history="history"
       @select="chooseHistoryLink($event)"
     ></scraping-form-history>
@@ -28,17 +43,12 @@
 
 <script>
 import { ipcRenderer } from "electron";
-
-import ScrapingFormInput from "./ScrapingFormInput.vue";
-import ScrapingFormLoad from "./ScrapingFormLoad.vue";
 import ScrapingFormHistory from "./ScrapingFormHistory.vue";
 
 export default {
   name: "ScrapingForm",
   components: {
-    ScrapingFormInput,
     ScrapingFormHistory,
-    ScrapingFormLoad,
   },
   data() {
     return {
@@ -103,8 +113,15 @@ export default {
 };
 </script>
 
-<style>
-.scrape-btn {
-  width: 84px;
+<style scoped>
+.btn-history {
+  background: #f7f7f7 !important;
+  border: 1px solid #ced4da !important;
+  border-left: 0 !important;
+  transition: all 1s;
+}
+
+.btn-history.is-invalid {
+  border-color: #dc3545 !important;
 }
 </style>

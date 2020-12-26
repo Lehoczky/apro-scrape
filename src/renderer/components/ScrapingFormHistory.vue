@@ -1,20 +1,24 @@
 <template>
-  <transition name="fade-from-top">
-    <div class="row collection">
-      <a
+  <b-collapse v-model="show" id="history">
+    <b-list-group>
+      <b-list-group-item
         v-for="link in history"
         :key="link"
-        class="collection-item small-font waves-effect waves-teal truncate"
+        button
         @click="$emit('select', link)"
-      >{{link}}</a>
-    </div>
-  </transition>
+        >{{ link }}</b-list-group-item
+      >
+    </b-list-group>
+  </b-collapse>
 </template>
 
 <script>
 export default {
   name: "ScrapingFormHistory",
   props: {
+    show: {
+      type: Boolean,
+    },
     history: {
       type: Array,
       required: true,
@@ -23,26 +27,13 @@ export default {
 };
 </script>
 
-<style scoped>
-.small-font {
-  font-size: 12px;
+<style>
+.list-group-item {
+  color: #717171 !important;
+  padding: 12px !important;
 }
 
-.fade-from-top-enter-active {
-  animation: fade-from-top 0.1s;
-}
-
-.fade-from-top-leave-active {
-  animation: fade-from-top 0.1s reverse;
-}
-
-@keyframes fade-from-top {
-  0% {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.list-group-item:first-child {
+  border-top: none;
 }
 </style>

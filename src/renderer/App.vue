@@ -1,8 +1,16 @@
 <template>
-  <div class="container" id="app">
-    <scraping-form class="row mt-20" @submit="startScraping($event)" @stop="stopScraping()"></scraping-form>
-    <message-list class="row" :messages="messages"></message-list>
-  </div>
+  <b-container id="app">
+    <b-card class="mb-3 mt-5">
+      <scraping-form
+        @submit="startScraping($event)"
+        @stop="stopScraping()"
+      ></scraping-form>
+    </b-card>
+
+    <b-card class="mb-3" v-show="messages.length">
+      <message-list :messages="messages"></message-list>
+    </b-card>
+  </b-container>
 </template>
 
 <script >
@@ -54,15 +62,63 @@ export default {
 </script>
 
 <style>
-.mr-8 {
-  margin-right: 8px;
+/** App global */
+body {
+  background-color: #ececec !important;
 }
 
-.mt-20 {
-  margin-top: 20px;
+body,
+input,
+textarea,
+select,
+button {
+  font-family: Roboto, Helvetica Neue, Helvetica, sans-serif;
 }
 
-.ml-10 {
-  margin-left: 10px;
+#app {
+  width: min(750px, 95%);
+}
+
+/** Input */
+.form-control:focus {
+  box-shadow: 0 0 0.25rem 0.0625rem rgba(0, 0, 0, 0.125) inset !important;
+  border-color: #aaa !important;
+}
+
+.form-control {
+  font-size: 0.875rem;
+  background-image: none !important;
+}
+
+.form-control.is-invalid:focus,
+.was-validated .form-control:invalid:focus {
+  border-color: #dc3545 !important;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.125) inset !important;
+}
+
+/** Buttons */
+
+.btn:focus,
+.btn:not(:disabled):not(.disabled):active:focus {
+  box-shadow: none !important;
+}
+
+.btn-primary {
+  background-color: #bc1013 !important;
+  border-color: #bc1013 !important;
+  color: #fff !important;
+}
+
+.btn-primary:hover {
+  background-color: #a50e11 !important;
+  border-color: #a50e11 !important;
+  color: #fff !important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active,
+.btn-primary:not(:disabled):not(.disabled).active {
+  background-color: #8a0f11 !important;
+  border-color: #8a0f11 !important;
+  color: #fff !important;
 }
 </style>
