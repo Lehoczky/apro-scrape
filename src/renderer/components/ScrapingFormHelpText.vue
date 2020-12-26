@@ -1,7 +1,7 @@
 <template>
   <small class="form-text text-muted text-truncate"
     >Ex.
-    <span class="example-url" @click="$emit('urlClicked')">{{
+    <span class="example-url" @click="$emit('urlClicked', exampleUrl)">{{
       exampleUrl
     }}</span>
     for mobile phones</small
@@ -11,11 +11,10 @@
 <script>
 export default {
   name: "ScrapingFormHelpText",
-  props: {
-    exampleUrl: {
-      type: String,
-      required: true,
-    },
+  data() {
+    return {
+      exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",
+    };
   },
 };
 </script>

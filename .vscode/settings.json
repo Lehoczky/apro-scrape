@@ -1,4 +1,3 @@
 {
-    "jest.pathToJest": " npm test -- --group=unit",
-    "vetur.format.defaultFormatter.html": "none"
+  "jest.pathToJest": " npm test -- --group=unit"
 }

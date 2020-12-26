@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: "ScrapingFormHistory",
+  name: "ScrapingFormHistoryList",
   props: {
     show: {
       type: Boolean,
@@ -34,6 +34,6 @@ export default {
 }
 
 .list-group-item:first-child {
-  border-top: none;
+  margin-top: 1rem;
 }
 </style>

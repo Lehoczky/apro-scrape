@@ -4,72 +4,71 @@
       <b-input-group>
         <b-form-input
           v-model="url"
-          :class="{ 'is-invalid': error !== '' }"
+          :class="{ 'is-invalid': hasError }"
           :disabled="scraping"
           placeholder="Enter HardverApro URL"
         >
         </b-form-input>
         <b-input-group-append>
-          <b-button
-            type="button"
-            variant="light"
-            class="btn-history"
-            :class="{ 'is-invalid': error !== '' }"
-            v-show="history.length && !scraping"
-            @click.prevent="toggleHistory()"
+          <scraping-form-history-button
+            :hasError="hasError"
+            v-show="!historyIsEmpty && !scraping"
+            @click="toggleHistory()"
           >
-            <b-icon icon="arrow-counterclockwise" title="History"></b-icon>
-          </b-button>
+          </scraping-form-history-button>
 
-          <b-button v-if="!scraping" variant="primary" type="submit">
-            Scrape
-          </b-button>
+          <scraping-form-submit-button
+            v-if="!scraping"
+          ></scraping-form-submit-button>
 
-          <b-button v-else variant="primary" @click.prevent="onStop()">
-            <b-spinner class="mr-1" small></b-spinner>
-            Stop
-          </b-button>
+          <scraping-form-stop-button
+            v-else
+            @stop="onStop()"
+          ></scraping-form-stop-button>
         </b-input-group-append>
         <div class="invalid-feedback">{{ error }}</div>
       </b-input-group>
 
       <scraping-form-help-text
-        v-if="showHelpText"
-        :exampleUrl="exampleUrl"
-        @urlClicked="copyExampleUrlToInput()"
+        v-if="historyIsEmpty"
+        @urlClicked="setAsCurrentUrl($event)"
       >
       </scraping-form-help-text>
     </b-form>
-    <scraping-form-history
+    <scraping-form-history-list
       :show="showHistory"
       v-click-outside="hideHistory"
       :history="history"
-      @select="chooseHistoryLink($event)"
-    ></scraping-form-history>
+      @select="setAsCurrentUrl($event)"
+    ></scraping-form-history-list>
   </div>
 </template>
 
 <script>
 import { ipcRenderer } from "electron";
-import ClickOutside from "vue-click-outside";
 
-import ScrapingFormHistory from "./ScrapingFormHistory.vue";
+import clickOutsideHostMixin from "../mixins/clickOutsideHostMixin.js";
+import ScrapingFormSubmitButton from "./ScrapingFormSubmitButton.vue";
+import ScrapingFormStopButton from "./ScrapingFormStopButton.vue";
+import ScrapingFormHistoryButton from "./ScrapingFormHistoryButton.vue";
 import ScrapingFormHelpText from "./ScrapingFormHelpText.vue";
+import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue";
 
 export default {
   name: "ScrapingForm",
-  directives: {
-    ClickOutside,
-  },
+  mixins: [clickOutsideHostMixin],
   components: {
-    ScrapingFormHistory,
+    ScrapingFormSubmitButton,
+    ScrapingFormStopButton,
+    ScrapingFormHistoryButton,
     ScrapingFormHelpText,
+    ScrapingFormHistoryList,
   },
   data() {
     return {
       url: "",
-      exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",
       scraping: false,
+      loading: false,
       showHistory: false,
       history: [],
       error: "",
@@ -78,12 +77,12 @@ export default {
   created() {
     this.loadSavedHistory();
   },
-  mounted() {
-    this.popupItem = this.$el;
-  },
   computed: {
-    showHelpText() {
-      return !this.history.length;
+    historyIsEmpty() {
+      return this.history.length === 0;
+    },
+    hasError() {
+      return this.error !== "";
     },
   },
   methods: {
@@ -114,8 +113,10 @@ export default {
         return "";
       }
     },
-    copyExampleUrlToInput() {
-      this.url = this.exampleUrl;
+    setAsCurrentUrl(link) {
+      if (!this.scraping) {
+        this.url = link;
+      }
     },
     loadSavedHistory() {
       this.history = JSON.parse(localStorage.getItem("history")) || [];
@@ -126,11 +127,6 @@ export default {
     toggleHistory() {
       this.showHistory = !this.showHistory;
     },
-    chooseHistoryLink(link) {
-      if (!this.scraping) {
-        this.url = link;
-      }
-    },
     addToHistory(link) {
       if (this.history.includes(link)) {
         this.history.splice(this.history.indexOf(link), 1);
@@ -139,7 +135,7 @@ export default {
     },
   },
   watch: {
-    history(newValue, oldValue) {
+    history(newValue) {
       localStorage.setItem("history", JSON.stringify(newValue));
     },
   },
@@ -147,14 +143,4 @@ export default {
 </script>
 
 <style scoped>
-.btn-history {
-  background: #f7f7f7 !important;
-  border: 1px solid #ced4da !important;
-  border-left: 0 !important;
-  transition: all 1s;
-}
-
-.btn-history.is-invalid {
-  border-color: #dc3545 !important;
-}
 </style>
