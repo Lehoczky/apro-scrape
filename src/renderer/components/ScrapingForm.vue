@@ -42,6 +42,7 @@
     </b-form>
     <scraping-form-history
       :show="showHistory"
+      v-click-outside="hideHistory"
       :history="history"
       @select="chooseHistoryLink($event)"
     ></scraping-form-history>
@@ -50,11 +51,16 @@
 
 <script>
 import { ipcRenderer } from "electron";
+import ClickOutside from "vue-click-outside";
+
 import ScrapingFormHistory from "./ScrapingFormHistory.vue";
 import ScrapingFormHelpText from "./ScrapingFormHelpText.vue";
 
 export default {
   name: "ScrapingForm",
+  directives: {
+    ClickOutside,
+  },
   components: {
     ScrapingFormHistory,
     ScrapingFormHelpText,
@@ -71,6 +77,9 @@ export default {
   },
   created() {
     this.loadSavedHistory();
+  },
+  mounted() {
+    this.popupItem = this.$el;
   },
   computed: {
     showHelpText() {
@@ -110,6 +119,9 @@ export default {
     },
     loadSavedHistory() {
       this.history = JSON.parse(localStorage.getItem("history")) || [];
+    },
+    hideHistory() {
+      this.showHistory = false;
     },
     toggleHistory() {
       this.showHistory = !this.showHistory;
