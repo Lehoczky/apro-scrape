@@ -13,6 +13,7 @@ export const createWindow = () => {
     height: 600,
     minWidth: 310,
     icon: iconPath,
+    backgroundColor: "#ececec",
     autoHideMenuBar: true,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
