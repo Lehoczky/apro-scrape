@@ -32,6 +32,13 @@
         </b-input-group-append>
         <div class="invalid-feedback">{{ error }}</div>
       </b-input-group>
+
+      <scraping-form-help-text
+        v-if="showHelpText"
+        :exampleUrl="exampleUrl"
+        @urlClicked="copyExampleUrlToInput()"
+      >
+      </scraping-form-help-text>
     </b-form>
     <scraping-form-history
       :show="showHistory"
@@ -44,15 +51,18 @@
 <script>
 import { ipcRenderer } from "electron";
 import ScrapingFormHistory from "./ScrapingFormHistory.vue";
+import ScrapingFormHelpText from "./ScrapingFormHelpText.vue";
 
 export default {
   name: "ScrapingForm",
   components: {
     ScrapingFormHistory,
+    ScrapingFormHelpText,
   },
   data() {
     return {
       url: "",
+      exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",
       scraping: false,
       showHistory: false,
       history: [],
@@ -60,7 +70,12 @@ export default {
     };
   },
   created() {
-    this.history = JSON.parse(localStorage.getItem("history")) || [];
+    this.loadSavedHistory();
+  },
+  computed: {
+    showHelpText() {
+      return !this.history.length;
+    },
   },
   methods: {
     async onFormSubmit() {
@@ -89,6 +104,12 @@ export default {
         }
         return "";
       }
+    },
+    copyExampleUrlToInput() {
+      this.url = this.exampleUrl;
+    },
+    loadSavedHistory() {
+      this.history = JSON.parse(localStorage.getItem("history")) || [];
     },
     toggleHistory() {
       this.showHistory = !this.showHistory;
