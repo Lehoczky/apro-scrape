@@ -65,10 +65,16 @@ export default {
 .item {
   border-bottom: solid 1px #ddd;
   padding: 0.5rem 0;
-  margin: 0;
   display: flex;
   align-items: center;
-  position: relative;
+}
+
+@media screen and (max-width: 470px) {
+  .item {
+    padding: 1rem 0;
+    flex-direction: column;
+    align-items: unset;
+  }
 }
 
 .title {
@@ -87,12 +93,31 @@ export default {
   color: #333;
 }
 
+@media screen and (max-width: 470px) {
+  .title {
+    padding: 0;
+  }
+
+  .title > h1 {
+    font-size: 0.9rem;
+  }
+}
+
 .info {
   width: 140px;
   text-align: center;
   border-left: solid 1px #ddd;
-  padding: 0 0.125rem;
-  flex: none;
+}
+
+@media screen and (max-width: 470px) {
+  .info {
+    width: unset;
+    display: flex;
+    text-align: unset;
+    border: none;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+  }
 }
 
 .price,
@@ -101,10 +126,17 @@ export default {
   line-height: 1.25rem;
 }
 
+@media screen and (max-width: 470px) {
+  .price,
+  .location,
+  .updated {
+    font-size: 0.95rem;
+  }
+}
+
 .price {
   color: #bc1013;
   font-weight: 500;
-  font-size: 1rem;
 }
 
 .updated {
