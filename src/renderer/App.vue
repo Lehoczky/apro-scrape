@@ -16,7 +16,6 @@
 <script >
 import { remote, ipcRenderer } from "electron";
 
-import titlebarMixin from "./mixins/titlebarMixin.js";
 import ScrapingForm from "./components/ScrapingForm.vue";
 import MessageList from "./components/MessageList.vue";
 import { createNewItemNotification } from "./notification.js";
@@ -27,7 +26,6 @@ const mainWindow = remote.getCurrentWindow();
 
 export default {
   name: "App",
-  mixins: [titlebarMixin],
   components: {
     ScrapingForm,
     MessageList,

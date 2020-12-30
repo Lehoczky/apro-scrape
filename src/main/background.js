@@ -1,21 +1,18 @@
 "use strict";
 
-import { app, protocol, ipcMain } from "electron";
+import { app, ipcMain } from "electron";
 import unhandled from "electron-unhandled";
 
 import { createTray } from "./tray";
 import { createScraper } from "./scrape";
 import { createWindow } from "./window";
 import { canReach, installVueDevtools } from "./utils";
+import { registerAppScheme, registerFileProtocol } from "./protocols";
 
 unhandled();
+registerAppScheme();
 const scrape = createScraper();
 const isDevelopment = process.env.NODE_ENV !== "production";
-
-// Scheme must be registered before the app is ready
-protocol.registerSchemesAsPrivileged([
-  { scheme: "app", privileges: { secure: true, standard: true } },
-]);
 
 ipcMain.on("validate", async (event, url) => {
   event.returnValue = await canReach(url);
@@ -30,6 +27,7 @@ app.on("ready", async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     await installVueDevtools();
   }
+  registerFileProtocol();
   createWindow();
   createTray();
 });

@@ -10,6 +10,7 @@ module.exports = {
       mainProcessFile: "src/main/background.js",
       mainProcessWatch: ["src/main/"],
       nodeIntegration: true,
+      preload: { preload: "src/main/preload.js" },
       externals: ["jsdom"],
       builderOptions: {
         win: {

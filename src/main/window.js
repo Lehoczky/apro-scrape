@@ -1,6 +1,7 @@
 "use strict";
 
 import { app, BrowserWindow } from "electron";
+import { join } from "path";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import { autoUpdater } from "electron-updater";
 import { iconPath } from "./icon";
@@ -22,6 +23,8 @@ export const createWindow = () => {
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: false,
       enableRemoteModule: true,
+      webSecurity: false,
+      preload: join(__dirname, "preload.js"),
     },
   });
 
