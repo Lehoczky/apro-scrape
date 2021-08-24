@@ -1,5 +1,5 @@
 <template>
-  <b-collapse id="history" :value="show">
+  <b-collapse id="history" :visible="show">
     <b-list-group>
       <b-list-group-item
         v-for="link in history"
