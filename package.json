@@ -35,7 +35,7 @@
     "custom-electron-titlebar": "^3.2.7",
     "electron-unhandled": "^3.0.2",
     "electron-updater": "^4.3.9",
-    "jsdom": "^16.7.0",
+    "jsdom": "^17.0.0",
     "vue": "^2.6.14",
     "vue-click-outside": "^1.1.0"
   },
@@ -46,7 +46,7 @@
     "@vue/test-utils": "^1.2.2",
     "electron": "^11.4.12",
     "electron-devtools-installer": "^3.2.0",
-    "electron-icon-builder": "^1.0.2",
+    "electron-icon-builder": "^2.0.1",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-node": "^11.1.0",
