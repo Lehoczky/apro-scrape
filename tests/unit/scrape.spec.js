@@ -2,22 +2,22 @@
  * @group unit
  */
 
-import { JSDOM } from "jsdom";
+import { JSDOM } from "jsdom"
 
-import { createScraper } from "@/main/scrape.js";
+import { createScraper } from "@/main/scrape.js"
 
 test("return empty list when no .media element is present", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
 
-  const dom = new JSDOM("<body></body>");
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom);
+  const dom = new JSDOM("<body></body>")
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
 
-  const items = await scrape("");
-  expect(items).toEqual([]);
-});
+  const items = await scrape("")
+  expect(items).toEqual([])
+})
 
 test("return every item on first call", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
 
   const dom = new JSDOM(`
     <li class="media">
@@ -33,10 +33,10 @@ test("return every item on first call", async () => {
       <div class="uad-light">Budafok</div>
       <div class="uad-ultralight">2020-09-06</div>
     </li>
-  `);
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom);
+  `)
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
 
-  const items = await scrape("");
+  const items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/1",
@@ -52,11 +52,11 @@ test("return every item on first call", async () => {
       location: "Budafok",
       updated: "2020-09-06",
     },
-  ]);
-});
+  ])
+})
 
 test("skip featured item", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
   const dom = new JSDOM(`
     <li class="media">
       <h1><a href="http://example.com/1">Item1</a></h1>
@@ -71,10 +71,10 @@ test("skip featured item", async () => {
       <div class="uad-light">Budafok</div>
       <div class="uad-ultralight">2020-09-06</div>
     </li>
-  `);
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom);
+  `)
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
 
-  const items = await scrape("");
+  const items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/2",
@@ -83,11 +83,11 @@ test("skip featured item", async () => {
       location: "Budafok",
       updated: "2020-09-06",
     },
-  ]);
-});
+  ])
+})
 
 test("return only new item | older is present", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
@@ -98,7 +98,7 @@ test("return only new item | older is present", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
+      `)
     })
     .mockImplementationOnce(() => {
       return new JSDOM(`
@@ -115,11 +115,11 @@ test("return only new item | older is present", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
-    });
+      `)
+    })
 
-  let items = await scrape("");
-  items = await scrape("");
+  let items = await scrape("")
+  items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/2",
@@ -128,11 +128,11 @@ test("return only new item | older is present", async () => {
       location: "Budafok",
       updated: "ma 19:48",
     },
-  ]);
-});
+  ])
+})
 
 test("return only new item | old has been removed", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
@@ -143,7 +143,7 @@ test("return only new item | old has been removed", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
+      `)
     })
     .mockImplementationOnce(() => {
       return new JSDOM(`
@@ -153,11 +153,11 @@ test("return only new item | old has been removed", async () => {
           <div class="uad-light">Budafok</div>
           <div class="uad-ultralight">ma 19:48</div>
         </li>
-      `);
-    });
+      `)
+    })
 
-  let items = await scrape("");
-  items = await scrape("");
+  let items = await scrape("")
+  items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/2",
@@ -166,11 +166,11 @@ test("return only new item | old has been removed", async () => {
       location: "Budafok",
       updated: "ma 19:48",
     },
-  ]);
-});
+  ])
+})
 
 test("return empty list while there is no new item", async () => {
-  const scrape = createScraper();
+  const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
@@ -181,7 +181,7 @@ test("return empty list while there is no new item", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
+      `)
     })
     .mockImplementationOnce(() => {
       return new JSDOM(`
@@ -191,7 +191,7 @@ test("return empty list while there is no new item", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
+      `)
     })
     .mockImplementationOnce(() => {
       return new JSDOM(`
@@ -201,7 +201,7 @@ test("return empty list while there is no new item", async () => {
           <div class="uad-light">Budapest</div>
           <div class="uad-ultralight">ma 19:41</div>
         </li>
-      `);
+      `)
     })
     .mockImplementationOnce(() => {
       return new JSDOM(`
@@ -211,10 +211,10 @@ test("return empty list while there is no new item", async () => {
           <div class="uad-light">Budafok</div>
           <div class="uad-ultralight">ma 19:48</div>
         </li>
-      `);
-    });
+      `)
+    })
 
-  let items = await scrape("");
+  let items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/1",
@@ -223,15 +223,15 @@ test("return empty list while there is no new item", async () => {
       location: "Budapest",
       updated: "ma 19:41",
     },
-  ]);
+  ])
 
-  items = await scrape("");
-  expect(items).toEqual([]);
+  items = await scrape("")
+  expect(items).toEqual([])
 
-  items = await scrape("");
-  expect(items).toEqual([]);
+  items = await scrape("")
+  expect(items).toEqual([])
 
-  items = await scrape("");
+  items = await scrape("")
   expect(items).toEqual([
     {
       url: "http://example.com/2",
@@ -240,5 +240,5 @@ test("return empty list while there is no new item", async () => {
       location: "Budafok",
       updated: "ma 19:48",
     },
-  ]);
-});
+  ])
+})

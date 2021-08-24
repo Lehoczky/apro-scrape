@@ -1,10 +1,10 @@
-import { protocol } from "electron";
+import { protocol } from "electron"
 
 export const registerAppScheme = () => {
   protocol.registerSchemesAsPrivileged([
     { scheme: "app", privileges: { secure: true, standard: true } },
-  ]);
-};
+  ])
+}
 
 /**
  * Register file protocol to access local files
@@ -13,7 +13,7 @@ export const registerAppScheme = () => {
  */
 export const registerFileProtocol = () => {
   protocol.registerFileProtocol("file", (request, callback) => {
-    const pathname = request.url.replace("file:///", "");
-    callback(pathname);
-  });
-};
+    const pathname = request.url.replace("file:///", "")
+    callback(pathname)
+  })
+}

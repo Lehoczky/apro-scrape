@@ -14,9 +14,9 @@ export default {
   data() {
     return {
       exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",
-    };
+    }
   },
-};
+}
 </script>
 
 <style scoped>

@@ -1,13 +1,13 @@
-"use strict";
+"use strict"
 
-import { app, BrowserWindow, Tray, Menu } from "electron";
-import { iconPath } from "./icon";
+import { app, BrowserWindow, Tray, Menu } from "electron"
+import { iconPath } from "./icon"
 
-let tray;
+let tray
 
 export const createTray = () => {
-  tray = new Tray(iconPath);
-  tray.setToolTip("Apro Scrape");
+  tray = new Tray(iconPath)
+  tray.setToolTip("Apro Scrape")
 
   const contextMenu = Menu.buildFromTemplate([
     {
@@ -18,13 +18,13 @@ export const createTray = () => {
       label: "Quit",
       click: app.quit,
     },
-  ]);
-  tray.setContextMenu(contextMenu);
+  ])
+  tray.setContextMenu(contextMenu)
 
-  tray.on("click", openMainWindow);
-};
+  tray.on("click", openMainWindow)
+}
 
 const openMainWindow = () => {
-  const mainWindow = BrowserWindow.getAllWindows()[0];
-  mainWindow.show();
-};
+  const mainWindow = BrowserWindow.getAllWindows()[0]
+  mainWindow.show()
+}

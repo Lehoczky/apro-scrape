@@ -1,28 +1,25 @@
 <template>
-  <b-container fluid id="app">
+  <b-container id="app" fluid>
     <b-card class="mb-3 mt-5">
-      <scraping-form
-        @submit="startScraping($event)"
-        @stop="stopScraping()"
-      ></scraping-form>
+      <scraping-form @submit="startScraping($event)" @stop="stopScraping()" />
     </b-card>
 
-    <b-card class="mb-3" v-show="messages.length">
-      <message-list :messages="messages"></message-list>
+    <b-card v-show="messages.length" class="mb-3">
+      <message-list :messages="messages" />
     </b-card>
   </b-container>
 </template>
 
-<script >
-import { remote, ipcRenderer } from "electron";
+<script>
+import { remote, ipcRenderer } from "electron"
 
-import ScrapingForm from "./components/ScrapingForm.vue";
-import MessageList from "./components/MessageList.vue";
-import { createNewItemNotification } from "./notification.js";
-import { startInterval } from "./utils.js";
+import ScrapingForm from "./components/ScrapingForm.vue"
+import MessageList from "./components/MessageList.vue"
+import { createNewItemNotification } from "./notification.js"
+import { startInterval } from "./utils.js"
 
-const SCRAPING_INTERVAL = 15;
-const mainWindow = remote.getCurrentWindow();
+const SCRAPING_INTERVAL = 15
+const mainWindow = remote.getCurrentWindow()
 
 export default {
   name: "App",
@@ -34,31 +31,31 @@ export default {
     return {
       messages: [],
       interval: undefined,
-    };
+    }
   },
   created() {
     ipcRenderer.on("new-items", (event, items) => {
-      console.log(items.length);
+      console.log(items.length)
       if (items.length) {
-        this.messages = [items, ...this.messages];
+        this.messages = [items, ...this.messages]
         if (!mainWindow.isVisible()) {
-          createNewItemNotification(items, mainWindow);
+          createNewItemNotification(items, mainWindow)
         }
       }
-    });
+    })
   },
   methods: {
     startScraping(url) {
       this.interval = startInterval(SCRAPING_INTERVAL, () => {
-        ipcRenderer.send("start-scraping", url);
-      });
+        ipcRenderer.send("start-scraping", url)
+      })
     },
     stopScraping() {
-      clearInterval(this.interval);
-      this.interval = undefined;
+      clearInterval(this.interval)
+      this.interval = undefined
     },
   },
-};
+}
 </script>
 
 <style>
@@ -81,14 +78,14 @@ button {
   width: min(850px, 95%);
 }
 
+.form-control {
+  background-image: none !important;
+}
+
 /** Input */
 .form-control:focus {
   box-shadow: 0 0 0.25rem 0.0625rem rgba(0, 0, 0, 0.125) inset !important;
   border-color: #aaa !important;
-}
-
-.form-control {
-  background-image: none !important;
 }
 
 .form-control.is-invalid:focus,

@@ -1,10 +1,10 @@
-import ClickOutside from "vue-click-outside";
+import ClickOutside from "vue-click-outside"
 
 export default {
   directives: {
     ClickOutside,
   },
   mounted() {
-    this.popupItem = this.$el;
+    this.popupItem = this.$el
   },
-};
+}

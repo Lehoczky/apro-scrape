@@ -1,11 +1,11 @@
-import Vue from "vue";
-import App from "./App.vue";
-import "./plugins/bootstrap-vue";
+import Vue from "vue"
+import App from "./App.vue"
+import "./plugins/bootstrap-vue"
 
-Vue.config.productionTip = false;
+Vue.config.productionTip = false
 
 new Vue({
   render: function(h) {
-    return h(App);
+    return h(App)
   },
-}).$mount("#app");
+}).$mount("#app")

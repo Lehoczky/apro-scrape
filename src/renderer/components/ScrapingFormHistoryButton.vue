@@ -6,7 +6,7 @@
     :class="{ 'is-invalid': hasError }"
     @click="$emit('click')"
   >
-    <b-icon icon="arrow-counterclockwise" title="History"></b-icon>
+    <b-icon icon="arrow-counterclockwise" title="History" />
   </b-button>
 </template>
 
@@ -19,7 +19,7 @@ export default {
       required: true,
     },
   },
-};
+}
 </script>
 
 <style scoped>

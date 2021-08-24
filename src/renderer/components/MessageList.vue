@@ -1,7 +1,9 @@
 <template>
   <div>
     <section v-for="(message, index) in messages" :key="index">
-      <div class="section-title">{{ dateIntervalForMessage(message) }}</div>
+      <div class="section-title">
+        {{ dateIntervalForMessage(message) }}
+      </div>
       <ul class="list-unstyled">
         <li v-for="item in message" :key="item.url" class="item">
           <div class="title">
@@ -12,9 +14,15 @@
             </h1>
           </div>
           <div class="info">
-            <div class="price">{{ item.price }}</div>
-            <div class="location">{{ item.location }}</div>
-            <div class="updated">{{ item.updated }}</div>
+            <div class="price">
+              {{ item.price }}
+            </div>
+            <div class="location">
+              {{ item.location }}
+            </div>
+            <div class="updated">
+              {{ item.updated }}
+            </div>
           </div>
         </li>
       </ul>
@@ -23,7 +31,7 @@
 </template>
 
 <script>
-import { shell } from "electron";
+import { shell } from "electron"
 
 export default {
   name: "MessageList",
@@ -35,15 +43,15 @@ export default {
   },
   methods: {
     dateIntervalForMessage(message) {
-      const lastDate = message[message.length - 1].updated;
-      const firstDate = message[0].updated;
-      return `${lastDate} - ${firstDate}`;
+      const lastDate = message[message.length - 1].updated
+      const firstDate = message[0].updated
+      return `${lastDate} - ${firstDate}`
     },
     openExternal(url) {
-      shell.openExternal(url);
+      shell.openExternal(url)
     },
   },
-};
+}
 </script>
 
 <style scoped>

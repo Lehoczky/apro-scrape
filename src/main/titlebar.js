@@ -1,5 +1,5 @@
-import { Titlebar, Color } from "custom-electron-titlebar";
-import { iconUrl } from "./icon";
+import { Titlebar, Color } from "custom-electron-titlebar"
+import { iconUrl } from "./icon"
 
 const options = {
   backgroundColor: Color.fromHex("#383838"),
@@ -7,6 +7,6 @@ const options = {
   menu: null,
   titleHorizontalAlignment: "left",
   shadow: true,
-};
+}
 
-export const createTitlebar = () => new Titlebar(options);
+export const createTitlebar = () => new Titlebar(options)

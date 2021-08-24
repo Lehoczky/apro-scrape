@@ -1,12 +1,12 @@
-"use strict";
+"use strict"
 
-import { app, BrowserWindow } from "electron";
-import { join } from "path";
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
-import { autoUpdater } from "electron-updater";
-import { iconPath } from "./icon";
+import { app, BrowserWindow } from "electron"
+import { join } from "path"
+import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
+import { autoUpdater } from "electron-updater"
+import { iconPath } from "./icon"
 
-let mainWindow;
+var mainWindow
 
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -26,37 +26,37 @@ export const createWindow = () => {
       webSecurity: false,
       preload: join(__dirname, "preload.js"),
     },
-  });
+  })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
-    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools();
+    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
+    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
   } else {
-    createProtocol("app");
-    mainWindow.loadURL("app://./index.html");
-    autoUpdater.checkForUpdatesAndNotify();
+    createProtocol("app")
+    mainWindow.loadURL("app://./index.html")
+    autoUpdater.checkForUpdatesAndNotify()
   }
 
-  mainWindow.on("minimize", mainWindow.hide);
-  mainWindow.on("close", mainWindow.destroy);
+  mainWindow.on("minimize", mainWindow.hide)
+  mainWindow.on("close", mainWindow.destroy)
   mainWindow.on("closed", () => {
-    mainWindow = undefined;
-  });
-};
+    mainWindow = undefined
+  })
+}
 
 app.on("activate", () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === undefined) {
-    createWindow();
+    createWindow()
   }
-});
+})
 
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== "darwin") {
-    app.quit();
+    app.quit()
   }
-});
+})

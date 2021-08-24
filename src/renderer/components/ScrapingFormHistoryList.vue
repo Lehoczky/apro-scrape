@@ -1,13 +1,14 @@
 <template>
-  <b-collapse v-model="show" id="history">
+  <b-collapse id="history" :value="show">
     <b-list-group>
       <b-list-group-item
         v-for="link in history"
         :key="link"
         button
         @click="$emit('select', link)"
-        >{{ link }}</b-list-group-item
       >
+        {{ link }}
+      </b-list-group-item>
     </b-list-group>
   </b-collapse>
 </template>
@@ -24,7 +25,7 @@ export default {
       required: true,
     },
   },
-};
+}
 </script>
 
 <style>

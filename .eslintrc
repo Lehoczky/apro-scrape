@@ -1,32 +1,49 @@
 {
   "root": true,
   "env": {
-    "node": true
+    "node": true,
+    "es6": true
   },
-  "plugins": ["only-warn"],
-  "extends": ["plugin:vue/essential", "@vue/standard"],
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
-  "globals": {
-    "__static": "readonly"
-  },
-  "rules": {
-    "no-debugger": "warn",
-    "arrow-parens": [1, "as-needed"],
-    "semi": [1, "always"],
-    "quotes": [1, "double", "avoid-escape"],
-    "comma-dangle": [1, "always-multiline"],
-    "space-before-function-paren": [
-      "error",
-      {
-        "anonymous": "never",
-        "named": "never",
-        "asyncArrow": "always"
-      }
-    ]
-  },
+  "plugins": ["only-warn", "promise"],
+  "extends": ["eslint:recommended"],
   "overrides": [
+    {
+      "files": ["**/main/**/*.{j,t}s"],
+      "extends": ["plugin:node/recommended", "prettier"],
+      "globals": {
+        "__static": "readonly"
+      },
+      "parserOptions": {
+        "sourceType": "module"
+      },
+      "rules": {
+        "node/no-unpublished-import": "off",
+        "node/no-unsupported-features/es-syntax": [
+          "warn",
+          { "ignores": ["modules"] }
+        ]
+      }
+    },
+    {
+      "files": ["**/main/preload.{j,t}s"],
+      "env": {
+        "browser": true
+      }
+    },
+    {
+      "files": ["**/renderer/**/*.{j,t}s", "**/renderer/**/*.vue"],
+      "extends": ["plugin:vue/recommended", "prettier"],
+      "env": {
+        "browser": true
+      },
+      "rules": {
+        "vue/html-self-closing": ["warn", { "html": { "void": "always" } }]
+      }
+    },
     {
       "files": [
         "**/tests/e2e/**/*.spec.{j,t}s?(x)",
