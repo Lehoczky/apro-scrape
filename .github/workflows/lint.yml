@@ -21,5 +21,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run Prettier
+        run: npm run format:check
+
+      - name: Run Stylelint
+        run: npm run styles:check
+
       - name: Run ESLint
         run: npx eslint . --ignore-path .gitignore
