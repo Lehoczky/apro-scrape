@@ -50,7 +50,6 @@ import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
 import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
 
 export default {
-  name: "ScrapingForm",
   components: {
     ScrapingFormSubmitButton,
     ScrapingFormStopButton,

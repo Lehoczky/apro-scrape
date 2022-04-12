@@ -15,7 +15,6 @@
 
 <script>
 export default {
-  name: "ScrapingFormHistoryList",
   props: {
     show: {
       type: Boolean,

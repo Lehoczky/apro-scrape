@@ -21,7 +21,6 @@ import { startInterval } from "./utils.js"
 const SCRAPING_INTERVAL = 15
 
 export default {
-  name: "App",
   components: {
     ScrapingForm,
     MessageList,

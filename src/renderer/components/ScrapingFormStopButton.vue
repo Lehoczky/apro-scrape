@@ -4,9 +4,3 @@
     Stop
   </b-button>
 </template>
-
-<script>
-export default {
-  name: "ScrapingFormStopButton",
-}
-</script>

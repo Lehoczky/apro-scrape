@@ -34,7 +34,6 @@
 import { shell } from "electron"
 
 export default {
-  name: "MessageList",
   props: {
     messages: {
       type: Array,
