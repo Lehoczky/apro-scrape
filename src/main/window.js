@@ -4,9 +4,14 @@ import { app, BrowserWindow } from "electron"
 import { join } from "path"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 import { autoUpdater } from "electron-updater"
+import {
+  setupTitlebar,
+  attachTitlebarToWindow,
+} from "custom-electron-titlebar/dist/main"
 import { iconPath } from "./icon"
 
 var mainWindow
+setupTitlebar()
 
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -37,6 +42,7 @@ export const createWindow = () => {
     autoUpdater.checkForUpdatesAndNotify()
   }
 
+  attachTitlebarToWindow(mainWindow)
   mainWindow.on("minimize", mainWindow.hide)
   mainWindow.on("close", mainWindow.destroy)
   mainWindow.on("closed", () => {
