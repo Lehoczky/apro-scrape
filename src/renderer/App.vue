@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { remote, ipcRenderer } from "electron"
+import { ipcRenderer } from "electron"
 
 import ScrapingForm from "./components/ScrapingForm.vue"
 import MessageList from "./components/MessageList.vue"
@@ -19,7 +19,6 @@ import { createNewItemNotification } from "./notification.js"
 import { startInterval } from "./utils.js"
 
 const SCRAPING_INTERVAL = 15
-const mainWindow = remote.getCurrentWindow()
 
 export default {
   name: "App",
@@ -33,26 +32,26 @@ export default {
       interval: undefined,
     }
   },
-  created() {
-    ipcRenderer.on("new-items", (event, items) => {
-      console.log(items.length)
-      if (items.length) {
-        this.messages = [items, ...this.messages]
-        if (!mainWindow.isVisible()) {
-          createNewItemNotification(items, mainWindow)
-        }
-      }
-    })
-  },
   methods: {
     startScraping(url) {
-      this.interval = startInterval(SCRAPING_INTERVAL, () => {
-        ipcRenderer.send("start-scraping", url)
+      this.interval = startInterval(SCRAPING_INTERVAL, async () => {
+        const items = await ipcRenderer.invoke("start-scraping", url)
+        this.handleScrapedItems(items)
       })
     },
     stopScraping() {
       clearInterval(this.interval)
       this.interval = undefined
+    },
+    async handleScrapedItems(items) {
+      console.log(items.length)
+      if (items.length) {
+        this.messages = [items, ...this.messages]
+        const isWindowHidden = await ipcRenderer.invoke("is-window-hidden")
+        if (isWindowHidden) {
+          createNewItemNotification(items)
+        }
+      }
     },
   },
 }

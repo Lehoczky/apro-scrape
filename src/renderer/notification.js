@@ -1,9 +1,11 @@
-export const createNewItemNotification = (items, window) => {
+import { ipcRenderer } from "electron"
+
+export const createNewItemNotification = items => {
   const title = titleBasedOnItems(items)
   const body = bodyBasedOnItems(items)
   const myNotification = new Notification(title, { body })
 
-  myNotification.onclick = window.show
+  myNotification.onclick = () => ipcRenderer.send("open-window")
 }
 
 const titleBasedOnItems = items => {

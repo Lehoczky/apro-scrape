@@ -10,7 +10,7 @@ import {
 } from "custom-electron-titlebar/dist/main"
 import { iconPath } from "./icon"
 
-var mainWindow
+let mainWindow
 setupTitlebar()
 
 export const createWindow = () => {
@@ -22,12 +22,12 @@ export const createWindow = () => {
     frame: false,
     backgroundColor: "#ececec",
     autoHideMenuBar: true,
+    show: false,
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
       nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
       contextIsolation: false,
-      enableRemoteModule: true,
       webSecurity: false,
       preload: join(__dirname, "preload.js"),
     },
@@ -48,6 +48,7 @@ export const createWindow = () => {
   mainWindow.on("closed", () => {
     mainWindow = undefined
   })
+  mainWindow.once("ready-to-show", () => mainWindow.show())
 }
 
 app.on("activate", () => {
