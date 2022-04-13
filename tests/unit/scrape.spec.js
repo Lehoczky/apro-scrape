@@ -1,7 +1,3 @@
-/**
- * @group unit
- */
-
 import { JSDOM } from "jsdom"
 
 import { createScraper } from "@/main/scrape.js"

@@ -12,7 +12,6 @@
 
 <script>
 export default {
-  name: "ScrapingFormHistoryButton",
   props: {
     hasError: {
       type: Boolean,

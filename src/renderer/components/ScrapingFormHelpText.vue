@@ -10,7 +10,6 @@
 
 <script>
 export default {
-  name: "ScrapingFormHelpText",
   data() {
     return {
       exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",

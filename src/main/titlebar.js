@@ -1,4 +1,4 @@
-import { Titlebar, Color } from "custom-electron-titlebar"
+import { Titlebar, Color } from "custom-electron-titlebar/dist"
 import { iconUrl } from "./icon"
 
 const options = {

@@ -1,29 +1,35 @@
 "use strict"
 
-import { app, ipcMain } from "electron"
-import unhandled from "electron-unhandled"
+import { app, ipcMain, BrowserWindow } from "electron"
 
+import { setupErrorHandling } from "./errorHandling"
 import { createTray } from "./tray"
 import { createScraper } from "./scrape"
 import { createWindow } from "./window"
 import { canReach, installVueDevtools } from "./utils"
 import { registerAppScheme, registerFileProtocol } from "./protocols"
 
-unhandled()
+setupErrorHandling()
 registerAppScheme()
 const scrape = createScraper()
 const isDevelopment = process.env.NODE_ENV !== "production"
 
-ipcMain.on("validate", async (event, url) => {
-  event.returnValue = await canReach(url)
+ipcMain.handle("validate", async (_event, url) => {
+  return await canReach(url)
+})
+ipcMain.handle("start-scraping", async (_event, url) => {
+  return await scrape(url)
+})
+ipcMain.handle("is-window-hidden", async ({ sender }) => {
+  const mainWindow = BrowserWindow.fromWebContents(sender)
+  return !mainWindow.isVisible()
+})
+ipcMain.on("open-window", ({ sender }) => {
+  const mainWindow = BrowserWindow.fromWebContents(sender)
+  mainWindow.show()
 })
 
-ipcMain.on("start-scraping", async (event, page) => {
-  const selling = await scrape(page)
-  event.reply("new-items", selling)
-})
-
-app.on("ready", async () => {
+app.whenReady().then(async () => {
   if (isDevelopment && !process.env.IS_TEST) {
     await installVueDevtools()
   }

@@ -1,11 +1,16 @@
 import axios from "axios"
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 
+import { logError } from "./errorHandling"
+
 export const canReach = async url => {
   try {
     await axios.head(url)
     return true
-  } catch {
+  } catch (error) {
+    if (!error.response) {
+      logError(error)
+    }
     return false
   }
 }
