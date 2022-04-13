@@ -1,15 +1,15 @@
 "use strict"
 
 import { app, ipcMain, BrowserWindow } from "electron"
-import unhandled from "electron-unhandled"
 
+import { setupErrorHandling } from "./errorHandling"
 import { createTray } from "./tray"
 import { createScraper } from "./scrape"
 import { createWindow } from "./window"
 import { canReach, installVueDevtools } from "./utils"
 import { registerAppScheme, registerFileProtocol } from "./protocols"
 
-unhandled()
+setupErrorHandling()
 registerAppScheme()
 const scrape = createScraper()
 const isDevelopment = process.env.NODE_ENV !== "production"
