@@ -20,6 +20,7 @@
     "format:fix": "prettier {src,tests}/** --write",
     "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
   },
+  "main": "background.js",
   "engines": {
     "node": ">=14.0.0"
   },
