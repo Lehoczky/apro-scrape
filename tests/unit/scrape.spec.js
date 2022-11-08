@@ -15,7 +15,7 @@ test("return empty list when no .media element is present", async () => {
 test("return every item on first call", async () => {
   const scrape = createScraper()
 
-  const dom = new JSDOM(`
+  const dom = new JSDOM(/*html*/ `
     <li class="media">
       <h1><a href="http://example.com/1">Item1</a></h1>
       <div class="uad-price">5000 Ft</div>
@@ -53,7 +53,7 @@ test("return every item on first call", async () => {
 
 test("skip featured item", async () => {
   const scrape = createScraper()
-  const dom = new JSDOM(`
+  const dom = new JSDOM(/*html*/ `
     <li class="media">
       <h1><a href="http://example.com/1">Item1</a></h1>
       <div class="uad-price">5000 Ft</div>
@@ -87,7 +87,7 @@ test("return only new item | older is present", async () => {
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
           <div class="uad-price">5000 Ft</div>
@@ -97,7 +97,7 @@ test("return only new item | older is present", async () => {
       `)
     })
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>
           <div class="uad-price">15000 Ft</div>
@@ -132,7 +132,7 @@ test("return only new item | old has been removed", async () => {
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
           <div class="uad-price">5000 Ft</div>
@@ -142,7 +142,7 @@ test("return only new item | old has been removed", async () => {
       `)
     })
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>
           <div class="uad-price">15000 Ft</div>
@@ -170,7 +170,7 @@ test("return empty list while there is no new item", async () => {
   jest
     .spyOn(JSDOM, "fromURL")
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
           <div class="uad-price">5000 Ft</div>
@@ -180,7 +180,7 @@ test("return empty list while there is no new item", async () => {
       `)
     })
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
           <div class="uad-price">5000 Ft</div>
@@ -190,7 +190,7 @@ test("return empty list while there is no new item", async () => {
       `)
     })
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
           <div class="uad-price">5000 Ft</div>
@@ -200,7 +200,7 @@ test("return empty list while there is no new item", async () => {
       `)
     })
     .mockImplementationOnce(() => {
-      return new JSDOM(`
+      return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>
           <div class="uad-price">15000 Ft</div>
