@@ -5,7 +5,7 @@ import { logError } from "./errorHandling"
 
 export const canReach = async url => {
   try {
-    await axios.head(url)
+    await axios.options(url)
     return true
   } catch (error) {
     if (!error.response) {

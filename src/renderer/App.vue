@@ -69,7 +69,7 @@ input,
 textarea,
 select,
 button {
-  font-family: Roboto, Helvetica Neue, Helvetica, sans-serif;
+  font-family: Roboto, "Helvetica Neue", Helvetica, sans-serif;
 }
 
 #app {
@@ -82,20 +82,20 @@ button {
 
 /** Input */
 .form-control:focus {
-  box-shadow: 0 0 0.25rem 0.0625rem rgba(0, 0, 0, 0.125) inset !important;
+  box-shadow: 0 0 0.25rem 0.0625rem rgb(0 0 0 / 12.5%) inset !important;
   border-color: #aaa !important;
 }
 
 .form-control.is-invalid:focus,
 .was-validated .form-control:invalid:focus {
   border-color: #dc3545 !important;
-  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.125) inset !important;
+  box-shadow: 0 0 0 0.2rem rgb(220 53 69 / 12.5%) inset !important;
 }
 
 /** Buttons */
 
 .btn:focus,
-.btn:not(:disabled):not(.disabled):active:focus {
+.btn:not(:disabled, .disabled):active:focus {
   box-shadow: none !important;
 }
 
@@ -111,8 +111,8 @@ button {
   color: #fff !important;
 }
 
-.btn-primary:not(:disabled):not(.disabled):active,
-.btn-primary:not(:disabled):not(.disabled).active {
+.btn-primary:not(:disabled, .disabled):active,
+.btn-primary:not(:disabled, .disabled).active {
   background-color: #8a0f11 !important;
   border-color: #8a0f11 !important;
   color: #fff !important;
