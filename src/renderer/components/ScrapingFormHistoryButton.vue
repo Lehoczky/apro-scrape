@@ -4,9 +4,14 @@
     variant="light"
     class="btn-history"
     :class="{ 'is-invalid': hasError }"
-    @click="$emit('click')"
+    @click="$emit('input', !value)"
   >
-    <b-icon icon="arrow-counterclockwise" title="History" />
+    <b-icon
+      class="icon"
+      :class="{ rotate: value }"
+      icon="arrow-counterclockwise"
+      title="History"
+    />
   </b-button>
 </template>
 
@@ -14,6 +19,10 @@
 export default {
   props: {
     hasError: {
+      type: Boolean,
+      required: true,
+    },
+    value: {
       type: Boolean,
       required: true,
     },
@@ -26,10 +35,17 @@ export default {
   background: #f7f7f7 !important;
   border: 1px solid #ced4da !important;
   border-left: 0 !important;
-  transition: all 1s;
 }
 
 .btn-history.is-invalid {
   border-color: #dc3545 !important;
+}
+
+.icon {
+  transition: transform 200ms ease-in-out;
+}
+
+.rotate {
+  transform: rotate(-125deg);
 }
 </style>

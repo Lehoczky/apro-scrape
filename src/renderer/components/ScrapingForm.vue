@@ -9,19 +9,25 @@
           :disabled="scraping"
           placeholder="Enter HardverApro URL"
         />
-        <b-input-group-append>
+        <b-input-group-append class="button-group">
           <scraping-form-history-button
             v-show="!historyIsEmpty && !scraping"
+            v-model="showHistory"
             :has-error="hasError"
-            @click="toggleHistory()"
           />
 
-          <scraping-form-submit-button v-if="!scraping" />
-
-          <scraping-form-stop-button v-else @stop="onStop()" />
+          <scraping-form-submit-button v-if="!scraping" class="action-button" />
+          <scraping-form-stop-button
+            v-else
+            class="action-button"
+            @stop="onStop()"
+          />
         </b-input-group-append>
+
         <div class="invalid-feedback">
-          {{ error }}
+          <b-collapse :visible="hasError">
+            {{ error }}
+          </b-collapse>
         </div>
       </b-input-group>
 
@@ -114,6 +120,7 @@ export default {
     },
     setAsCurrentUrl(link) {
       if (!this.scraping) {
+        this.error = ""
         this.url = link
       }
     },
@@ -135,3 +142,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.action-button {
+  width: 84px;
+}
+</style>
