@@ -14,8 +14,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
 import { BCollapse, BListGroup, BListGroupItem } from "bootstrap-vue"
+import { defineComponent } from "vue"
 
 export default defineComponent({
   components: { BCollapse, BListGroup, BListGroupItem },

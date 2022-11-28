@@ -46,22 +46,22 @@
 </template>
 
 <script lang="ts">
-import { ipcRenderer } from "electron"
-
-import ScrapingFormSubmitButton from "./ScrapingFormSubmitButton.vue"
-import ScrapingFormStopButton from "./ScrapingFormStopButton.vue"
-import ScrapingFormHistoryButton from "./ScrapingFormHistoryButton.vue"
-import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
-import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
-import { computed, defineComponent, ref, watch } from "vue"
 import { onClickOutside } from "@vueuse/core"
 import {
+  BCollapse,
   BForm,
+  BFormInput,
   BInputGroup,
   BInputGroupAppend,
-  BCollapse,
-  BFormInput,
 } from "bootstrap-vue"
+import { ipcRenderer } from "electron"
+import { computed, defineComponent, ref, watch } from "vue"
+
+import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
+import ScrapingFormHistoryButton from "./ScrapingFormHistoryButton.vue"
+import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
+import ScrapingFormStopButton from "./ScrapingFormStopButton.vue"
+import ScrapingFormSubmitButton from "./ScrapingFormSubmitButton.vue"
 
 export default defineComponent({
   components: {

@@ -11,9 +11,12 @@ module.exports = defineConfig({
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint", "only-warn"],
+  plugins: ["@typescript-eslint", "simple-import-sort", "only-warn"],
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "@typescript-eslint/parser",
+  rules: {
+    "simple-import-sort/imports": "warn",
+  },
   overrides: [
     {
       files: ["**/main/**/*.{j,t}s"],

@@ -1,5 +1,6 @@
+import { CookieJar, JSDOM } from "jsdom"
+
 import { SoldItem } from "@/shared"
-import { JSDOM, CookieJar } from "jsdom"
 
 export function createScraper() {
   let lastItem: SoldItem | null = null

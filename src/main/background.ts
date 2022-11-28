@@ -1,13 +1,13 @@
 "use strict"
 
-import { app, ipcMain, BrowserWindow } from "electron"
+import { app, BrowserWindow, ipcMain } from "electron"
 
 import { setupErrorHandling } from "./errorHandling"
-import { createTray } from "./tray"
-import { createScraper } from "./scrape"
-import { createWindow } from "./window"
-import { canReach, installVueDevtools } from "./utils"
 import { registerAppScheme, registerFileProtocol } from "./protocols"
+import { createScraper } from "./scrape"
+import { createTray } from "./tray"
+import { canReach, installVueDevtools } from "./utils"
+import { createWindow } from "./window"
 
 setupErrorHandling()
 registerAppScheme()

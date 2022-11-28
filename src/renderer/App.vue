@@ -11,15 +11,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "vue"
+import { BCard, BContainer } from "bootstrap-vue"
 import { ipcRenderer } from "electron"
+import { defineComponent, ref } from "vue"
 
-import ScrapingForm from "./components/ScrapingForm.vue"
+import { SoldItem } from "@/shared"
+
 import MessageList from "./components/MessageList.vue"
+import ScrapingForm from "./components/ScrapingForm.vue"
 import { createNewItemNotification } from "./notification"
 import { startInterval } from "./utils"
-import { SoldItem } from "@/shared"
-import { BCard, BContainer } from "bootstrap-vue"
 
 const SCRAPING_INTERVAL = 60
 

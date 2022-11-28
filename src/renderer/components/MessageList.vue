@@ -33,6 +33,7 @@
 <script lang="ts">
 import { shell } from "electron"
 import { defineComponent, PropType } from "vue"
+
 import { SoldItem } from "@/shared"
 
 export default defineComponent({

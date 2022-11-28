@@ -1,6 +1,7 @@
 "use strict"
 
-import { app, BrowserWindow, Tray, Menu } from "electron"
+import { app, BrowserWindow, Menu, Tray } from "electron"
+
 import { iconPath } from "./icon"
 
 let tray

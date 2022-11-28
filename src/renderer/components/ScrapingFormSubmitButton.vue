@@ -3,8 +3,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
 import { BButton } from "bootstrap-vue"
+import { defineComponent } from "vue"
 
 export default defineComponent({
   components: { BButton },

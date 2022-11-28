@@ -1,13 +1,14 @@
 "use strict"
 
+import {
+  attachTitlebarToWindow,
+  setupTitlebar,
+} from "custom-electron-titlebar/dist/main"
 import { app, BrowserWindow } from "electron"
+import { autoUpdater } from "electron-updater"
 import { join } from "path"
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
-import { autoUpdater } from "electron-updater"
-import {
-  setupTitlebar,
-  attachTitlebarToWindow,
-} from "custom-electron-titlebar/dist/main"
+
 import { iconPath } from "./icon"
 
 let mainWindow: BrowserWindow | undefined
