@@ -19,11 +19,14 @@ import MessageList from "./components/MessageList.vue"
 import { createNewItemNotification } from "./notification"
 import { startInterval } from "./utils"
 import { SoldItem } from "@/shared"
+import { BCard, BContainer } from "bootstrap-vue"
 
 const SCRAPING_INTERVAL = 60
 
 export default defineComponent({
   components: {
+    BCard,
+    BContainer,
     ScrapingForm,
     MessageList,
   },

@@ -55,9 +55,21 @@ import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
 import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
 import { computed, defineComponent, ref, watch } from "vue"
 import { onClickOutside } from "@vueuse/core"
+import {
+  BForm,
+  BInputGroup,
+  BInputGroupAppend,
+  BCollapse,
+  BFormInput,
+} from "bootstrap-vue"
 
 export default defineComponent({
   components: {
+    BForm,
+    BInputGroup,
+    BCollapse,
+    BInputGroupAppend,
+    BFormInput,
     ScrapingFormSubmitButton,
     ScrapingFormStopButton,
     ScrapingFormHistoryButton,

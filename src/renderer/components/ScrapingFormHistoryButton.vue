@@ -17,8 +17,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue"
+import { BIcon, BButton, BIconArrowCounterclockwise } from "bootstrap-vue"
 
 export default defineComponent({
+  // eslint-disable-next-line vue/no-unused-components
+  components: { BIcon, BButton, BIconArrowCounterclockwise },
   props: {
     hasError: {
       type: Boolean,
