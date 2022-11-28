@@ -19,10 +19,14 @@ jobs:
         with:
           node-version: 16
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Build/release Electron app
         uses: paneron/action-electron-builder@v1.8.1
         with:
           package_manager: "NPM"
+          skip_package_manager_install: true
           skip_build: true
           use_vue_cli: true
           # GitHub token, automatically provided to the action
