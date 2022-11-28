@@ -18,7 +18,7 @@ import MessageList from "./components/MessageList.vue"
 import { createNewItemNotification } from "./notification.js"
 import { startInterval } from "./utils.js"
 
-const SCRAPING_INTERVAL = 15
+const SCRAPING_INTERVAL = 60
 
 export default {
   components: {
