@@ -27,4 +27,4 @@ platform.
 
 ## Creating new release
 
-See: <https://github.com/samuelmeuli/action-electron-builder#releasin>
+See: <https://github.com/samuelmeuli/action-electron-builder#releasing>

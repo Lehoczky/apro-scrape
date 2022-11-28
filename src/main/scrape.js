@@ -20,26 +20,44 @@ export function createScraper() {
 async function fetchDomForPage(page) {
   const cookieJar = new CookieJar()
   const COOKIE_TO_FETCH_200_ITEMS = "prf_ls_uad=lstup.d.200.normal"
-  cookieJar.setCookieSync(COOKIE_TO_FETCH_200_ITEMS, page)
+  if (process.env.JEST_WORKER_ID === undefined) {
+    cookieJar.setCookieSync(COOKIE_TO_FETCH_200_ITEMS, page)
+  }
   return await JSDOM.fromURL(page, { cookieJar })
 }
 
 async function getSellingItems(dom) {
   return Array.from(dom.window.document.querySelectorAll(".media"))
-    .map(item => {
-      try {
-        const url = item.querySelector("h1 > a").href
-        const title = item.querySelector("h1 > a").textContent
-        const price = item.querySelector(".uad-price").textContent
-        const location = item.querySelector(".uad-light").textContent
-        const updated = item.querySelector(".uad-ultralight").textContent
-        return { url, title, price, location, updated }
-      } catch (error) {
-        console.error(error.message)
-        return undefined
-      }
-    })
+    .filter(domElement => !isAd(domElement))
+    .map(createItemObject)
     .filter(item => item !== undefined)
     .filter(item => item.updated !== "Előresorolt hirdetés")
     .filter(item => item.price !== "Csere")
+}
+
+function isAd(domElement) {
+  const ribbon = domElement.querySelector(".uad-corner-ribbon")
+  if (ribbon) {
+    const ribbonText = ribbon.querySelector("span").textContent
+    return removeZeroWidthNoBreakSpace(ribbonText) === "PR"
+  }
+  return false
+}
+
+function createItemObject(domElement) {
+  try {
+    const url = domElement.querySelector("h1 > a").href
+    const title = domElement.querySelector("h1 > a").textContent
+    const price = domElement.querySelector(".uad-price").textContent
+    const location = domElement.querySelector(".uad-light").textContent
+    const updated = domElement.querySelector(".uad-ultralight").textContent
+    return { url, title, price, location, updated }
+  } catch (error) {
+    console.error(error.message)
+    return undefined
+  }
+}
+
+function removeZeroWidthNoBreakSpace(text) {
+  return text.replace(/\uFEFF/g, "")
 }
