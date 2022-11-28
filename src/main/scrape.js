@@ -1,9 +1,10 @@
-import { JSDOM } from "jsdom"
+import { JSDOM, CookieJar } from "jsdom"
 
-export const createScraper = () => {
+export function createScraper() {
   let lastItem = null
   return async page => {
-    let items = await getSellingItems(page)
+    const dom = await fetchDomForPage(page)
+    let items = await getSellingItems(dom)
     const urls = items.map(item => item.url)
 
     if (lastItem && urls.includes(lastItem.url)) {
@@ -16,8 +17,14 @@ export const createScraper = () => {
   }
 }
 
-const getSellingItems = async page => {
-  const dom = await JSDOM.fromURL(page)
+async function fetchDomForPage(page) {
+  const cookieJar = new CookieJar()
+  const COOKIE_TO_FETCH_200_ITEMS = "prf_ls_uad=lstup.d.200.normal"
+  cookieJar.setCookieSync(COOKIE_TO_FETCH_200_ITEMS, page)
+  return await JSDOM.fromURL(page, { cookieJar })
+}
+
+async function getSellingItems(dom) {
   return Array.from(dom.window.document.querySelectorAll(".media"))
     .map(item => {
       try {
