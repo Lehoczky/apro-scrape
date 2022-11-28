@@ -1,5 +1,5 @@
 <template>
-  <b-button variant="primary" type="submit">Scrape</b-button>
+  <BButton variant="primary" type="submit">Scrape</BButton>
 </template>
 
 <script lang="ts">

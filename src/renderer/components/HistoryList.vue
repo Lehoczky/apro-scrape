@@ -1,20 +1,21 @@
 <template>
-  <b-collapse id="history" :visible="show">
-    <b-list-group>
-      <b-list-group-item
+  <BCollapse id="history" :visible="show">
+    <BListGroup>
+      <BListGroupItem
         v-for="link in history"
         :key="link"
         button
         @click="$emit('select', link)"
       >
         {{ link }}
-      </b-list-group-item>
-    </b-list-group>
-  </b-collapse>
+      </BListGroupItem>
+    </BListGroup>
+  </BCollapse>
 </template>
 
 <script lang="ts">
 import { BCollapse, BListGroup, BListGroupItem } from "bootstrap-vue"
+import type { PropType } from "vue"
 import { defineComponent } from "vue"
 
 export default defineComponent({
@@ -24,9 +25,12 @@ export default defineComponent({
       type: Boolean,
     },
     history: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
+  },
+  emits: {
+    select: (_payload: string) => true,
   },
 })
 </script>

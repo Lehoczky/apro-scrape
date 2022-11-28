@@ -1,6 +1,6 @@
 import { CookieJar, JSDOM } from "jsdom"
 
-import { SoldItem } from "@/shared"
+import type { SoldItem } from "@/shared"
 
 export function createScraper() {
   let lastItem: SoldItem | null = null
@@ -29,7 +29,7 @@ async function fetchDomForPage(page: string) {
   return await JSDOM.fromURL(page, { cookieJar })
 }
 
-async function getSellingItems(dom: JSDOM) {
+function getSellingItems(dom: JSDOM) {
   return Array.from(dom.window.document.querySelectorAll(".media"))
     .filter(domElement => !isAd(domElement))
     .map(createItemObject)

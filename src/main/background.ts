@@ -20,7 +20,7 @@ ipcMain.handle("validate", async (_event, url) => {
 ipcMain.handle("start-scraping", async (_event, url) => {
   return await scrape(url)
 })
-ipcMain.handle("is-window-hidden", async ({ sender }) => {
+ipcMain.handle("is-window-hidden", ({ sender }) => {
   const mainWindow = BrowserWindow.fromWebContents(sender)
   return !mainWindow.isVisible()
 })

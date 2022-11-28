@@ -15,6 +15,62 @@ module.exports = defineConfig({
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "@typescript-eslint/parser",
   rules: {
+    // Possible Problems
+    "no-constant-binary-expression": "warn",
+    "no-constructor-return": "warn",
+    "no-promise-executor-return": "warn",
+    "no-unreachable-loop": "warn",
+
+    // Suggestions
+    complexity: ["warn", 13],
+    "default-case-last": "warn",
+    "dot-notation": "warn",
+    eqeqeq: ["warn", "smart"],
+    "func-style": ["warn", "declaration", { allowArrowFunctions: true }],
+    "grouped-accessor-pairs": ["warn", "getBeforeSet"],
+    "max-depth": ["warn", 6],
+    "max-params": ["warn", { max: 8 }],
+    "no-bitwise": "warn",
+    "no-caller": "warn",
+    "no-extend-native": "warn",
+    "no-implicit-coercion": ["warn", { boolean: false }],
+    "no-lonely-if": "warn",
+    "no-multi-str": "warn",
+    "no-nested-ternary": "warn",
+    "no-return-assign": "warn",
+    "no-throw-literal": "warn",
+    "no-unneeded-ternary": "warn",
+    "no-useless-concat": "warn",
+    "no-var": "warn",
+    "no-useless-return": "warn",
+    "object-shorthand": "warn",
+    "prefer-arrow-callback": "warn",
+    "prefer-const": "warn",
+    "prefer-exponentiation-operator": "warn",
+    "prefer-object-spread": "warn",
+    "prefer-rest-params": "warn",
+    "prefer-template": "warn",
+    radix: "warn",
+    "require-await": "warn",
+    yoda: ["warn", "never", { exceptRange: true }],
+
+    "@typescript-eslint/array-type": ["warn", { default: "array-simple" }],
+    "@typescript-eslint/consistent-indexed-object-style": ["warn", "record"],
+    "@typescript-eslint/consistent-type-assertions": [
+      "warn",
+      {
+        assertionStyle: "as",
+        objectLiteralTypeAssertions: "allow-as-parameter",
+      },
+    ],
+    "@typescript-eslint/consistent-type-imports": [
+      "warn",
+      { disallowTypeAnnotations: false },
+    ],
+    "@typescript-eslint/prefer-for-of": "warn",
+    "@typescript-eslint/prefer-function-type": "warn",
+    "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+
     "simple-import-sort/imports": "warn",
   },
   overrides: [
@@ -46,7 +102,18 @@ module.exports = defineConfig({
         browser: true,
       },
       rules: {
+        "vue/component-name-in-template-casing": [
+          "warn",
+          "PascalCase",
+          {
+            ignores: [],
+          },
+        ],
+        "vue/custom-event-name-casing": ["warn", "kebab-case"],
         "vue/html-self-closing": ["warn", { html: { void: "always" } }],
+        "vue/no-static-inline-styles": "warn",
+        "vue/no-useless-mustaches": "warn",
+        "vue/no-useless-v-bind": "warn",
       },
     },
     {
@@ -56,6 +123,9 @@ module.exports = defineConfig({
       ],
       env: {
         jest: true,
+      },
+      rules: {
+        "require-await": "off",
       },
     },
     {

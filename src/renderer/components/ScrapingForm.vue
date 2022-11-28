@@ -1,42 +1,35 @@
 <template>
   <div>
-    <b-form @submit.prevent="onFormSubmit()">
-      <b-input-group>
-        <b-form-input
+    <BForm @submit.prevent="onFormSubmit()">
+      <BInputGroup>
+        <BFormInput
           v-model="url"
           class="text-truncate"
           :class="{ 'is-invalid': hasError }"
           :disabled="scraping"
           placeholder="Enter HardverApro URL"
         />
-        <b-input-group-append class="button-group">
-          <scraping-form-history-button
+        <BInputGroupAppend class="button-group">
+          <HistoryButton
             v-show="!historyIsEmpty && !scraping"
             v-model="showHistory"
             :has-error="hasError"
           />
 
-          <scraping-form-submit-button v-if="!scraping" class="action-button" />
-          <scraping-form-stop-button
-            v-else
-            class="action-button"
-            @stop="onStop()"
-          />
-        </b-input-group-append>
+          <SubmitButton v-if="!scraping" class="action-button" />
+          <StopButton v-else class="action-button" @stop="onStop()" />
+        </BInputGroupAppend>
 
         <div class="invalid-feedback">
-          <b-collapse :visible="hasError">
+          <BCollapse :visible="hasError">
             {{ error }}
-          </b-collapse>
+          </BCollapse>
         </div>
-      </b-input-group>
+      </BInputGroup>
 
-      <scraping-form-help-text
-        v-if="historyIsEmpty"
-        @urlClicked="setAsCurrentUrl($event)"
-      />
-    </b-form>
-    <scraping-form-history-list
+      <HelpText v-if="historyIsEmpty" @url-click="setAsCurrentUrl($event)" />
+    </BForm>
+    <HistoryList
       ref="historyListRef"
       :show="showHistory"
       :history="history"
@@ -57,11 +50,11 @@ import {
 import { ipcRenderer } from "electron"
 import { computed, defineComponent, ref, watch } from "vue"
 
-import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
-import ScrapingFormHistoryButton from "./ScrapingFormHistoryButton.vue"
-import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
-import ScrapingFormStopButton from "./ScrapingFormStopButton.vue"
-import ScrapingFormSubmitButton from "./ScrapingFormSubmitButton.vue"
+import HelpText from "./HelpText.vue"
+import HistoryButton from "./HistoryButton.vue"
+import HistoryList from "./HistoryList.vue"
+import StopButton from "./StopButton.vue"
+import SubmitButton from "./SubmitButton.vue"
 
 export default defineComponent({
   components: {
@@ -70,11 +63,15 @@ export default defineComponent({
     BCollapse,
     BInputGroupAppend,
     BFormInput,
-    ScrapingFormSubmitButton,
-    ScrapingFormStopButton,
-    ScrapingFormHistoryButton,
-    ScrapingFormHelpText,
-    ScrapingFormHistoryList,
+    SubmitButton,
+    StopButton,
+    HistoryButton,
+    HelpText,
+    HistoryList,
+  },
+  emits: {
+    submit: (_payload: string) => true,
+    stop: () => true,
   },
   setup(props, { emit }) {
     const url = ref("")

@@ -1,8 +1,8 @@
 <template>
-  <b-button variant="primary" @click="$emit('stop')">
-    <b-spinner class="mr-1" small />
+  <BButton variant="primary" @click="$emit('stop')">
+    <BSpinner class="mr-1" small />
     Stop
-  </b-button>
+  </BButton>
 </template>
 
 <script lang="ts">
@@ -11,5 +11,8 @@ import { defineComponent } from "vue"
 
 export default defineComponent({
   components: { BButton, BSpinner },
+  emits: {
+    stop: () => true,
+  },
 })
 </script>

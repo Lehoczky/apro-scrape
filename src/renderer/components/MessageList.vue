@@ -32,9 +32,10 @@
 
 <script lang="ts">
 import { shell } from "electron"
-import { defineComponent, PropType } from "vue"
+import type { PropType } from "vue"
+import { defineComponent } from "vue"
 
-import { SoldItem } from "@/shared"
+import type { SoldItem } from "@/shared"
 
 export default defineComponent({
   props: {

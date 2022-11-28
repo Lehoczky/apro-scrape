@@ -1,18 +1,18 @@
 <template>
-  <b-button
+  <BButton
     type="button"
     variant="light"
     class="btn-history"
     :class="{ 'is-invalid': hasError }"
     @click="$emit('input', !value)"
   >
-    <b-icon
+    <BIcon
       class="icon"
       :class="{ rotate: value }"
       icon="arrow-counterclockwise"
       title="History"
     />
-  </b-button>
+  </BButton>
 </template>
 
 <script lang="ts">
@@ -31,6 +31,9 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  emits: {
+    input: (_payload: boolean) => true,
   },
 })
 </script>

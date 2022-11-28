@@ -1,13 +1,13 @@
 <template>
-  <b-container id="app" fluid>
-    <b-card class="mb-3 mt-5">
-      <scraping-form @submit="startScraping($event)" @stop="stopScraping()" />
-    </b-card>
+  <BContainer id="app" fluid>
+    <BCard class="mb-3 mt-5">
+      <ScrapingForm @submit="startScraping($event)" @stop="stopScraping()" />
+    </BCard>
 
-    <b-card v-show="shownItems.length" class="mb-3">
-      <message-list :messages="shownItems" />
-    </b-card>
-  </b-container>
+    <BCard v-show="shownItems.length" class="mb-3">
+      <MessageList :messages="shownItems" />
+    </BCard>
+  </BContainer>
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ import { BCard, BContainer } from "bootstrap-vue"
 import { ipcRenderer } from "electron"
 import { defineComponent, ref } from "vue"
 
-import { SoldItem } from "@/shared"
+import type { SoldItem } from "@/shared"
 
 import MessageList from "./components/MessageList.vue"
 import ScrapingForm from "./components/ScrapingForm.vue"
