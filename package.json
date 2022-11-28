@@ -69,5 +69,10 @@
     "testMatch": [
       "<rootDir>/tests/**/*.spec.(js|ts)"
     ]
+  },
+  "overrides": {
+    "vue-cli-plugin-electron-builder": {
+      "electron-builder": "^23.0.3"
+    }
   }
 }
