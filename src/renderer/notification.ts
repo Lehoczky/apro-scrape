@@ -1,6 +1,7 @@
+import { SoldItem } from "@/shared"
 import { ipcRenderer } from "electron"
 
-export const createNewItemNotification = items => {
+export function createNewItemNotification(items: SoldItem[]) {
   const title = titleBasedOnItems(items)
   const body = bodyBasedOnItems(items)
   const myNotification = new Notification(title, { body })
@@ -8,13 +9,13 @@ export const createNewItemNotification = items => {
   myNotification.onclick = () => ipcRenderer.send("open-window")
 }
 
-const titleBasedOnItems = items => {
+function titleBasedOnItems(items: SoldItem[]) {
   return items.length === 1
     ? "New item is available"
     : "New items are available"
 }
 
-const bodyBasedOnItems = items => {
+function bodyBasedOnItems(items: SoldItem[]) {
   return items.length === 1
     ? `${items[0].title} - ${items[0].price}`
     : `${items.length} new items found!`

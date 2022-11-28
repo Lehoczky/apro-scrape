@@ -10,7 +10,7 @@ import {
 } from "custom-electron-titlebar/dist/main"
 import { iconPath } from "./icon"
 
-let mainWindow
+let mainWindow: BrowserWindow | undefined
 setupTitlebar()
 
 export const createWindow = () => {
@@ -26,7 +26,7 @@ export const createWindow = () => {
     webPreferences: {
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+      nodeIntegration: Boolean(process.env.ELECTRON_NODE_INTEGRATION),
       contextIsolation: false,
       webSecurity: false,
       preload: join(__dirname, "preload.js"),

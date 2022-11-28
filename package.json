@@ -1,34 +1,31 @@
 {
   "name": "apro-scrape",
-  "productName": "Apro Scrape",
-  "description": "Helpful web scraper for hardverapro.hu",
   "version": "1.2.3",
+  "private": true,
+  "description": "Helpful web scraper for hardverapro.hu",
   "author": {
     "name": "Zoltan Lehoczky",
     "email": "ifjlehoczkyzoltan@gmail.com",
     "url": "https://github.com/Lehoczky"
   },
-  "private": true,
   "scripts": {
-    "lint": "vue-cli-service lint",
     "build": "vue-cli-service electron:build",
-    "start": "vue-cli-service electron:serve",
-    "test": "vue-cli-service test:unit",
-    "styles:check": "stylelint \"src/**/*.{css,vue}\"",
-    "styles:fix": "stylelint \"src/**/*.{css,vue}\" --fix",
+    "lint": "vue-cli-service lint",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
     "format:check": "prettier {src,tests}/** --check",
     "format:fix": "prettier {src,tests}/** --write",
-    "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten"
+    "generate-icons": "electron-icon-builder --input=./public/icon.png --output=build --flatten",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "start": "vue-cli-service electron:serve",
+    "styles:check": "stylelint \"src/**/*.{css,vue}\"",
+    "styles:fix": "stylelint \"src/**/*.{css,vue}\" --fix",
+    "test": "vue-cli-service test:unit"
   },
   "main": "background.js",
-  "engines": {
-    "node": ">=14.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Lehoczky/apro-scrape.git"
-  },
   "dependencies": {
+    "@vueuse/core": "^9.6.0",
     "axios": "~1.1.3",
     "bootstrap-vue": "^2.23.1",
     "custom-electron-titlebar": "^4.1.0",
@@ -36,11 +33,16 @@
     "electron-updater": "5.3.0",
     "electron-util": "^0.17.2",
     "jsdom": "^20.0.3",
-    "vue": "^2.7.13",
-    "vue-click-outside": "^1.1.0"
+    "vue": "^2.7.13"
   },
   "devDependencies": {
+    "@types/electron-devtools-installer": "^2.2.0",
+    "@types/jest": "^27.0.1",
+    "@types/jsdom": "^20.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
     "@vue/cli-plugin-eslint": "^5.0.8",
+    "@vue/cli-plugin-typescript": "~5.0.0",
     "@vue/cli-plugin-unit-jest": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^1.3.0",
@@ -50,29 +52,39 @@
     "electron-icon-builder": "^2.0.1",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-define-config": "^1.11.0",
-    "eslint-plugin-node": "^11.1.0",
+    "eslint-define-config": "^1.12.0",
+    "eslint-plugin-n": "^15.5.1",
     "eslint-plugin-only-warn": "^1.0.3",
-    "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.7.0",
     "postcss-html": "^1.5.0",
     "stylelint": "^14.14.1",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard": "^29.0.0",
+    "ts-jest": "^27.0.4",
+    "ts-loader": "~8.2.0",
+    "typescript": "~4.5.5",
     "vue-cli-plugin-electron-builder": "^2.1.1",
     "vue-template-compiler": "^2.7.13"
   },
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest/presets/no-babel",
+    "preset": "@vue/cli-plugin-unit-jest/presets/typescript",
     "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/tests/**/*.spec.(js|ts)"
     ]
   },
+  "engines": {
+    "node": ">=v16.17.0"
+  },
   "overrides": {
     "vue-cli-plugin-electron-builder": {
       "electron-builder": "^23.0.3"
     }
+  },
+  "productName": "Apro Scrape",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lehoczky/apro-scrape.git"
   }
 }

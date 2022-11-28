@@ -4,56 +4,60 @@
       <scraping-form @submit="startScraping($event)" @stop="stopScraping()" />
     </b-card>
 
-    <b-card v-show="messages.length" class="mb-3">
-      <message-list :messages="messages" />
+    <b-card v-show="shownItems.length" class="mb-3">
+      <message-list :messages="shownItems" />
     </b-card>
   </b-container>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, ref } from "vue"
 import { ipcRenderer } from "electron"
 
 import ScrapingForm from "./components/ScrapingForm.vue"
 import MessageList from "./components/MessageList.vue"
-import { createNewItemNotification } from "./notification.js"
-import { startInterval } from "./utils.js"
+import { createNewItemNotification } from "./notification"
+import { startInterval } from "./utils"
+import { SoldItem } from "@/shared"
 
 const SCRAPING_INTERVAL = 60
 
-export default {
+export default defineComponent({
   components: {
     ScrapingForm,
     MessageList,
   },
-  data() {
-    return {
-      messages: [],
-      interval: undefined,
-    }
-  },
-  methods: {
-    startScraping(url) {
-      this.interval = startInterval(SCRAPING_INTERVAL, async () => {
+  setup() {
+    const shownItems = ref<SoldItem[][]>([])
+    const interval = ref<ReturnType<typeof startInterval>>()
+
+    function startScraping(url: string) {
+      interval.value = startInterval(SCRAPING_INTERVAL, async () => {
         const items = await ipcRenderer.invoke("start-scraping", url)
-        this.handleScrapedItems(items)
+        handleScrapedItems(items)
       })
-    },
-    stopScraping() {
-      clearInterval(this.interval)
-      this.interval = undefined
-    },
-    async handleScrapedItems(items) {
-      console.log(items.length)
+    }
+
+    async function handleScrapedItems(items: SoldItem[]) {
       if (items.length) {
-        this.messages = [items, ...this.messages]
+        console.log(items.length)
+
+        shownItems.value = [items, ...shownItems.value]
         const isWindowHidden = await ipcRenderer.invoke("is-window-hidden")
         if (isWindowHidden) {
           createNewItemNotification(items)
         }
       }
-    },
+    }
+
+    function stopScraping() {
+      clearInterval(interval.value)
+      interval.value = undefined
+    }
+
+    return { shownItems, startScraping, stopScraping }
   },
-}
+})
 </script>
 
 <style>

@@ -2,7 +2,8 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll.stylelint": true,
+    "source.fixAll.markdownlint": true
   },
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -11,6 +12,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "stylelint.validate": ["vue"],
-  "eslint.validate": ["javascript", "vue"],
-  "jest.pathToJest": " npm test -- --group=unit"
+  "eslint.validate": ["javascript", "typescript", "vue"],
+  "jest.pathToJest": " npm test -- --group=unit",
+  "cSpell.words": ["Titlebar", "VUEJS"],
+  "markdownlint.config": {
+    "MD033": false
+  }
 }

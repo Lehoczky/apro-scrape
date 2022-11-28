@@ -8,14 +8,15 @@
   >
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      exampleUrl: "https://hardverapro.hu/aprok/mobil/index.html",
-    }
+<script lang="ts">
+import { defineComponent, ref } from "vue"
+
+export default defineComponent({
+  setup() {
+    const exampleUrl = ref("https://hardverapro.hu/aprok/mobil/index.html")
+    return { exampleUrl }
   },
-}
+})
 </script>
 
 <style scoped>

@@ -30,27 +30,32 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { shell } from "electron"
+import { defineComponent, PropType } from "vue"
+import { SoldItem } from "@/shared"
 
-export default {
+export default defineComponent({
   props: {
     messages: {
-      type: Array,
+      type: Array as PropType<SoldItem[][]>,
       required: true,
     },
   },
-  methods: {
-    dateIntervalForMessage(message) {
+  setup() {
+    function dateIntervalForMessage(message: SoldItem[]) {
       const lastDate = message[message.length - 1].updated
       const firstDate = message[0].updated
       return `${lastDate} - ${firstDate}`
-    },
-    openExternal(url) {
+    }
+
+    function openExternal(url: string) {
       shell.openExternal(url)
-    },
+    }
+
+    return { dateIntervalForMessage, openExternal }
   },
-}
+})
 </script>
 
 <style scoped>

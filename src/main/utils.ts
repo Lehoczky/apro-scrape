@@ -3,22 +3,22 @@ import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer"
 
 import { logError } from "./errorHandling"
 
-export const canReach = async url => {
+export async function canReach(url: string) {
   try {
     await axios.options(url)
     return true
   } catch (error) {
-    if (!error.response) {
-      logError(error)
+    if (!axios.isAxiosError(error)) {
+      logError(error as Error)
     }
     return false
   }
 }
 
-export const installVueDevtools = async () => {
+export async function installVueDevtools() {
   try {
     await installExtension(VUEJS_DEVTOOLS)
-  } catch (e) {
-    console.error("Vue Devtools failed to install:", e.toString())
+  } catch (error) {
+    console.error("Vue Devtools failed to install:", error.toString())
   }
 }

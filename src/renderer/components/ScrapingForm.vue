@@ -37,7 +37,7 @@
       />
     </b-form>
     <scraping-form-history-list
-      v-click-outside="hideHistory"
+      ref="historyListRef"
       :show="showHistory"
       :history="history"
       @select="setAsCurrentUrl($event)"
@@ -45,17 +45,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ipcRenderer } from "electron"
 
-import clickOutsideHostMixin from "../mixins/clickOutsideHostMixin.js"
 import ScrapingFormSubmitButton from "./ScrapingFormSubmitButton.vue"
 import ScrapingFormStopButton from "./ScrapingFormStopButton.vue"
 import ScrapingFormHistoryButton from "./ScrapingFormHistoryButton.vue"
 import ScrapingFormHelpText from "./ScrapingFormHelpText.vue"
 import ScrapingFormHistoryList from "./ScrapingFormHistoryList.vue"
+import { computed, defineComponent, ref, watch } from "vue"
+import { onClickOutside } from "@vueuse/core"
 
-export default {
+export default defineComponent({
   components: {
     ScrapingFormSubmitButton,
     ScrapingFormStopButton,
@@ -63,84 +64,97 @@ export default {
     ScrapingFormHelpText,
     ScrapingFormHistoryList,
   },
-  mixins: [clickOutsideHostMixin],
-  data() {
-    return {
-      url: "",
-      scraping: false,
-      loading: false,
-      showHistory: false,
-      history: [],
-      error: "",
-    }
-  },
-  computed: {
-    historyIsEmpty() {
-      return this.history.length === 0
-    },
-    hasError() {
-      return this.error !== ""
-    },
-  },
-  watch: {
-    history(newValue) {
-      localStorage.setItem("history", JSON.stringify(newValue))
-    },
-  },
-  created() {
-    this.loadSavedHistory()
-  },
-  methods: {
-    async onFormSubmit() {
-      this.error = await this.validateUrlInput()
-      if (!this.error) {
-        this.scraping = true
-        this.showHistory = false
-        this.addToHistory(this.url)
+  setup(props, { emit }) {
+    const url = ref("")
+    const scraping = ref(false)
+    const showHistory = ref(false)
+    const history = ref<string[]>([])
+    const error = ref("")
+    const historyListRef = ref(null)
 
-        this.$emit("submit", this.url)
+    const historyIsEmpty = computed(() => {
+      return history.value.length === 0
+    })
+
+    const hasError = computed(() => {
+      return error.value !== ""
+    })
+
+    watch(history, newValue => {
+      localStorage.setItem("history", JSON.stringify(newValue))
+    })
+
+    async function onFormSubmit(): Promise<void> {
+      error.value = await validateUrlInput()
+      if (!error.value) {
+        scraping.value = true
+        showHistory.value = false
+        addToHistory(url.value)
+
+        emit("submit", url.value)
       }
-    },
-    onStop() {
-      this.scraping = false
-      this.$emit("stop")
-    },
-    async validateUrlInput() {
-      if (this.url === "") {
+    }
+
+    function onStop(): void {
+      scraping.value = false
+      emit("stop")
+    }
+
+    async function validateUrlInput(): Promise<string> {
+      if (url.value === "") {
         return "Please fill out this field"
-      } else if (!this.url.startsWith("https://hardverapro.hu")) {
+      } else if (!url.value.startsWith("https://hardverapro.hu")) {
         return "Please provide a link to hardverapro.hu"
       } else {
-        const validURL = await ipcRenderer.invoke("validate", this.url)
+        const validURL = await ipcRenderer.invoke("validate", url.value)
         if (!validURL) {
           return "The page does not exist, please check the URL"
         }
         return ""
       }
-    },
-    setAsCurrentUrl(link) {
-      if (!this.scraping) {
-        this.error = ""
-        this.url = link
+    }
+
+    function setAsCurrentUrl(link: string): void {
+      if (!scraping.value) {
+        error.value = ""
+        url.value = link
       }
-    },
-    loadSavedHistory() {
-      this.history = JSON.parse(localStorage.getItem("history")) || []
-    },
-    hideHistory() {
-      this.showHistory = false
-    },
-    toggleHistory() {
-      this.showHistory = !this.showHistory
-    },
-    addToHistory(link) {
-      if (this.history.includes(link)) {
-        this.history.splice(this.history.indexOf(link), 1)
+    }
+
+    function loadSavedHistory(): void {
+      history.value = JSON.parse(localStorage.getItem("history")) || []
+    }
+    loadSavedHistory()
+
+    function hideHistory(): void {
+      showHistory.value = false
+    }
+
+    function addToHistory(link: string): void {
+      if (history.value.includes(link)) {
+        history.value.splice(history.value.indexOf(link), 1)
       }
-      this.history = [link, ...this.history.slice(0, 4)]
-    },
+      history.value = [link, ...history.value.slice(0, 4)]
+    }
+
+    onClickOutside(historyListRef, hideHistory)
+
+    return {
+      url,
+      scraping,
+      hasError,
+      historyIsEmpty,
+      showHistory,
+      onStop,
+      error,
+      setAsCurrentUrl,
+      history,
+      hideHistory,
+      onFormSubmit,
+      historyListRef,
+    }
   },
-}
+})
 </script>
 
 <style scoped>

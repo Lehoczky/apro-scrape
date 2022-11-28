@@ -1,7 +1,7 @@
 import unhandled from "electron-unhandled"
 import { openNewGitHubIssue } from "electron-util"
 
-export const setupErrorHandling = () => {
+export function setupErrorHandling() {
   unhandled({
     reportButton: error => {
       openNewGitHubIssue({
@@ -13,6 +13,6 @@ export const setupErrorHandling = () => {
   })
 }
 
-export const logError = error => {
+export function logError(error: Error) {
   unhandled.logError(error)
 }

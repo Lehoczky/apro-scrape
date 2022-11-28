@@ -5,12 +5,12 @@ module.exports = {
       chainWebpackRendererProcess: config => {
         // Add custom entry point
         config.entry("app").clear()
-        config.entry("app").add("./src/renderer/main.js")
+        config.entry("app").add("./src/renderer/main.ts")
       },
-      mainProcessFile: "src/main/background.js",
+      mainProcessFile: "src/main/background.ts",
       mainProcessWatch: ["src/main/"],
       nodeIntegration: true,
-      preload: { preload: "src/main/preload.js" },
+      preload: { preload: "src/main/preload.ts" },
       externals: ["jsdom"],
       builderOptions: {
         win: {

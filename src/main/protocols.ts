@@ -1,6 +1,6 @@
 import { protocol } from "electron"
 
-export const registerAppScheme = () => {
+export function registerAppScheme() {
   protocol.registerSchemesAsPrivileged([
     { scheme: "app", privileges: { secure: true, standard: true } },
   ])
@@ -11,7 +11,7 @@ export const registerAppScheme = () => {
  *
  * @see {@link https://github.com/electron/electron/issues/23757#issuecomment-640146333}
  */
-export const registerFileProtocol = () => {
+export function registerFileProtocol() {
   protocol.registerFileProtocol("file", (request, callback) => {
     const pathname = request.url.replace("file:///", "")
     callback(pathname)

@@ -1,3 +1,4 @@
+//@ts-check
 const { defineConfig } = require("eslint-define-config")
 
 module.exports = defineConfig({
@@ -10,24 +11,18 @@ module.exports = defineConfig({
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["only-warn", "promise"],
-  extends: ["eslint:recommended"],
+  plugins: ["@typescript-eslint", "only-warn"],
+  extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+  parser: "@typescript-eslint/parser",
   overrides: [
     {
       files: ["**/main/**/*.{j,t}s"],
-      extends: ["plugin:node/recommended", "prettier"],
-      globals: {
-        __static: "readonly",
-      },
+      extends: ["plugin:n/recommended", "prettier"],
       parserOptions: {
         sourceType: "module",
       },
       rules: {
-        "node/no-unpublished-import": "off",
-        "node/no-unsupported-features/es-syntax": [
-          "warn",
-          { ignores: ["modules"] },
-        ],
+        "n/no-missing-import": "off",
       },
     },
     {
@@ -39,6 +34,11 @@ module.exports = defineConfig({
     {
       files: ["**/renderer/**/*.{j,t}s", "**/renderer/**/*.vue"],
       extends: ["plugin:vue/recommended", "prettier"],
+      parser: "vue-eslint-parser",
+      parserOptions: {
+        parser: "@typescript-eslint/parser",
+        sourceType: "module",
+      },
       env: {
         browser: true,
       },
@@ -53,6 +53,12 @@ module.exports = defineConfig({
       ],
       env: {
         jest: true,
+      },
+    },
+    {
+      files: ["**/*.cjs"],
+      rules: {
+        "@typescript-eslint/no-var-requires": "off",
       },
     },
   ],

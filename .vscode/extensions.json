@@ -5,7 +5,7 @@
     "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
     "stylelint.vscode-stylelint",
-    "octref.vetur",
-    "redhat.vscode-yaml"
+    "redhat.vscode-yaml",
+    "vue.volar"
   ]
 }

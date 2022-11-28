@@ -1,12 +1,12 @@
 import { JSDOM } from "jsdom"
 
-import { createScraper } from "@/main/scrape.js"
+import { createScraper } from "@/main/scrape"
 
 test("return empty list when no .media element is present", async () => {
   const scrape = createScraper()
 
   const dom = new JSDOM("<body></body>")
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(async () => dom)
 
   const items = await scrape("")
   expect(items).toEqual([])
@@ -30,7 +30,7 @@ test("return every item on first call", async () => {
       <div class="uad-ultralight">2020-09-06</div>
     </li>
   `)
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(async () => dom)
 
   const items = await scrape("")
   expect(items).toEqual([
@@ -68,7 +68,7 @@ test("skip featured item", async () => {
       <div class="uad-ultralight">2020-09-06</div>
     </li>
   `)
-  jest.spyOn(JSDOM, "fromURL").mockImplementation(() => dom)
+  jest.spyOn(JSDOM, "fromURL").mockImplementation(async () => dom)
 
   const items = await scrape("")
   expect(items).toEqual([
@@ -86,7 +86,7 @@ test("return only new item | older is present", async () => {
   const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
@@ -96,7 +96,7 @@ test("return only new item | older is present", async () => {
         </li>
       `)
     })
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>
@@ -131,7 +131,7 @@ test("return only new item | old has been removed", async () => {
   const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
@@ -141,7 +141,7 @@ test("return only new item | old has been removed", async () => {
         </li>
       `)
     })
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>
@@ -169,7 +169,7 @@ test("return empty list while there is no new item", async () => {
   const scrape = createScraper()
   jest
     .spyOn(JSDOM, "fromURL")
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
@@ -179,7 +179,7 @@ test("return empty list while there is no new item", async () => {
         </li>
       `)
     })
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
@@ -189,7 +189,7 @@ test("return empty list while there is no new item", async () => {
         </li>
       `)
     })
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/1">Item1</a></h1>
@@ -199,7 +199,7 @@ test("return empty list while there is no new item", async () => {
         </li>
       `)
     })
-    .mockImplementationOnce(() => {
+    .mockImplementationOnce(async () => {
       return new JSDOM(/*html*/ `
         <li class="media">
           <h1><a href="http://example.com/2">Item2</a></h1>

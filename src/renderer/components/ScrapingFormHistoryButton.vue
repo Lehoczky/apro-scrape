@@ -15,8 +15,10 @@
   </b-button>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue"
+
+export default defineComponent({
   props: {
     hasError: {
       type: Boolean,
@@ -27,7 +29,7 @@ export default {
       required: true,
     },
   },
-}
+})
 </script>
 
 <style scoped>
