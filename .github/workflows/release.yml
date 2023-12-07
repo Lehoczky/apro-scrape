@@ -2,10 +2,11 @@ name: Build/release Electron app
 
 on:
   push:
-    branches:
-      - master
     tags:
       - v*.*.*
+
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   release:
