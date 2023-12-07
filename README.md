@@ -1,8 +1,8 @@
-# AproScrape <img src="public/icon.png" alt="logo" width="40">
+# AproScrape <img src="resources/icon.png" alt="logo" width="40">
 
-[![Github all releases](https://img.shields.io/github/downloads/Lehoczky/apro-scrape/total.svg)](https://GitHub.com/Lehoczky/apro-scrape/releases/)
-![Test status](https://github.com/lehoczky/apro-scrape/workflows/Test/badge.svg)
-![Build status](https://github.com/lehoczky/apro-scrape/workflows/Build%2Frelease/badge.svg)
+[![Downloads](https://img.shields.io/github/downloads/Lehoczky/apro-scrape/total.svg)](https://GitHub.com/Lehoczky/apro-scrape/releases/)
+[![CI](https://github.com/Lehoczky/apro-scrape/actions/workflows/ci.yml/badge.svg)](https://github.com/Lehoczky/apro-scrape/actions/workflows/ci.yml)
+[![Build/release](https://github.com/Lehoczky/apro-scrape/actions/workflows/release.yml/badge.svg)](https://github.com/Lehoczky/apro-scrape/actions/workflows/release.yml)
 
 Get instantly notified about new items you are interested in!
 
