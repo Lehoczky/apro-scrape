@@ -9,6 +9,8 @@
     "stylelint.vscode-stylelint",
     "jock.svg",
     "vue.volar",
-    "dotjoshjohnson.xml"
+    "dotjoshjohnson.xml",
+    "orta.vscode-jest",
+    "bierner.comment-tagged-templates"
   ]
 }
