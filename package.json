@@ -11,8 +11,12 @@
   "main": "./out/main/index.js",
   "scripts": {
     "format:fix": "prettier . --write --ignore-unknown",
-    "eslint:fix": "eslint . --ext .js,.ts,.vue --max-warnings=0 --fix",
+    "format:check": "prettier . --check --ignore-unknown",
+    "eslint:fix": "eslint . --ext .js,.cjs,.ts,.vue --max-warnings=0 --fix",
+    "eslint:check": "eslint . --ext .js,.cjs,.ts,.vue --max-warnings=0",
     "styles:fix": "stylelint \"src/**/*.{css,vue}\" --fix",
+    "styles:check": "stylelint \"src/**/*.{css,vue}\"",
+    "lint": "npm run format:check && npm run eslint:check && npm run styles:check",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",

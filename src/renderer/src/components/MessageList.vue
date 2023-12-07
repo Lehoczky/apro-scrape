@@ -68,7 +68,7 @@ function dateIntervalForMessage(message: SoldItem[]) {
   align-items: center;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (width <= 470px) {
   .item {
     padding: 1rem 0;
     flex-direction: column;
@@ -92,7 +92,7 @@ function dateIntervalForMessage(message: SoldItem[]) {
   color: #333;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (width <= 470px) {
   .title {
     padding: 0;
   }
@@ -108,7 +108,7 @@ function dateIntervalForMessage(message: SoldItem[]) {
   border-left: solid 1px #ddd;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (width <= 470px) {
   .info {
     width: unset;
     display: flex;
@@ -125,7 +125,7 @@ function dateIntervalForMessage(message: SoldItem[]) {
   line-height: 1.25rem;
 }
 
-@media screen and (max-width: 470px) {
+@media screen and (width <= 470px) {
   .price,
   .location,
   .updated {

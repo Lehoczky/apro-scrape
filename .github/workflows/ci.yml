@@ -30,14 +30,8 @@ jobs:
       - name: Install dependencies 💤
         run: npm ci
 
-      - name: Run Prettier
-        run: npm run format:check
+      - name: Check lint errors 🧹
+        run: npm run lint
 
-      - name: Run Stylelint
-        run: npm run styles:check
-
-      - name: Run ESLint
-        run: npx eslint . --ignore-path .gitignore
-
-      - name: Run tests
+      - name: Run tests 🧪
         run: npm test
