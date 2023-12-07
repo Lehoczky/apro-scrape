@@ -13,26 +13,22 @@
   </BCollapse>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { BCollapse, BListGroup, BListGroupItem } from "bootstrap-vue"
-import type { PropType } from "vue"
-import { defineComponent } from "vue"
 
-export default defineComponent({
-  components: { BCollapse, BListGroup, BListGroupItem },
-  props: {
-    show: {
-      type: Boolean,
-    },
-    history: {
-      type: Array as PropType<string[]>,
-      required: true,
-    },
+defineProps({
+  show: {
+    type: Boolean,
   },
-  emits: {
-    select: (_payload: string) => true,
+  history: {
+    type: Array as PropType<string[]>,
+    required: true,
   },
 })
+
+defineEmits<{
+  (event: "select", payload: string): void
+}>()
 </script>
 
 <style>

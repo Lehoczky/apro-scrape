@@ -8,9 +8,7 @@
         <li v-for="item in message" :key="item.url" class="item">
           <div class="title">
             <h1>
-              <a :href="item.url" @click.prevent="openExternal(item.url)">{{
-                item.title
-              }}</a>
+              <a :href="item.url" target="_blank">{{ item.title }}</a>
             </h1>
           </div>
           <div class="info">
@@ -30,34 +28,21 @@
   </div>
 </template>
 
-<script lang="ts">
-import { shell } from "electron"
-import type { PropType } from "vue"
-import { defineComponent } from "vue"
+<script setup lang="ts">
+import type { SoldItem } from "@shared"
 
-import type { SoldItem } from "@/shared"
-
-export default defineComponent({
-  props: {
-    messages: {
-      type: Array as PropType<SoldItem[][]>,
-      required: true,
-    },
-  },
-  setup() {
-    function dateIntervalForMessage(message: SoldItem[]) {
-      const lastDate = message[message.length - 1].updated
-      const firstDate = message[0].updated
-      return `${lastDate} - ${firstDate}`
-    }
-
-    function openExternal(url: string) {
-      shell.openExternal(url)
-    }
-
-    return { dateIntervalForMessage, openExternal }
+defineProps({
+  messages: {
+    type: Array as PropType<SoldItem[][]>,
+    required: true,
   },
 })
+
+function dateIntervalForMessage(message: SoldItem[]) {
+  const lastDate = message[message.length - 1].updated
+  const firstDate = message[0].updated
+  return `${lastDate} - ${firstDate}`
+}
 </script>
 
 <style scoped>

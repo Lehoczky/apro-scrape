@@ -1,11 +1,14 @@
 {
   "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
     "editorconfig.editorconfig",
-    "tobermory.es6-string-html",
+    "github.vscode-github-actions",
     "davidanson.vscode-markdownlint",
     "esbenp.prettier-vscode",
     "stylelint.vscode-stylelint",
-    "redhat.vscode-yaml",
-    "vue.volar"
+    "jock.svg",
+    "vue.volar",
+    "dotjoshjohnson.xml"
   ]
 }

@@ -8,18 +8,12 @@
   >
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from "vue"
+<script setup lang="ts">
+defineEmits<{
+  (event: "url-click", payload: string): void
+}>()
 
-export default defineComponent({
-  emits: {
-    "url-click": (_payload: string) => true,
-  },
-  setup() {
-    const exampleUrl = ref("https://hardverapro.hu/aprok/mobil/index.html")
-    return { exampleUrl }
-  },
-})
+const exampleUrl = ref("https://hardverapro.hu/aprok/mobil/index.html")
 </script>
 
 <style scoped>

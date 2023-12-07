@@ -1,6 +1,0 @@
-{
-  "arrowParens": "avoid",
-  "endOfLine": "auto",
-  "trailingComma": "es5",
-  "semi": false
-}

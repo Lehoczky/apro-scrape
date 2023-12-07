@@ -3,7 +3,7 @@ import { openNewGitHubIssue } from "electron-util"
 
 export function setupErrorHandling() {
   unhandled({
-    reportButton: error => {
+    reportButton: (error) => {
       openNewGitHubIssue({
         user: "Lehoczky",
         repo: "apro-scrape",

@@ -17,7 +17,6 @@
 
 <script lang="ts">
 import { BButton, BIcon, BIconArrowCounterclockwise } from "bootstrap-vue"
-import { defineComponent } from "vue"
 
 export default defineComponent({
   // eslint-disable-next-line vue/no-unused-components

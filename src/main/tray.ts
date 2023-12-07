@@ -1,13 +1,11 @@
-"use strict"
+import { app, BrowserWindow, Menu, nativeImage, Tray } from "electron"
 
-import { app, BrowserWindow, Menu, Tray } from "electron"
+import icon from "../../resources/icon.png?asset"
 
-import { iconPath } from "./icon"
-
-let tray
+let tray: Tray
 
 export const createTray = () => {
-  tray = new Tray(iconPath)
+  tray = new Tray(nativeImage.createFromPath(icon))
   tray.setToolTip("Apro Scrape")
 
   const contextMenu = Menu.buildFromTemplate([

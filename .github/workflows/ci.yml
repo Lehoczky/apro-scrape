@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: ci
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Git repository ⏬
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js 💿
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies 💤
+        run: npm ci
+
+      - name: Run Prettier
+        run: npm run format:check
+
+      - name: Run Stylelint
+        run: npm run styles:check
+
+      - name: Run ESLint
+        run: npx eslint . --ignore-path .gitignore
+
+      - name: Run tests
+        run: npm test

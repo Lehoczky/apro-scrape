@@ -1,14 +1,13 @@
+import type { SoldItem } from "@shared"
 import { CookieJar, JSDOM } from "jsdom"
 
-import type { SoldItem } from "@/shared"
-
 export function createScraper() {
-  let lastItem: SoldItem | null = null
+  let lastItem: SoldItem | undefined = undefined
 
   return async (page: string) => {
     const dom = await fetchDomForPage(page)
     let items = await getSellingItems(dom)
-    const urls = items.map(item => item.url)
+    const urls = items.map((item) => item!.url)
 
     if (lastItem && urls.includes(lastItem.url)) {
       items = items.slice(0, urls.indexOf(lastItem.url))
@@ -31,17 +30,17 @@ async function fetchDomForPage(page: string) {
 
 function getSellingItems(dom: JSDOM) {
   return Array.from(dom.window.document.querySelectorAll(".media"))
-    .filter(domElement => !isAd(domElement))
+    .filter((domElement) => !isAd(domElement))
     .map(createItemObject)
-    .filter(item => item !== undefined)
-    .filter(item => item.updated !== "Előresorolt hirdetés")
-    .filter(item => item.price !== "Csere")
+    .filter((item) => item !== undefined)
+    .filter((item) => item!.updated !== "Előresorolt hirdetés")
+    .filter((item) => item!.price !== "Csere")
 }
 
 function isAd(domElement: Element) {
   const ribbon = domElement.querySelector(".uad-corner-ribbon")
   if (ribbon) {
-    const ribbonText = ribbon.querySelector("span").textContent
+    const ribbonText = ribbon.querySelector("span")!.textContent!
     return removeZeroWidthNoBreakSpace(ribbonText) === "PR"
   }
   return false
@@ -49,11 +48,11 @@ function isAd(domElement: Element) {
 
 function createItemObject(domElement: Element): SoldItem | undefined {
   try {
-    const url = domElement.querySelector<HTMLAnchorElement>("h1 > a").href
-    const title = domElement.querySelector("h1 > a").textContent
-    const price = domElement.querySelector(".uad-price").textContent
-    const location = domElement.querySelector(".uad-light").textContent
-    const updated = domElement.querySelector(".uad-ultralight").textContent
+    const url = domElement.querySelector<HTMLAnchorElement>("h1 > a")!.href
+    const title = domElement.querySelector("h1 > a")!.textContent!
+    const price = domElement.querySelector(".uad-price")!.textContent!
+    const location = domElement.querySelector(".uad-light")!.textContent!
+    const updated = domElement.querySelector(".uad-ultralight")!.textContent!
     return { url, title, price, location, updated }
   } catch (error) {
     if (error instanceof Error) {

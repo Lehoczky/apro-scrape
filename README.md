@@ -19,7 +19,7 @@ so you can contact the seller as fast as you can.
 
 ## Installation
 
-Dowload the latest version from the [releases](https://github.com/Lehoczky/apro-scrape/releases) page.
+Download the latest version from the [releases](https://github.com/Lehoczky/apro-scrape/releases) page.
 Installers are available for all platforms (Windows, Linux, OSX).
 
 ## Usage
@@ -42,7 +42,7 @@ and display a notification when it finds new items!
 
 <img src="docs/images/notification.png" alt="AproScrape main window">
 
-Open the app by clicking on the notification or the icon in the taksbar, and click
+Open the app by clicking on the notification or the icon in the taskbar, and click
 on the item's link. It will navigate you straight to HardverApro and you can contact
 the seller immediately!
 

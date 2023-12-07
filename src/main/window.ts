@@ -1,55 +1,58 @@
-"use strict"
-
+import { is } from "@electron-toolkit/utils"
 import {
   attachTitlebarToWindow,
   setupTitlebar,
-} from "custom-electron-titlebar/dist/main"
-import { app, BrowserWindow } from "electron"
+} from "custom-electron-titlebar/main"
+import { app, BrowserWindow, shell } from "electron"
 import { autoUpdater } from "electron-updater"
 import { join } from "path"
-import { createProtocol } from "vue-cli-plugin-electron-builder/lib"
 
-import { iconPath } from "./icon"
+import icon from "../../resources/icon.png?asset"
+
+setupTitlebar()
 
 let mainWindow: BrowserWindow | undefined
-setupTitlebar()
 
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     minWidth: 350,
-    icon: iconPath,
     frame: false,
     backgroundColor: "#ececec",
     autoHideMenuBar: true,
     show: false,
+    titleBarStyle: "hidden",
+    titleBarOverlay: true,
+    ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
-      // Use pluginOptions.nodeIntegration, leave this alone
-      // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: Boolean(process.env.ELECTRON_NODE_INTEGRATION),
-      contextIsolation: false,
+      preload: join(__dirname, "../preload/index.js"),
+      sandbox: false,
       webSecurity: false,
-      preload: join(__dirname, "preload.js"),
     },
   })
 
-  if (process.env.WEBPACK_DEV_SERVER_URL) {
-    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
-    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url)
+    return { action: "deny" }
+  })
+
+  if (is.dev && process.env.ELECTRON_RENDERER_URL) {
+    mainWindow.loadURL(process.env.ELECTRON_RENDERER_URL)
+    mainWindow.webContents.openDevTools({ mode: "right" })
   } else {
-    createProtocol("app")
-    mainWindow.loadURL("app://./index.html")
+    mainWindow.loadFile(join(__dirname, "../renderer/index.html"))
     autoUpdater.checkForUpdatesAndNotify()
   }
 
-  attachTitlebarToWindow(mainWindow)
-  mainWindow.on("minimize", mainWindow.hide)
-  mainWindow.on("close", mainWindow.destroy)
+  mainWindow.on("minimize", () => mainWindow?.hide())
+  mainWindow.on("close", () => mainWindow?.destroy())
   mainWindow.on("closed", () => {
     mainWindow = undefined
   })
-  mainWindow.once("ready-to-show", () => mainWindow.show())
+  mainWindow.once("ready-to-show", () => mainWindow?.show())
+
+  attachTitlebarToWindow(mainWindow)
 }
 
 app.on("activate", () => {

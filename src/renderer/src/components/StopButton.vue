@@ -5,14 +5,10 @@
   </BButton>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { BButton, BSpinner } from "bootstrap-vue"
-import { defineComponent } from "vue"
 
-export default defineComponent({
-  components: { BButton, BSpinner },
-  emits: {
-    stop: () => true,
-  },
-})
+defineEmits<{
+  (event: "stop"): void
+}>()
 </script>

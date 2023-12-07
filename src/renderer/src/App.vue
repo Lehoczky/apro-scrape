@@ -10,58 +10,39 @@
   </BContainer>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import type { SoldItem } from "@shared"
 import { BCard, BContainer } from "bootstrap-vue"
-import { ipcRenderer } from "electron"
-import { defineComponent, ref } from "vue"
 
-import type { SoldItem } from "@/shared"
-
-import MessageList from "./components/MessageList.vue"
-import ScrapingForm from "./components/ScrapingForm.vue"
 import { createNewItemNotification } from "./notification"
 import { startInterval } from "./utils"
 
 const SCRAPING_INTERVAL = 60
 
-export default defineComponent({
-  components: {
-    BCard,
-    BContainer,
-    ScrapingForm,
-    MessageList,
-  },
-  setup() {
-    const shownItems = ref<SoldItem[][]>([])
-    const interval = ref<ReturnType<typeof startInterval>>()
+const shownItems = ref<SoldItem[][]>([])
+const interval = ref<ReturnType<typeof startInterval>>()
 
-    function startScraping(url: string) {
-      interval.value = startInterval(SCRAPING_INTERVAL, async () => {
-        const items = await ipcRenderer.invoke("start-scraping", url)
-        handleScrapedItems(items)
-      })
+function startScraping(url: string) {
+  interval.value = startInterval(SCRAPING_INTERVAL, async () => {
+    const items = await window.api.startScraping(url)
+    handleScrapedItems(items)
+  })
+}
+
+async function handleScrapedItems(items: SoldItem[]) {
+  if (items.length) {
+    shownItems.value = [items, ...shownItems.value]
+    const isWindowHidden = await window.api.isWindowHidden()
+    if (isWindowHidden) {
+      createNewItemNotification(items)
     }
+  }
+}
 
-    async function handleScrapedItems(items: SoldItem[]) {
-      if (items.length) {
-        console.log(items.length)
-
-        shownItems.value = [items, ...shownItems.value]
-        const isWindowHidden = await ipcRenderer.invoke("is-window-hidden")
-        if (isWindowHidden) {
-          createNewItemNotification(items)
-        }
-      }
-    }
-
-    function stopScraping() {
-      clearInterval(interval.value)
-      interval.value = undefined
-    }
-
-    return { shownItems, startScraping, stopScraping }
-  },
-})
+function stopScraping() {
+  clearInterval(interval.value)
+  interval.value = undefined
+}
 </script>
 
 <style>
@@ -124,5 +105,9 @@ button {
   background-color: #8a0f11 !important;
   border-color: #8a0f11 !important;
   color: #fff !important;
+}
+
+.cet-menubar {
+  display: none !important;
 }
 </style>
