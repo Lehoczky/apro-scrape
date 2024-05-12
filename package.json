@@ -1,6 +1,6 @@
 {
   "name": "apro-scrape",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "private": true,
   "description": "Helpful web scraper for hardverapro.hu",
   "author": {
