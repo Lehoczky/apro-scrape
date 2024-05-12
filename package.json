@@ -36,6 +36,7 @@
     "axios": "^1.6.8",
     "bootstrap-vue": "^2.23.1",
     "custom-electron-titlebar": "^4.2.8",
+    "dedent": "^1.5.3",
     "electron-unhandled": "^4.0.1",
     "electron-updater": "^6.1.8",
     "electron-util": "~0.17.2",

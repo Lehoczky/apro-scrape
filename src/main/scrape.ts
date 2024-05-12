@@ -1,4 +1,5 @@
 import type { SoldItem } from "@shared"
+import dedent from "dedent"
 import { CookieJar, JSDOM } from "jsdom"
 
 export function createScraper() {
@@ -29,7 +30,7 @@ async function fetchDomForPage(page: string) {
 }
 
 function getSellingItems(dom: JSDOM) {
-  return Array.from(dom.window.document.querySelectorAll(".media"))
+  return Array.from(dom.window.document.querySelectorAll(".uad-list .media"))
     .filter((domElement) => !isAd(domElement))
     .map(createItemObject)
     .filter((item) => item !== undefined)
@@ -56,7 +57,9 @@ function createItemObject(domElement: Element): SoldItem | undefined {
     return { url, title, price, location, updated }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(error.message)
+      const html = dedent(domElement.outerHTML)
+      const message = `An error occurred while processing the following element: \n\n${html}\n${error.message}\n`
+      console.error(message)
     }
     return undefined
   }
