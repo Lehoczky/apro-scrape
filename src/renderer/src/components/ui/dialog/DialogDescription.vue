@@ -8,12 +8,18 @@
 </template>
 
 <script setup lang="ts">
-import { DialogDescription, type DialogDescriptionProps, useForwardProps } from 'radix-vue'
-import { computed,type HTMLAttributes } from 'vue'
+import {
+  DialogDescription,
+  type DialogDescriptionProps,
+  useForwardProps,
+} from "radix-vue"
+import { computed, type HTMLAttributes } from "vue"
 
-import { cn } from '@/renderer/src/utils/cn'
+import { cn } from "@/renderer/src/utils/cn"
 
-const props = defineProps<DialogDescriptionProps & { class?: HTMLAttributes['class'] }>()
+const props = defineProps<
+  DialogDescriptionProps & { class?: HTMLAttributes["class"] }
+>()
 
 const delegatedProps = computed(() => {
   const { class: _, ...delegated } = props
