@@ -21,6 +21,7 @@ import MessageList from "./components/MessageList.vue"
 import ScrapingForm from "./components/ScrapingForm.vue"
 import SettingsDialog from "./components/SettingsDialog.vue"
 import { Card } from "./components/ui/card"
+import { useSettings } from "./composables/useSettings"
 import { createNewItemNotification } from "./notification"
 import { startInterval } from "./utils"
 
@@ -56,8 +57,6 @@ window.api.onOpenSettings(() => {
   settingDialogOpen.value = true
 })
 
-useDark({
-  initialValue: "light",
-  storageKey: "settings:darkMode",
-})
+const { actOnInitialSettings } = useSettings()
+actOnInitialSettings()
 </script>

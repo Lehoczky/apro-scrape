@@ -20,4 +20,16 @@ export function setupIpcChannels() {
     const mainWindow = BrowserWindow.fromWebContents(sender)
     mainWindow?.show()
   })
+  ipcMain.handle("enable-always-on-top", ({ sender }) => {
+    const mainWindow = BrowserWindow.fromWebContents(sender)
+    mainWindow?.setAlwaysOnTop(true, "modal-panel")
+  })
+  ipcMain.handle("disable-always-on-top", ({ sender }) => {
+    const mainWindow = BrowserWindow.fromWebContents(sender)
+    mainWindow?.setAlwaysOnTop(false)
+  })
+  ipcMain.on("get-always-on-top", (event) => {
+    const mainWindow = BrowserWindow.fromWebContents(event.sender)
+    event.returnValue = mainWindow?.isAlwaysOnTop()
+  })
 }

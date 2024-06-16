@@ -13,4 +13,7 @@ contextBridge.exposeInMainWorld("api", {
   openWindow: () => ipcRenderer.send("open-window"),
   onOpenSettings: (callback: () => unknown) =>
     ipcRenderer.on("open-settings", (_event) => callback()),
+  enableAlwaysOnTop: () => ipcRenderer.invoke("enable-always-on-top"),
+  disableAlwaysOnTop: () => ipcRenderer.invoke("disable-always-on-top"),
+  getAlwaysOnTop: () => ipcRenderer.sendSync("get-always-on-top"),
 })

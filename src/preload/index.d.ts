@@ -8,6 +8,9 @@ declare global {
       validateUrl: (url: string) => Promise<boolean>
       openWindow: () => Promise<void>
       onOpenSettings: (callback: () => unknown) => Electron.IpcRenderer
+      enableAlwaysOnTop: () => Promise<void>
+      disableAlwaysOnTop: () => Promise<void>
+      getAlwaysOnTop: () => boolean
     }
   }
 }
