@@ -23,7 +23,7 @@ import SettingsDialog from "./components/SettingsDialog.vue"
 import { Card } from "./components/ui/card"
 import { useSettings } from "./composables/useSettings"
 import { createNewItemNotification } from "./notification"
-import { startInterval } from "./utils"
+import { startInterval } from "./utils/startInterval"
 
 const SCRAPING_INTERVAL = 60
 

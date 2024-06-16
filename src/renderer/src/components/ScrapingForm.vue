@@ -37,7 +37,7 @@
             <span>Search History</span>
           </Button>
         </DialogTrigger>
-        <ScrapingFormHistoryDialog
+        <ScrapingHistoryDialog
           :history="history"
           @select="setAsCurrentUrl($event)"
         />
@@ -72,7 +72,7 @@ import { Textarea } from "@/renderer/src/components/ui/textarea"
 import { useHistory } from "../composables/useHistory"
 import { useScrapingForm } from "../composables/useScrapingFrom"
 import HelpText from "./HelpText.vue"
-import ScrapingFormHistoryDialog from "./ScrapingFormHistoryDialog.vue"
+import ScrapingHistoryDialog from "./ScrapingHistoryDialog.vue"
 import { Card, CardContent, CardFooter } from "./ui/card"
 
 const emit = defineEmits<{
