@@ -1,10 +1,12 @@
 <template>
-  <div >
+  <CardContent>
     <section v-for="(message, index) in messages" :key="index">
-      <div class="section-title">
+      <div
+        class="mt-6 border-b border-border p-4 text-xl font-semibold capitalize text-primary"
+      >
         {{ dateIntervalForMessage(message) }}
       </div>
-      <ul class="list-unstyled">
+      <ul>
         <li v-for="item in message" :key="item.url" class="item">
           <div class="title">
             <h1>
@@ -12,25 +14,26 @@
             </h1>
           </div>
           <div class="info">
-            <div class="price">
+            <div class="price font-semibold text-primary">
               {{ item.price }}
             </div>
             <div class="location">
               {{ item.location }}
             </div>
-            <div class="updated">
+            <div class="updated text-muted-foreground">
               {{ item.updated }}
             </div>
           </div>
         </li>
       </ul>
     </section>
-  </div>
+  </CardContent>
 </template>
 
 <script setup lang="ts">
-
 import type { SoldItem } from "@/shared"
+
+import { CardContent } from "./ui/card"
 
 defineProps({
   messages: {
@@ -47,21 +50,6 @@ function dateIntervalForMessage(message: SoldItem[]) {
 </script>
 
 <style scoped>
-.section-title {
-  font-weight: 500;
-  font-size: 1.25rem;
-  text-transform: capitalize;
-  color: #bc1013;
-  padding: 1rem;
-  line-height: 1.5rem;
-  margin: 0;
-  border-bottom: solid 1px #d5d4cb;
-}
-
-.section-title:not(:first-child) {
-  margin-top: 2rem;
-}
-
 .item {
   border-bottom: solid 1px #ddd;
   padding: 0.5rem 0;
@@ -87,10 +75,6 @@ function dateIntervalForMessage(message: SoldItem[]) {
   overflow-wrap: break-word;
   margin: 0;
   font-size: 1rem;
-}
-
-.title > h1 > a {
-  color: #333;
 }
 
 @media screen and (width <= 470px) {
@@ -132,14 +116,5 @@ function dateIntervalForMessage(message: SoldItem[]) {
   .updated {
     font-size: 0.95rem;
   }
-}
-
-.price {
-  color: #bc1013;
-  font-weight: 500;
-}
-
-.updated {
-  color: #999;
 }
 </style>

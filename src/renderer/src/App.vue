@@ -27,7 +27,6 @@ const shownItems = ref<SoldItem[][]>([])
 const interval = ref<ReturnType<typeof startInterval>>()
 
 function startScraping(url: string) {
-  shownItems.value = []
   interval.value = startInterval(SCRAPING_INTERVAL, async () => {
     const items = await window.api.startScraping(url)
     handleScrapedItems(items)
