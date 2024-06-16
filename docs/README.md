@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-The project was built with `node v14+`. Older versions might work too, but haven't been tested.
+The project was built with `node v20+`. Older versions might work too, but haven't been tested.
 
 To install this version of node I recommend using:  
 [NVM](https://github.com/nvm-sh/nvm) or [NVM for Windows](https://github.com/coreybutler/nvm-windows)

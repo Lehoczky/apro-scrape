@@ -33,39 +33,15 @@
             <span>Search History</span>
           </Button>
         </DialogTrigger>
-
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Search History</DialogTitle>
-            <DialogDescription>
-              You can see your past searches in the list below.
-            </DialogDescription>
-          </DialogHeader>
-          <ul class="grid gap-4">
-            <li
-              v-for="item in history"
-              :key="item"
-              class="grid overflow-hidden [word-wrap:break-word]"
-            >
-              <DialogClose as-child>
-                <button
-                  class="w-full overflow-hidden text-left"
-                  @click="setAsCurrentUrl(item)"
-                >
-                  {{ item }}
-                </button>
-              </DialogClose>
-            </li>
-          </ul>
-          <DialogFooter>
-            <Button type="submit"> Save changes </Button>
-          </DialogFooter>
-        </DialogContent>
+        <ScrapingFormHistoryDialog
+          :history="history"
+          @select="setAsCurrentUrl($event)"
+        />
       </Dialog>
 
-      <Button v-if="!scraping" class="w-24" type="submit" form="scrapingForm"
-        >Scrape</Button
-      >
+      <Button v-if="!scraping" class="w-24" type="submit" form="scrapingForm">
+        Scrape
+      </Button>
       <Button v-else class="w-24" loading variant="destructive" @click="onStop">
         <Loader2 class="mr-2 h-4 w-4 animate-spin" />
         <span>Stop</span>
@@ -79,16 +55,7 @@ import { vAutoAnimate } from "@formkit/auto-animate/vue"
 import { HistoryIcon, Loader2 } from "lucide-vue-next"
 
 import { Button } from "@/renderer/src/components/ui/button"
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/renderer/src/components/ui/dialog"
+import { Dialog, DialogTrigger } from "@/renderer/src/components/ui/dialog"
 import {
   FormControl,
   FormField,
@@ -101,6 +68,7 @@ import { Textarea } from "@/renderer/src/components/ui/textarea"
 import { useHistory } from "../composables/useHistory"
 import { useScrapingForm } from "../composables/useScrapingFrom"
 import HelpText from "./HelpText.vue"
+import ScrapingFormHistoryDialog from "./ScrapingFormHistoryDialog.vue"
 import { Card, CardContent, CardFooter } from "./ui/card"
 
 const emit = defineEmits<{
@@ -109,17 +77,19 @@ const emit = defineEmits<{
 }>()
 
 const scraping = ref(false)
-const showHistory = ref(false)
-
 const form = useScrapingForm()
+const { history, loadSavedHistory, addToHistory, historyIsEmpty } = useHistory()
 
 const onSubmit = form.handleSubmit(({ url }) => {
   scraping.value = true
-  showHistory.value = false
   addToHistory(url)
-
   emit("submit", url)
 })
+
+function onStop(): void {
+  scraping.value = false
+  emit("stop")
+}
 
 function setAsCurrentUrl(link: string): void {
   if (!scraping.value) {
@@ -128,12 +98,5 @@ function setAsCurrentUrl(link: string): void {
   }
 }
 
-const { history, loadSavedHistory, addToHistory, historyIsEmpty } = useHistory()
-
 loadSavedHistory()
-
-function onStop(): void {
-  scraping.value = false
-  emit("stop")
-}
 </script>
