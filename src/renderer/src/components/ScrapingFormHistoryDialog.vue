@@ -6,7 +6,7 @@
         You can see your past searches in the list below.
       </DialogDescription>
     </DialogHeader>
-    <ul class="grid gap-4">
+    <ul v-if="history.length" class="grid gap-4">
       <li
         v-for="item in history"
         :key="item"
@@ -22,6 +22,10 @@
         </DialogClose>
       </li>
     </ul>
+
+    <div v-else class="py-10 text-center text-2xl">
+      No searches have been done so far :/
+    </div>
     <DialogFooter>
       <DialogClose as-child>
         <Button variant="destructive">
