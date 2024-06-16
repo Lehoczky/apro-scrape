@@ -13,7 +13,11 @@
           <FormItem v-auto-animate>
             <FormLabel>URL to scrape</FormLabel>
             <FormControl>
-              <Textarea type="text" v-bind="componentField" />
+              <Textarea
+                type="text"
+                v-bind="componentField"
+                :disabled="scraping"
+              />
             </FormControl>
             <HelpText
               v-if="historyIsEmpty"

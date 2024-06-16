@@ -1,19 +1,23 @@
 <template>
-  <CardContent>
-    <section v-for="(message, index) in messages" :key="index">
+  <CardContent v-auto-animate>
+    <section v-for="message in messages" :key="dateIntervalForMessage(message)">
       <div
         class="mt-6 border-b border-border p-4 text-xl font-semibold capitalize text-primary"
       >
         {{ dateIntervalForMessage(message) }}
       </div>
       <ul>
-        <li v-for="item in message" :key="item.url" class="item">
+        <li
+          v-for="item in message"
+          :key="item.url"
+          class="item border-b border-border"
+        >
           <div class="title">
             <h1>
               <a :href="item.url" target="_blank">{{ item.title }}</a>
             </h1>
           </div>
-          <div class="info">
+          <div class="info border-l border-border">
             <div class="price font-semibold text-primary">
               {{ item.price }}
             </div>
@@ -31,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { vAutoAnimate } from "@formkit/auto-animate"
+
 import type { SoldItem } from "@/shared"
 
 import { CardContent } from "./ui/card"
@@ -51,7 +57,6 @@ function dateIntervalForMessage(message: SoldItem[]) {
 
 <style scoped>
 .item {
-  border-bottom: solid 1px #ddd;
   padding: 0.5rem 0;
   display: flex;
   align-items: center;
@@ -90,7 +95,6 @@ function dateIntervalForMessage(message: SoldItem[]) {
 .info {
   width: 140px;
   text-align: center;
-  border-left: solid 1px #ddd;
 }
 
 @media screen and (width <= 470px) {
