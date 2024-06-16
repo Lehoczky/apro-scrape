@@ -1,6 +1,7 @@
-import type { SoldItem } from "@shared"
 import dedent from "dedent"
 import { CookieJar, JSDOM } from "jsdom"
+
+import type { SoldItem } from "@/shared"
 
 export function createScraper() {
   let lastItem: SoldItem | undefined = undefined

@@ -1,14 +1,5 @@
-import "bootstrap/dist/css/bootstrap.css"
-import "bootstrap-vue/dist/bootstrap-vue.css"
-
-import Vue from "vue"
+import "./assets/main.css"
 
 import App from "./App.vue"
 
-Vue.config.productionTip = false
-
-new Vue({
-  render(h) {
-    return h(App)
-  },
-}).$mount("#app")
+createApp(App).mount("#app")

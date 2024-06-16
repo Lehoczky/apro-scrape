@@ -8,5 +8,13 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["Apro", "hardverapro", "Titlebar", "typecheck", "vueuse"]
+  "cSpell.words": [
+    "Apro",
+    "formkit",
+    "hardverapro",
+    "lucide",
+    "Titlebar",
+    "typecheck",
+    "vueuse"
+  ]
 }

@@ -1,15 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import vue from "@vitejs/plugin-vue2"
+import vue from "@vitejs/plugin-vue"
+import autoprefixer from "autoprefixer"
 import { defineConfig, externalizeDepsPlugin } from "electron-vite"
 import { resolve } from "path"
+import tailwind from "tailwindcss"
 import AutoImport from "unplugin-auto-import/vite"
-import Components from "unplugin-vue-components/vite"
 
 export default defineConfig({
   main: {
     resolve: {
       alias: {
-        "@shared": resolve("src/shared"),
+        "@": resolve(__dirname, "./src"),
       },
     },
     plugins: [externalizeDepsPlugin()],
@@ -17,22 +18,26 @@ export default defineConfig({
   preload: {
     resolve: {
       alias: {
-        "@shared": resolve("src/shared"),
+        "@": resolve(__dirname, "./src"),
       },
     },
     plugins: [externalizeDepsPlugin()],
   },
   renderer: {
+    css: {
+      postcss: {
+        plugins: [
+          tailwind({ config: resolve(__dirname, "tailwind.config.ts") }),
+          autoprefixer(),
+        ],
+      },
+    },
     resolve: {
       alias: {
-        "@renderer": resolve("src/renderer/src"),
-        "@shared": resolve("src/shared"),
+        "@": resolve(__dirname, "./src"),
       },
     },
     plugins: [
-      Components({
-        dts: "./src/components.d.ts",
-      }),
       AutoImport({
         imports: ["vue", "@vueuse/core"],
         dts: "./src/autoImports.d.ts",

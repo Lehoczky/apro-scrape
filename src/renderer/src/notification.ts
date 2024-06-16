@@ -1,4 +1,4 @@
-import type { SoldItem } from "@shared"
+import type { SoldItem } from "@/shared"
 
 export function createNewItemNotification(items: SoldItem[]) {
   const { title, body } = createNotificationText(items)

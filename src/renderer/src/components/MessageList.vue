@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <section v-for="(message, index) in messages" :key="index">
       <div class="section-title">
         {{ dateIntervalForMessage(message) }}
@@ -29,7 +29,8 @@
 </template>
 
 <script setup lang="ts">
-import type { SoldItem } from "@shared"
+
+import type { SoldItem } from "@/shared"
 
 defineProps({
   messages: {

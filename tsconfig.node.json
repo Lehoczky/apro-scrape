@@ -5,6 +5,7 @@
     "jest.config.*",
     "electron.vite.config.*",
     "electron-builder.config.*",
+    "tailwind.config.*",
     "src/main/*",
     "src/preload/*",
     "src/shared/*"
@@ -14,7 +15,7 @@
     "types": ["electron-vite/node", "jest"],
     "baseUrl": ".",
     "paths": {
-      "@shared": ["src/shared"]
+      "@/*": ["./src/*"]
     }
   }
 }

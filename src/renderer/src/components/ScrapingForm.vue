@@ -1,135 +1,139 @@
 <template>
-  <div>
-    <BForm @submit.prevent="onFormSubmit()">
-      <BInputGroup>
-        <BFormInput
-          v-model="url"
-          class="text-truncate"
-          :class="{ 'is-invalid': hasError }"
-          :disabled="scraping"
-          placeholder="Enter HardverApro URL"
-        />
-        <BInputGroupAppend class="button-group">
-          <HistoryButton
-            v-show="!historyIsEmpty && !scraping"
-            v-model="showHistory"
-            :has-error="hasError"
-          />
+  <Card>
+    <CardContent class="pt-6">
+      <form id="scrapingForm" @submit="onSubmit">
+        <FormField
+          v-slot="{ componentField }"
+          name="url"
+          :validate-on-model-update="false"
+          :validate-on-blur="false"
+          :validate-on-change="false"
+          :validate-on-input="false"
+        >
+          <FormItem v-auto-animate>
+            <FormLabel>URL to scrape</FormLabel>
+            <FormControl>
+              <Textarea type="text" v-bind="componentField" />
+            </FormControl>
+            <HelpText
+              v-if="historyIsEmpty"
+              @url-click="setAsCurrentUrl($event)"
+            />
+            <FormMessage />
+          </FormItem>
+        </FormField>
+      </form>
+    </CardContent>
 
-          <SubmitButton v-if="!scraping" class="action-button" />
-          <StopButton v-else class="action-button" @stop="onStop()" />
-        </BInputGroupAppend>
+    <CardFooter class="flex justify-end gap-4">
+      <Dialog>
+        <DialogTrigger as-child>
+          <Button variant="outline" :disabled="scraping">
+            <HistoryIcon class="mr-2 h-4 w-4" />
+            <span>Search History</span>
+          </Button>
+        </DialogTrigger>
 
-        <div class="invalid-feedback">
-          <BCollapse :visible="hasError">
-            {{ error }}
-          </BCollapse>
-        </div>
-      </BInputGroup>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Search History</DialogTitle>
+            <DialogDescription>
+              You can see your past searches in the list below.
+            </DialogDescription>
+          </DialogHeader>
+          <ul class="grid gap-4">
+            <li
+              v-for="item in history"
+              :key="item"
+              class="grid overflow-hidden [word-wrap:break-word]"
+            >
+              <DialogClose as-child>
+                <button
+                  class="w-full overflow-hidden text-left"
+                  @click="setAsCurrentUrl(item)"
+                >
+                  {{ item }}
+                </button>
+              </DialogClose>
+            </li>
+          </ul>
+          <DialogFooter>
+            <Button type="submit"> Save changes </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
-      <HelpText v-if="historyIsEmpty" @url-click="setAsCurrentUrl($event)" />
-    </BForm>
-    <HistoryList
-      ref="historyListRef"
-      :show="showHistory"
-      :history="history"
-      @select="setAsCurrentUrl($event)"
-    />
-  </div>
+      <Button v-if="!scraping" class="w-24" type="submit" form="scrapingForm"
+        >Scrape</Button
+      >
+      <Button v-else class="w-24" loading variant="destructive" @click="onStop">
+        <Loader2 class="mr-2 h-4 w-4 animate-spin" />
+        <span>Stop</span>
+      </Button>
+    </CardFooter>
+  </Card>
 </template>
 
 <script setup lang="ts">
+import { vAutoAnimate } from "@formkit/auto-animate/vue"
+import { HistoryIcon, Loader2 } from "lucide-vue-next"
+
+import { Button } from "@/renderer/src/components/ui/button"
 import {
-  BCollapse,
-  BForm,
-  BFormInput,
-  BInputGroup,
-  BInputGroupAppend,
-} from "bootstrap-vue"
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/renderer/src/components/ui/dialog"
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/renderer/src/components/ui/form"
+import { Textarea } from "@/renderer/src/components/ui/textarea"
+
+import { useHistory } from "../composables/useHistory"
+import { useScrapingForm } from "../composables/useScrapingFrom"
+import HelpText from "./HelpText.vue"
+import { Card, CardContent, CardFooter } from "./ui/card"
 
 const emit = defineEmits<{
   (submit: "submit", payload: string): void
   (event: "stop"): void
 }>()
 
-const url = ref("")
 const scraping = ref(false)
 const showHistory = ref(false)
-const history = ref<string[]>([])
-const error = ref("")
-const historyListRef = ref(null)
 
-const historyIsEmpty = computed(() => {
-  return history.value.length === 0
+const form = useScrapingForm()
+
+const onSubmit = form.handleSubmit(({ url }) => {
+  scraping.value = true
+  showHistory.value = false
+  addToHistory(url)
+
+  emit("submit", url)
 })
 
-const hasError = computed(() => {
-  return error.value !== ""
-})
-
-watch(history, (newValue) => {
-  localStorage.setItem("history", JSON.stringify(newValue))
-})
-
-async function onFormSubmit(): Promise<void> {
-  error.value = await validateUrlInput()
-  if (!error.value) {
-    scraping.value = true
-    showHistory.value = false
-    addToHistory(url.value)
-
-    emit("submit", url.value)
+function setAsCurrentUrl(link: string): void {
+  if (!scraping.value) {
+    form.resetForm()
+    form.setFieldValue("url", link)
   }
 }
+
+const { history, loadSavedHistory, addToHistory, historyIsEmpty } = useHistory()
+
+loadSavedHistory()
 
 function onStop(): void {
   scraping.value = false
   emit("stop")
 }
-
-async function validateUrlInput(): Promise<string> {
-  if (url.value === "") {
-    return "Please fill out this field"
-    // eslint-disable-next-line no-negated-condition
-  } else if (!url.value.startsWith("https://hardverapro.hu")) {
-    return "Please provide a link to hardverapro.hu"
-  } else {
-    const validURL = await window.api.validateUrl(url.value)
-    if (!validURL) {
-      return "The page does not exist, please check the URL"
-    }
-    return ""
-  }
-}
-
-function setAsCurrentUrl(link: string): void {
-  if (!scraping.value) {
-    error.value = ""
-    url.value = link
-  }
-}
-
-function loadSavedHistory(): void {
-  history.value = JSON.parse(localStorage.getItem("history")!) || []
-}
-loadSavedHistory()
-
-function hideHistory(): void {
-  showHistory.value = false
-}
-
-function addToHistory(link: string): void {
-  if (history.value.includes(link)) {
-    history.value.splice(history.value.indexOf(link), 1)
-  }
-  history.value = [link, ...history.value.slice(0, 4)]
-}
-
-onClickOutside(historyListRef, hideHistory)
 </script>
-
-<style scoped>
-.action-button {
-  width: 84px;
-}
-</style>
