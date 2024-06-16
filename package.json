@@ -14,7 +14,7 @@
     "format:check": "prettier . --check --ignore-unknown",
     "eslint:fix": "eslint . --ext .js,.cjs,.ts,.vue --max-warnings=0 --fix",
     "eslint:check": "eslint . --ext .js,.cjs,.ts,.vue --max-warnings=0",
-    "lint": "npm run format:check && npm run eslint:check && npm run styles:check",
+    "lint": "npm run format:check && npm run eslint:check",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
