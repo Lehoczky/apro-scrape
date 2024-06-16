@@ -12,6 +12,9 @@ import icon from "../../resources/icon.png?asset"
 setupTitlebar()
 
 let mainWindow: BrowserWindow | undefined
+export function getMainWindow() {
+  return mainWindow
+}
 
 export const createWindow = () => {
   mainWindow = new BrowserWindow({
