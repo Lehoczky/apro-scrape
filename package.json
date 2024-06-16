@@ -18,7 +18,7 @@
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
-    "dev": "electron-vite dev",
+    "dev": "electron-vite dev -w",
     "test": "jest",
     "postinstall": "electron-builder install-app-deps",
     "build:renderer": "npm run typecheck && electron-vite build",

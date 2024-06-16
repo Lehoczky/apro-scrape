@@ -9,6 +9,8 @@
     <Card v-show="shownItems.length" class="mb-3">
       <MessageList :messages="shownItems" />
     </Card>
+
+    <SettingsDialog v-if="settingDialogOpen" v-model:open="settingDialogOpen" />
   </div>
 </template>
 
@@ -17,6 +19,7 @@ import type { SoldItem } from "@/shared"
 
 import MessageList from "./components/MessageList.vue"
 import ScrapingForm from "./components/ScrapingForm.vue"
+import SettingsDialog from "./components/SettingsDialog.vue"
 import { Card } from "./components/ui/card"
 import { createNewItemNotification } from "./notification"
 import { startInterval } from "./utils"
@@ -47,10 +50,14 @@ function stopScraping() {
   clearInterval(interval.value)
   interval.value = undefined
 }
-</script>
 
-<style>
-.cet-menubar {
-  display: none !important;
-}
-</style>
+const settingDialogOpen = ref(false)
+window.api.onOpenSettings(() => {
+  settingDialogOpen.value = true
+})
+
+useDark({
+  initialValue: "light",
+  storageKey: "settings:darkMode",
+})
+</script>

@@ -6,7 +6,8 @@ import icon from "../../resources/icon.png?asset"
 const options: TitleBarOptions = {
   backgroundColor: TitlebarColor.fromHex("#383838"),
   icon,
-  titleHorizontalAlignment: "left",
+  titleHorizontalAlignment: "center",
+  menuPosition: "left",
   shadow: true,
 }
 

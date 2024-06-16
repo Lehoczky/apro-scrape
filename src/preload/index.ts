@@ -11,4 +11,6 @@ contextBridge.exposeInMainWorld("api", {
   isWindowHidden: () => ipcRenderer.invoke("is-window-hidden"),
   validateUrl: (url: string) => ipcRenderer.invoke("validate-url", url),
   openWindow: () => ipcRenderer.send("open-window"),
+  onOpenSettings: (callback: () => unknown) =>
+    ipcRenderer.on("open-settings", (_event) => callback()),
 })

@@ -3,6 +3,7 @@ import { app } from "electron"
 
 import { setupErrorHandling } from "./errorHandling"
 import { setupIpcChannels } from "./ipc"
+import { createMenu } from "./menu"
 import { createTray } from "./tray"
 import { installVueDevtools } from "./vueDevtools"
 import { createWindow } from "./window"
@@ -22,5 +23,6 @@ app.whenReady().then(async () => {
   })
 
   createWindow()
+  createMenu()
   createTray()
 })
