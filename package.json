@@ -25,7 +25,7 @@
     "build:win": "npm run build:renderer && electron-builder --win --config electron-builder.config.cjs",
     "build:linux": "npm run build:renderer && electron-builder --linux --config electron-builder.config.cjs",
     "generate-icons": "electron-icon-builder --input=./resources/icon.png --output=build --flatten",
-    "bumpp": "bumpp --commit --tag --no-push"
+    "bumpp": "bumpp --commit --tag"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.1",

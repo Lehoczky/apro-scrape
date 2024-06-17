@@ -8,7 +8,7 @@ export function createScraper() {
 
   return async (page: string) => {
     const dom = await fetchDomForPage(page)
-    let items = await getSellingItems(dom)
+    let items = getSellingItems(dom)
     const urls = items.map((item) => item!.url)
 
     if (lastItem && urls.includes(lastItem.url)) {
@@ -50,12 +50,16 @@ function isAd(domElement: Element) {
 
 function createItemObject(domElement: Element): SoldItem | undefined {
   try {
-    const url = domElement.querySelector<HTMLAnchorElement>("h1 > a")!.href
-    const title = domElement.querySelector("h1 > a")!.textContent!
+    const itemAnchor = domElement.querySelector<HTMLAnchorElement>("h1 > a")!
+
+    const url = itemAnchor.href
+    const title = itemAnchor.textContent!
+    const imageSrc =
+      domElement.querySelector<HTMLImageElement>(".uad-image > img")!.src!
     const price = domElement.querySelector(".uad-price")!.textContent!
     const location = domElement.querySelector(".uad-light")!.textContent!
     const updated = domElement.querySelector(".uad-ultralight")!.textContent!
-    return { url, title, price, location, updated }
+    return { url, title, price, location, updated, imageSrc }
   } catch (error) {
     if (error instanceof Error) {
       const html = dedent(domElement.outerHTML)

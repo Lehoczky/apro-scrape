@@ -6,22 +6,38 @@
       >
         {{ dateIntervalForMessage(message) }}
       </div>
+
       <ul>
         <li
           v-for="item in message"
           :key="item.url"
-          class="item border-b border-border"
+          class="xs:items-center xs:py-2 xs:flex-row flex flex-col border-b border-border py-4"
         >
-          <div class="title">
-            <h1>
-              <a :href="item.url" target="_blank">{{ item.title }}</a>
-            </h1>
+          <div class="xs:px-4 flex-1 px-0">
+            <div class="flex items-center gap-4">
+              <a :href="item.url" target="_blank">
+                <img
+                  :src="item.imageSrc"
+                  class="aspect-[4/3] w-[80px] rounded-md object-cover"
+                  alt=""
+                />
+              </a>
+
+              <a
+                :href="item.url"
+                class="underline decoration-transparent underline-offset-2 transition-colors duration-200 [overflow-wrap:break-word] [word-break:break-word] hover:decoration-current"
+                target="_blank"
+                >{{ item.title }}</a
+              >
+            </div>
           </div>
-          <div class="info border-l border-border">
-            <div class="price font-semibold text-primary">
+          <div
+            class="xs:w-[140px] xs:text-center xs:justify-normal xs:mt-0 xs:border-l xs:border-border xs:flex-col xs:text-base mt-2 flex justify-between border-0 text-sm leading-5"
+          >
+            <div class="font-semibold text-primary">
               {{ item.price }}
             </div>
-            <div class="location">
+            <div>
               {{ item.location }}
             </div>
             <div class="updated text-muted-foreground">
@@ -54,71 +70,3 @@ function dateIntervalForMessage(message: SoldItem[]) {
   return `${lastDate} - ${firstDate}`
 }
 </script>
-
-<style scoped>
-.item {
-  padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
-}
-
-@media screen and (width <= 470px) {
-  .item {
-    padding: 1rem 0;
-    flex-direction: column;
-    align-items: unset;
-  }
-}
-
-.title {
-  flex: 1;
-  padding: 0 1rem;
-}
-
-.title > h1 {
-  word-break: break-word;
-  overflow-wrap: break-word;
-  margin: 0;
-  font-size: 1rem;
-}
-
-@media screen and (width <= 470px) {
-  .title {
-    padding: 0;
-  }
-
-  .title > h1 {
-    font-size: 0.9rem;
-  }
-}
-
-.info {
-  width: 140px;
-  text-align: center;
-}
-
-@media screen and (width <= 470px) {
-  .info {
-    width: unset;
-    display: flex;
-    text-align: unset;
-    border: none;
-    justify-content: space-between;
-    margin-top: 0.5rem;
-  }
-}
-
-.price,
-.location,
-.updated {
-  line-height: 1.25rem;
-}
-
-@media screen and (width <= 470px) {
-  .price,
-  .location,
-  .updated {
-    font-size: 0.95rem;
-  }
-}
-</style>

@@ -1,5 +1,7 @@
 import { JSDOM } from "jsdom"
 
+import type { SoldItem } from "@/shared"
+
 import { createScraper } from "./scrape"
 
 test("return empty list when no .media element is present", async () => {
@@ -9,7 +11,7 @@ test("return empty list when no .media element is present", async () => {
   jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
-  expect(items).toEqual([])
+  expect(items).toEqual<SoldItem[]>([])
 })
 
 test("return every item on first call", async () => {
@@ -18,6 +20,9 @@ test("return every item on first call", async () => {
   const dom = new JSDOM(/*html*/ `
     <div class="uad-list">
       <li class="media">
+        <a class="uad-image" href="http://example.com/1">
+          <img src="http://example.com/image-1.jpg">
+        </a>
         <h1><a href="http://example.com/1">Item1</a></h1>
         <div class="uad-price">5000 Ft</div>
         <div class="uad-light">Budapest</div>
@@ -25,6 +30,9 @@ test("return every item on first call", async () => {
       </li>
 
       <li class="media">
+        <a class="uad-image" href="http://example.com/2">
+          <img src="http://example.com/image-2.jpg">
+        </a>
         <h1><a href="http://example.com/2">Item2</a></h1>
         <div class="uad-price">6000 Ft</div>
         <div class="uad-light">Budafok</div>
@@ -35,13 +43,14 @@ test("return every item on first call", async () => {
   jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/1",
       title: "Item1",
       price: "5000 Ft",
       location: "Budapest",
       updated: "2020-09-07",
+      imageSrc: "http://example.com/image-1.jpg",
     },
     {
       url: "http://example.com/2",
@@ -49,6 +58,7 @@ test("return every item on first call", async () => {
       price: "6000 Ft",
       location: "Budafok",
       updated: "2020-09-06",
+      imageSrc: "http://example.com/image-2.jpg",
     },
   ])
 })
@@ -58,6 +68,9 @@ test("skip featured item", async () => {
   const dom = new JSDOM(/*html*/ `
     <div class="uad-list">
       <li class="media">
+        <a class="uad-image" href="http://example.com/1">
+          <img src="http://example.com/image-1.jpg">
+        </a>
         <h1><a href="http://example.com/1">Item1</a></h1>
         <div class="uad-price">5000 Ft</div>
         <div class="uad-light">Budapest</div>
@@ -65,6 +78,9 @@ test("skip featured item", async () => {
       </li>
 
       <li class="media">
+        <a class="uad-image" href="http://example.com/2">
+          <img src="http://example.com/image-2.jpg">
+        </a>
         <h1><a href="http://example.com/2">Item2</a></h1>
         <div class="uad-price">6000 Ft</div>
         <div class="uad-light">Budafok</div>
@@ -75,13 +91,14 @@ test("skip featured item", async () => {
   jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/2",
       title: "Item2",
       price: "6000 Ft",
       location: "Budafok",
       updated: "2020-09-06",
+      imageSrc: "http://example.com/image-2.jpg",
     },
   ])
 })
@@ -94,6 +111,9 @@ test("return only new item | older is present", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -106,6 +126,9 @@ test("return only new item | older is present", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/2">
+              <img src="http://example.com/image-2.jpg">
+            </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
             <div class="uad-light">Budafok</div>
@@ -113,6 +136,9 @@ test("return only new item | older is present", async () => {
           </li>
 
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -124,13 +150,14 @@ test("return only new item | older is present", async () => {
 
   let items = await scrape("")
   items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/2",
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
       updated: "ma 19:48",
+      imageSrc: "http://example.com/image-2.jpg",
     },
   ])
 })
@@ -143,6 +170,9 @@ test("return only new item | old has been removed", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -155,6 +185,9 @@ test("return only new item | old has been removed", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/2">
+              <img src="http://example.com/image-2.jpg">
+            </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
             <div class="uad-light">Budafok</div>
@@ -166,13 +199,14 @@ test("return only new item | old has been removed", async () => {
 
   let items = await scrape("")
   items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/2",
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
       updated: "ma 19:48",
+      imageSrc: "http://example.com/image-2.jpg",
     },
   ])
 })
@@ -185,6 +219,9 @@ test("return empty list while there is no new item", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -197,6 +234,9 @@ test("return empty list while there is no new item", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -209,6 +249,9 @@ test("return empty list while there is no new item", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/1">
+              <img src="http://example.com/image-1.jpg">
+            </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
             <div class="uad-light">Budapest</div>
@@ -221,6 +264,9 @@ test("return empty list while there is no new item", async () => {
       new JSDOM(/*html*/ `
         <div class="uad-list">
           <li class="media">
+            <a class="uad-image" href="http://example.com/2">
+              <img src="http://example.com/image-2.jpg">
+            </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
             <div class="uad-light">Budafok</div>
@@ -231,30 +277,32 @@ test("return empty list while there is no new item", async () => {
     )
 
   let items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/1",
       title: "Item1",
       price: "5000 Ft",
       location: "Budapest",
       updated: "ma 19:41",
+      imageSrc: "http://example.com/image-1.jpg",
     },
   ])
 
   items = await scrape("")
-  expect(items).toEqual([])
+  expect(items).toEqual<SoldItem[]>([])
 
   items = await scrape("")
-  expect(items).toEqual([])
+  expect(items).toEqual<SoldItem[]>([])
 
   items = await scrape("")
-  expect(items).toEqual([
+  expect(items).toEqual<SoldItem[]>([
     {
       url: "http://example.com/2",
       title: "Item2",
       price: "15000 Ft",
       location: "Budafok",
       updated: "ma 19:48",
+      imageSrc: "http://example.com/image-2.jpg",
     },
   ])
 })
