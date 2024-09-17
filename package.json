@@ -33,7 +33,6 @@
     "@formkit/auto-animate": "^0.8.2",
     "@vee-validate/zod": "^4.13.1",
     "@vueuse/core": "^10.11.0",
-    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "custom-electron-titlebar": "^4.2.8",
