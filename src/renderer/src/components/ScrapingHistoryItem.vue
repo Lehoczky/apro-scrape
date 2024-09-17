@@ -44,7 +44,10 @@
 </template>
 
 <script setup lang="ts">
+import { useToggle } from "@vueuse/core"
 import { CheckIcon, GlobeIcon, XIcon } from "lucide-vue-next"
+import type { PropType } from "vue"
+import { computed, ref } from "vue"
 
 import { DialogClose } from "@/renderer/src/components/ui/dialog"
 

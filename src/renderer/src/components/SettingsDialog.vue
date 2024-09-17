@@ -57,6 +57,7 @@
 <script setup lang="ts">
 import { toTypedSchema } from "@vee-validate/zod"
 import { useForm } from "vee-validate"
+import { watch } from "vue"
 import * as z from "zod"
 
 import { useSettings } from "../composables/useSettings"

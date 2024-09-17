@@ -1,3 +1,5 @@
+import { computed, ref, watch } from "vue"
+
 import { type HistoryEntry, parseHistoryEntries } from "../types/history"
 
 const history = ref<HistoryEntry[]>([])

@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue"
+
 import type { SoldItem } from "@/shared"
 
 import MessageList from "./components/MessageList.vue"

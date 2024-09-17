@@ -1,3 +1,5 @@
+import { useDark, useStorage } from "@vueuse/core"
+
 const isDark = useDark({
   initialValue: "light",
   storageKey: "settings:darkMode",

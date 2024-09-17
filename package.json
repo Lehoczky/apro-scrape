@@ -74,7 +74,6 @@
     "tailwindcss-animate": "^1.0.7",
     "ts-jest": "^29.1.4",
     "typescript": "~5.4.5",
-    "unplugin-auto-import": "^0.17.6",
     "vite": "^5.3.1",
     "vue": "^3.4.29",
     "vue-tsc": "^2.0.21"

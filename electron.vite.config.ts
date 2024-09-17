@@ -4,7 +4,6 @@ import autoprefixer from "autoprefixer"
 import { defineConfig, externalizeDepsPlugin } from "electron-vite"
 import { resolve } from "path"
 import tailwind from "tailwindcss"
-import AutoImport from "unplugin-auto-import/vite"
 
 export default defineConfig({
   main: {
@@ -37,12 +36,6 @@ export default defineConfig({
         "@": resolve(__dirname, "./src"),
       },
     },
-    plugins: [
-      AutoImport({
-        imports: ["vue", "@vueuse/core"],
-        dts: "./src/autoImports.d.ts",
-      }),
-      vue(),
-    ],
+    plugins: [vue()],
   },
 })

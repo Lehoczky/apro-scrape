@@ -57,6 +57,7 @@
 <script setup lang="ts">
 import { vAutoAnimate } from "@formkit/auto-animate/vue"
 import { HistoryIcon, Loader2 } from "lucide-vue-next"
+import { ref } from "vue"
 
 import { Button } from "@/renderer/src/components/ui/button"
 import { Dialog, DialogTrigger } from "@/renderer/src/components/ui/dialog"

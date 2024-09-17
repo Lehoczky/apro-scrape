@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { useVModel } from "@vueuse/core"
+import { useTextareaAutosize, useVModel } from "@vueuse/core"
 import type { HTMLAttributes } from "vue"
 
 import { cn } from "@/renderer/src/utils/cn"

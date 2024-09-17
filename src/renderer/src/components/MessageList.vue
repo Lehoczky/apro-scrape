@@ -11,9 +11,9 @@
         <li
           v-for="item in message"
           :key="item.url"
-          class="xs:items-center xs:py-2 xs:flex-row flex flex-col border-b border-border py-4"
+          class="flex flex-col border-b border-border py-4 xs:flex-row xs:items-center xs:py-2"
         >
-          <div class="xs:px-4 flex-1 px-0">
+          <div class="flex-1 px-0 xs:px-4">
             <div class="flex items-center gap-4">
               <a :href="item.url" target="_blank">
                 <img
@@ -32,7 +32,7 @@
             </div>
           </div>
           <div
-            class="xs:w-[140px] xs:text-center xs:justify-normal xs:mt-0 xs:border-l xs:border-border xs:flex-col xs:text-base mt-2 flex justify-between border-0 text-sm leading-5"
+            class="mt-2 flex justify-between border-0 text-sm leading-5 xs:mt-0 xs:w-[140px] xs:flex-col xs:justify-normal xs:border-l xs:border-border xs:text-center xs:text-base"
           >
             <div class="font-semibold text-primary">
               {{ item.price }}
@@ -52,6 +52,7 @@
 
 <script setup lang="ts">
 import { vAutoAnimate } from "@formkit/auto-animate"
+import type { PropType } from "vue"
 
 import type { SoldItem } from "@/shared"
 
