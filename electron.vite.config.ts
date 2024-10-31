@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/naming-convention */
+ 
+import { resolve } from "node:path"
+
 import vue from "@vitejs/plugin-vue"
 import autoprefixer from "autoprefixer"
 import { defineConfig, externalizeDepsPlugin } from "electron-vite"
-import { resolve } from "path"
 import tailwind from "tailwindcss"
 
 export default defineConfig({

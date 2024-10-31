@@ -1,3 +1,5 @@
+import { join } from "node:path"
+
 import { is } from "@electron-toolkit/utils"
 import {
   attachTitlebarToWindow,
@@ -5,7 +7,6 @@ import {
 } from "custom-electron-titlebar/main"
 import { app, BrowserWindow, shell } from "electron"
 import { autoUpdater } from "electron-updater"
-import { join } from "path"
 
 import icon from "../../resources/icon.png?asset"
 
@@ -24,7 +25,6 @@ export const createWindow = () => {
     frame: false,
     backgroundColor: "#ececec",
     autoHideMenuBar: true,
-    show: false,
     titleBarStyle: "hidden",
     titleBarOverlay: true,
     ...(process.platform === "linux" ? { icon } : {}),

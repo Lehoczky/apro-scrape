@@ -31,7 +31,7 @@ async function fetchDomForPage(page: string) {
 }
 
 function getSellingItems(dom: JSDOM) {
-  return Array.from(dom.window.document.querySelectorAll(".uad-list .media"))
+  return [...dom.window.document.querySelectorAll(".uad-list .media")]
     .filter((domElement) => !isAd(domElement))
     .map(createItemObject)
     .filter((item) => item !== undefined)

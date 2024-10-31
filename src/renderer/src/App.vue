@@ -1,19 +1,3 @@
-<template>
-  <div class="container flex flex-col gap-10">
-    <ScrapingForm
-      class="mt-8"
-      @submit="startScraping($event)"
-      @stop="stopScraping()"
-    />
-
-    <Card v-show="shownItems.length" class="mb-3">
-      <MessageList :messages="shownItems" />
-    </Card>
-
-    <SettingsDialog v-if="settingDialogOpen" v-model:open="settingDialogOpen" />
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref } from "vue"
 
@@ -62,3 +46,19 @@ window.api.onOpenSettings(() => {
 const { actOnInitialSettings } = useSettings()
 actOnInitialSettings()
 </script>
+
+<template>
+  <div class="container flex flex-col gap-10">
+    <ScrapingForm
+      class="mt-8"
+      @submit="startScraping($event)"
+      @stop="stopScraping()"
+    />
+
+    <Card v-show="shownItems.length" class="mb-3">
+      <MessageList :messages="shownItems" />
+    </Card>
+
+    <SettingsDialog v-if="settingDialogOpen" v-model:open="settingDialogOpen" />
+  </div>
+</template>

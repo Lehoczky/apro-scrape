@@ -9,6 +9,7 @@ export function createMenu() {
         {
           label: "Settings",
           click(_menuItem, browserWindow) {
+            // @ts-expect-error Electron bug, it used to work
             browserWindow?.webContents.send("open-settings")
           },
         },

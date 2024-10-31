@@ -1,13 +1,3 @@
-<template>
-  <Primitive
-    :as="as"
-    :as-child="asChild"
-    :class="cn(buttonVariants({ variant, size }), props.class)"
-  >
-    <slot />
-  </Primitive>
-</template>
-
 <script setup lang="ts">
 import { Primitive, type PrimitiveProps } from "radix-vue"
 import type { HTMLAttributes } from "vue"
@@ -29,3 +19,13 @@ const props = withDefaults(defineProps<Props>(), {
   class: undefined,
 })
 </script>
+
+<template>
+  <Primitive
+    :as="as"
+    :as-child="asChild"
+    :class="cn(buttonVariants({ variant, size }), props.class)"
+  >
+    <slot />
+  </Primitive>
+</template>

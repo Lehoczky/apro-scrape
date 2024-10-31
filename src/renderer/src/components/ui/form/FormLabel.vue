@@ -1,9 +1,3 @@
-<template>
-  <Label :class="props.class" :for="formItemId">
-    <slot />
-  </Label>
-</template>
-
 <script lang="ts" setup>
 import type { LabelProps } from "radix-vue"
 import type { HTMLAttributes } from "vue"
@@ -16,3 +10,9 @@ const props = defineProps<LabelProps & { class?: HTMLAttributes["class"] }>()
 
 const { formItemId } = useFormField()
 </script>
+
+<template>
+  <Label :class="props.class" :for="formItemId">
+    <slot />
+  </Label>
+</template>

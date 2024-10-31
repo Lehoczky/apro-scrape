@@ -1,12 +1,3 @@
-<template>
-  <FormDescription @click="$emit('url-click', exampleUrl)">
-    Ex.
-    <button class="underline" type="button">
-      {{ exampleUrl }}
-    </button>
-  </FormDescription>
-</template>
-
 <script setup lang="ts">
 import { ref } from "vue"
 
@@ -18,3 +9,12 @@ defineEmits<{
 
 const exampleUrl = ref("https://hardverapro.hu/aprok/mobil/index.html")
 </script>
+
+<template>
+  <FormDescription @click="$emit('url-click', exampleUrl)">
+    Ex.
+    <button class="underline" type="button">
+      {{ exampleUrl }}
+    </button>
+  </FormDescription>
+</template>

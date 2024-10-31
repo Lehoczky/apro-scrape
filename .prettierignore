@@ -4,3 +4,4 @@ pnpm-lock.yaml
 LICENSE.md
 autoImports.d.ts
 components.d.ts
+lerna.json

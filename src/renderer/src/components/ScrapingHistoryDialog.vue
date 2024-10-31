@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import { LeafIcon } from "lucide-vue-next"
+
+import {
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/renderer/src/components/ui/dialog"
+
+import { useHistory } from "../composables/useHistory"
+import type { HistoryEntry } from "../types/history"
+import ScrapingHistoryItem from "./ScrapingHistoryItem.vue"
+
+defineProps<{
+  history: HistoryEntry[]
+}>()
+
+defineEmits<{
+  (event: "select", payload: string): void
+}>()
+
+const { removeFromHistory } = useHistory()
+</script>
+
 <template>
   <DialogContent class="flex flex-col">
     <DialogHeader>
@@ -25,28 +50,3 @@
     </div>
   </DialogContent>
 </template>
-
-<script setup lang="ts">
-import { LeafIcon } from "lucide-vue-next"
-
-import {
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/renderer/src/components/ui/dialog"
-
-import { useHistory } from "../composables/useHistory"
-import type { HistoryEntry } from "../types/history"
-import ScrapingHistoryItem from "./ScrapingHistoryItem.vue"
-
-defineProps<{
-  history: HistoryEntry[]
-}>()
-
-defineEmits<{
-  (event: "select", payload: string): void
-}>()
-
-const { removeFromHistory } = useHistory()
-</script>

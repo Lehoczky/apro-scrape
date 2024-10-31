@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { vAutoAnimate } from "@formkit/auto-animate"
+import type { PropType } from "vue"
+
+import type { SoldItem } from "@/shared"
+
+import { CardContent } from "./ui/card"
+
+defineProps({
+  messages: {
+    type: Array as PropType<SoldItem[][]>,
+    required: true,
+  },
+})
+
+function dateIntervalForMessage(message: SoldItem[]) {
+  const lastDate = message[message.length - 1].updated
+  const firstDate = message[0].updated
+  return `${lastDate} - ${firstDate}`
+}
+</script>
+
 <template>
   <CardContent v-auto-animate>
     <section v-for="message in messages" :key="dateIntervalForMessage(message)">
@@ -49,25 +71,3 @@
     </section>
   </CardContent>
 </template>
-
-<script setup lang="ts">
-import { vAutoAnimate } from "@formkit/auto-animate"
-import type { PropType } from "vue"
-
-import type { SoldItem } from "@/shared"
-
-import { CardContent } from "./ui/card"
-
-defineProps({
-  messages: {
-    type: Array as PropType<SoldItem[][]>,
-    required: true,
-  },
-})
-
-function dateIntervalForMessage(message: SoldItem[]) {
-  const lastDate = message[message.length - 1].updated
-  const firstDate = message[0].updated
-  return `${lastDate} - ${firstDate}`
-}
-</script>

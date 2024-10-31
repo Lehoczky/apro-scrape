@@ -1,3 +1,42 @@
+<script setup lang="ts">
+import { useToggle } from "@vueuse/core"
+import { CheckIcon, GlobeIcon, XIcon } from "lucide-vue-next"
+import type { PropType } from "vue"
+import { computed, ref } from "vue"
+
+import { DialogClose } from "@/renderer/src/components/ui/dialog"
+
+import { type HistoryEntry } from "../types/history"
+import { Button } from "./ui/button"
+
+const props = defineProps({
+  entry: {
+    type: Object as PropType<HistoryEntry>,
+    required: true,
+  },
+})
+
+defineEmits<{
+  (event: "select", payload: string): void
+  (event: "remove", payload: string): void
+}>()
+
+const showSearchParams = ref(false)
+const toggleShowSearchParams = useToggle(showSearchParams)
+const titlePrefix = "https://hardverapro.hu"
+const title = computed(() => {
+  return props.entry.url.substring(titlePrefix.length)
+})
+
+const dateTimeFormatter = new Intl.DateTimeFormat("en-us", {
+  dateStyle: "medium",
+  timeStyle: "short",
+})
+const lastSearched = computed(() =>
+  dateTimeFormatter.format(props.entry.lastSearched),
+)
+</script>
+
 <template>
   <li class="grid overflow-hidden [word-wrap:break-word]">
     <div
@@ -42,42 +81,3 @@
     </div>
   </li>
 </template>
-
-<script setup lang="ts">
-import { useToggle } from "@vueuse/core"
-import { CheckIcon, GlobeIcon, XIcon } from "lucide-vue-next"
-import type { PropType } from "vue"
-import { computed, ref } from "vue"
-
-import { DialogClose } from "@/renderer/src/components/ui/dialog"
-
-import { type HistoryEntry } from "../types/history"
-import { Button } from "./ui/button"
-
-const props = defineProps({
-  entry: {
-    type: Object as PropType<HistoryEntry>,
-    required: true,
-  },
-})
-
-defineEmits<{
-  (event: "select", payload: string): void
-  (event: "remove", payload: string): void
-}>()
-
-const showSearchParams = ref(false)
-const toggleShowSearchParams = useToggle(showSearchParams)
-const titlePrefix = "https://hardverapro.hu"
-const title = computed(() => {
-  return props.entry.url.substring(titlePrefix.length)
-})
-
-const dateTimeFormatter = new Intl.DateTimeFormat("en-us", {
-  dateStyle: "medium",
-  timeStyle: "short",
-})
-const lastSearched = computed(() =>
-  dateTimeFormatter.format(props.entry.lastSearched),
-)
-</script>

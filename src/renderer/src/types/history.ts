@@ -18,7 +18,7 @@ export function parseHistoryEntries(
     .transform((_, ctx) => {
       try {
         return JSON.parse(content)
-      } catch (error) {
+      } catch {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
           message: "invalid json",

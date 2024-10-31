@@ -5,4 +5,5 @@ export default {
   ...config,
   plugins: ["prettier-plugin-tailwindcss"],
   tailwindConfig: "./tailwind.config.ts",
+  tailwindFunctions: ["cn", "clsx"],
 }
