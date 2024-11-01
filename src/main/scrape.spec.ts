@@ -1,4 +1,5 @@
 import { JSDOM } from "jsdom"
+import { expect, test, vi } from "vitest"
 
 import type { SoldItem } from "@/shared"
 
@@ -8,7 +9,7 @@ test("return empty list when no .media element is present", async () => {
   const scrape = createScraper()
 
   const dom = new JSDOM("<body></body>")
-  jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
+  vi.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
   expect(items).toEqual<SoldItem[]>([])
@@ -40,7 +41,7 @@ test("return every item on first call", async () => {
       </li>
     </div>
   `)
-  jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
+  vi.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
   expect(items).toEqual<SoldItem[]>([
@@ -88,7 +89,7 @@ test("skip featured item", async () => {
       </li>
     </div>
   `)
-  jest.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
+  vi.spyOn(JSDOM, "fromURL").mockResolvedValue(dom)
 
   const items = await scrape("")
   expect(items).toEqual<SoldItem[]>([
@@ -105,8 +106,7 @@ test("skip featured item", async () => {
 
 test("return only new item | older is present", async () => {
   const scrape = createScraper()
-  jest
-    .spyOn(JSDOM, "fromURL")
+  vi.spyOn(JSDOM, "fromURL")
     .mockResolvedValueOnce(
       new JSDOM(/*html*/ `
         <div class="uad-list">
@@ -164,8 +164,7 @@ test("return only new item | older is present", async () => {
 
 test("return only new item | old has been removed", async () => {
   const scrape = createScraper()
-  jest
-    .spyOn(JSDOM, "fromURL")
+  vi.spyOn(JSDOM, "fromURL")
     .mockResolvedValueOnce(
       new JSDOM(/*html*/ `
         <div class="uad-list">
@@ -213,8 +212,7 @@ test("return only new item | old has been removed", async () => {
 
 test("return empty list while there is no new item", async () => {
   const scrape = createScraper()
-  jest
-    .spyOn(JSDOM, "fromURL")
+  vi.spyOn(JSDOM, "fromURL")
     .mockResolvedValueOnce(
       new JSDOM(/*html*/ `
         <div class="uad-list">

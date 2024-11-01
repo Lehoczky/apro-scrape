@@ -24,7 +24,7 @@ export function createScraper() {
 async function fetchDomForPage(page: string) {
   const cookieJar = new CookieJar()
   const COOKIE_TO_FETCH_200_ITEMS = "prf_ls_uad=lstup.d.200.normal"
-  if (process.env.JEST_WORKER_ID === undefined) {
+  if (process.env.NODE_ENV !== "test") {
     cookieJar.setCookieSync(COOKIE_TO_FETCH_200_ITEMS, page)
   }
   return await JSDOM.fromURL(page, { cookieJar })

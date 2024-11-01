@@ -2,17 +2,17 @@
   "extends": "@electron-toolkit/tsconfig/tsconfig.node.json",
   "include": [
     ".eslintrc.*",
-    "jest.config.*",
     "electron.vite.config.*",
     "electron-builder.config.*",
     "tailwind.config.*",
+    "vitest.config.*",
     "src/main/*",
     "src/preload/*",
     "src/shared/*"
   ],
   "compilerOptions": {
     "composite": true,
-    "types": ["electron-vite/node", "jest"],
+    "types": ["electron-vite/node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
