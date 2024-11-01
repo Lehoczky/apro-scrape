@@ -37,7 +37,7 @@ function dateIntervalForMessage(message: SoldItem[]) {
         >
           <div class="flex-1 px-0 xs:px-4">
             <div class="flex items-center gap-4">
-              <a :href="item.url" target="_blank">
+              <a :href="item.url" target="_blank" class="flex-shrink-0">
                 <img
                   :src="item.imageSrc"
                   class="aspect-[4/3] w-[80px] rounded-md object-cover"
