@@ -27,4 +27,7 @@ platform.
 
 ## Creating new release
 
-See: <https://github.com/samuelmeuli/action-electron-builder#releasing>
+```ps
+npx lerna version
+git push --tags
+```
