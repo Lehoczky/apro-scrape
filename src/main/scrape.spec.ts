@@ -26,8 +26,8 @@ test("return every item on first call", async () => {
         </a>
         <h1><a href="http://example.com/1">Item1</a></h1>
         <div class="uad-price">5000 Ft</div>
-        <div class="uad-light">Budapest</div>
-        <div class="uad-ultralight">2020-09-07</div>
+        <div class="uad-cities">Budapest</div>
+        <div class="uad-time">2020-09-07</div>
       </li>
 
       <li class="media">
@@ -36,8 +36,8 @@ test("return every item on first call", async () => {
         </a>
         <h1><a href="http://example.com/2">Item2</a></h1>
         <div class="uad-price">6000 Ft</div>
-        <div class="uad-light">Budafok</div>
-        <div class="uad-ultralight">2020-09-06</div>
+        <div class="uad-cities">Budafok</div>
+        <div class="uad-time">2020-09-06</div>
       </li>
     </div>
   `)
@@ -74,8 +74,8 @@ test("skip featured item", async () => {
         </a>
         <h1><a href="http://example.com/1">Item1</a></h1>
         <div class="uad-price">5000 Ft</div>
-        <div class="uad-light">Budapest</div>
-        <div class="uad-ultralight">Előresorolt hirdetés</div>
+        <div class="uad-cities">Budapest</div>
+        <div class="uad-time">Előresorolva</div>
       </li>
 
       <li class="media">
@@ -84,8 +84,8 @@ test("skip featured item", async () => {
         </a>
         <h1><a href="http://example.com/2">Item2</a></h1>
         <div class="uad-price">6000 Ft</div>
-        <div class="uad-light">Budafok</div>
-        <div class="uad-ultralight">2020-09-06</div>
+        <div class="uad-cities">Budafok</div>
+        <div class="uad-time">2020-09-06</div>
       </li>
     </div>
   `)
@@ -116,8 +116,8 @@ test("return only new item | older is present", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -131,8 +131,8 @@ test("return only new item | older is present", async () => {
             </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
-            <div class="uad-light">Budafok</div>
-            <div class="uad-ultralight">ma 19:48</div>
+            <div class="uad-cities">Budafok</div>
+            <div class="uad-time">ma 19:48</div>
           </li>
 
           <li class="media">
@@ -141,8 +141,8 @@ test("return only new item | older is present", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -174,8 +174,8 @@ test("return only new item | old has been removed", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -189,8 +189,8 @@ test("return only new item | old has been removed", async () => {
             </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
-            <div class="uad-light">Budafok</div>
-            <div class="uad-ultralight">ma 19:48</div>
+            <div class="uad-cities">Budafok</div>
+            <div class="uad-time">ma 19:48</div>
           </li>
         </div>
       `),
@@ -222,8 +222,8 @@ test("return empty list while there is no new item", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -237,8 +237,8 @@ test("return empty list while there is no new item", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -252,8 +252,8 @@ test("return empty list while there is no new item", async () => {
             </a>
             <h1><a href="http://example.com/1">Item1</a></h1>
             <div class="uad-price">5000 Ft</div>
-            <div class="uad-light">Budapest</div>
-            <div class="uad-ultralight">ma 19:41</div>
+            <div class="uad-cities">Budapest</div>
+            <div class="uad-time">ma 19:41</div>
           </li>
         </div>
       `),
@@ -267,8 +267,8 @@ test("return empty list while there is no new item", async () => {
             </a>
             <h1><a href="http://example.com/2">Item2</a></h1>
             <div class="uad-price">15000 Ft</div>
-            <div class="uad-light">Budafok</div>
-            <div class="uad-ultralight">ma 19:48</div>
+            <div class="uad-cities">Budafok</div>
+            <div class="uad-time">ma 19:48</div>
           </li>
         </div>
       `),

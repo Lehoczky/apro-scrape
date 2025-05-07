@@ -45,7 +45,7 @@
     "radix-vue": "^1.9.8",
     "tailwind-merge": "^2.5.4",
     "vee-validate": "^4.14.6",
-    "zod": "^3.23.8"
+    "zod": "^3.24.4"
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^1.0.1",
