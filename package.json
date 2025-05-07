@@ -42,7 +42,7 @@
     "electron-util": "~0.18.1",
     "jsdom": "26.1.0",
     "lucide-vue-next": "^0.508.0",
-    "radix-vue": "^1.9.17",
+    "reka-ui": "^2.2.1",
     "tailwind-merge": "^2.6.0",
     "vee-validate": "^4.15.0",
     "zod": "^3.24.4"

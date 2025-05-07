@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useId } from "radix-vue"
+import { useId } from "reka-ui"
 import { type HTMLAttributes, provide } from "vue"
 
 import { cn } from "@/renderer/src/utils/cn"
