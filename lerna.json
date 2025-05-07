@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/@lerna-lite/cli/schemas/lerna-schema.json",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "npmClient": "npm",
   "command": {
     "version": {
@@ -8,8 +8,12 @@
       "push": false,
       "changelog": false,
       "message": "chore: release %s",
-      "ignoreChanges": ["**/*.md"]
+      "ignoreChanges": [
+        "**/*.md"
+      ]
     }
   },
-  "packages": ["."]
+  "packages": [
+    "."
+  ]
 }
