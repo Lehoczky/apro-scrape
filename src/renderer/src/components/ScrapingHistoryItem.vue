@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useToggle } from "@vueuse/core"
-import { CheckIcon, GlobeIcon, XIcon } from "lucide-vue-next"
+import { CheckIcon, GlobeIcon, TrashIcon } from "lucide-vue-next"
 import type { PropType } from "vue"
 import { computed, ref } from "vue"
 
@@ -46,7 +46,7 @@ const lastSearched = computed(() =>
         class="absolute right-2 top-2 p-1"
         @click="$emit('remove', entry.url)"
       >
-        <XIcon class="size-3.5" />
+        <TrashIcon class="size-4" />
       </button>
       <div>
         <div class="mb-1 leading-tight">
@@ -59,7 +59,7 @@ const lastSearched = computed(() =>
         </div>
       </div>
 
-      <div class="mt-4 flex justify-end gap-2">
+      <div class="mt-6 flex justify-end gap-2">
         <Button
           size="sm"
           variant="outline"
