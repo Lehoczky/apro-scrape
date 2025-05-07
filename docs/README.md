@@ -29,5 +29,5 @@ platform.
 
 ```ps
 npx lerna version
-git push --tags
+git push --follow-tags
 ```
