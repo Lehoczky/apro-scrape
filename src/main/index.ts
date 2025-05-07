@@ -3,14 +3,12 @@ import { electronApp, is, optimizer } from "@electron-toolkit/utils"
 import type { BrowserWindow } from "electron"
 import { app } from "electron"
 
-import { setupErrorHandling } from "./errorHandling"
 import { setupIpcChannels } from "./ipc"
 import { createMenu } from "./menu"
 import { createTray } from "./tray"
 import { installVueDevtools } from "./vueDevtools"
 import { createWindow, getMainWindow } from "./window"
 
-setupErrorHandling()
 setupIpcChannels()
 
 const gotTheLock = app.requestSingleInstanceLock()
